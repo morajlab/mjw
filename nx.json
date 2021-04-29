@@ -1,29 +1,19 @@
 {
   "implicitDependencies": {
     "workspace.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "npmScope": "workspace-desktop",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
         "accessToken": "NzU2ODM1YzMtOTI4ZS00MTE5LWJhYTctMzc5NjYwZWE5MjAxfHJlYWQtd3JpdGU=",
         "canTrackAnalytics": false,
         "showUsageWarnings": true
@@ -31,14 +21,8 @@
     }
   },
   "projects": {
-    "next10": {
-      "tags": []
-    },
-    "next10-e2e": {
-      "tags": [],
-      "implicitDependencies": [
-        "next10"
-      ]
-    }
+    "next10": { "tags": [] },
+    "next10-e2e": { "tags": [], "implicitDependencies": ["next10"] },
+    "react-uwp": { "tags": [] }
   }
 }
