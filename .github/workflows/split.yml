@@ -17,9 +17,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package:
-          - local_path: 'react-uwp'
-            split_repository: 'react-uwp'
+        packages:
+          react-uwp:
+            - local_path: 'react-uwp'
+          next10:
+            - local_path: 'next10'
 
     steps:
       - uses: actions/checkout@v2
@@ -28,9 +30,17 @@ jobs:
       - if: "!startsWith(github.ref, 'refs/tags/')"
         uses: 'symplify/monorepo-split-github-action@2.0'
         with:
-          package-directory: 'libs/${{ matrix.package.local_path }}'
+          package-directory: 'libs/${{ matrix.packages.react-uwp.local_path }}'
           split-repository-organization: 'morteza-jamali'
-          split-repository-name: '${{ matrix.package.split_repository }}'
+          split-repository-name: '${{ matrix.packages.react-uwp.local_path }}'
+          branch: 'workspace-desktop'
+          user-name: 'morteza-jamali'
+          user-email: 'mortezajamali4241@gmail.com'
+        uses: 'symplify/monorepo-split-github-action@2.0'
+        with:
+          package-directory: 'apps/${{ matrix.packages.next10.local_path }}'
+          split-repository-organization: 'morteza-jamali'
+          split-repository-name: '${{ matrix.packages.next10.local_path }}'
           branch: 'workspace-desktop'
           user-name: 'morteza-jamali'
           user-email: 'mortezajamali4241@gmail.com'
@@ -40,9 +50,18 @@ jobs:
         uses: 'symplify/monorepo-split-github-action@2.0'
         with:
           tag: ${GITHUB_REF#refs/tags/}
-          package-directory: 'libs/${{ matrix.package.local_path }}'
+          package-directory: 'libs/${{ matrix.packages.react-uwp.local_path }}'
           split-repository-organization: 'morteza-jamali'
-          split-repository-name: '${{ matrix.package.split_repository }}'
+          split-repository-name: '${{ matrix.packages.react-uwp.local_path }}'
+          branch: 'workspace-desktop'
+          user-name: 'morteza-jamali'
+          user-email: 'mortezajamali4241@gmail.com'
+        uses: 'symplify/monorepo-split-github-action@2.0'
+        with:
+          tag: ${GITHUB_REF#refs/tags/}
+          package-directory: 'apps/${{ matrix.packages.next10.local_path }}'
+          split-repository-organization: 'morteza-jamali'
+          split-repository-name: '${{ matrix.packages.next10.local_path }}'
           branch: 'workspace-desktop'
           user-name: 'morteza-jamali'
           user-email: 'mortezajamali4241@gmail.com'
