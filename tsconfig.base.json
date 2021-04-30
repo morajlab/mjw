@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "react-uwp": ["libs/react-uwp/src"],
+      "react-uwp": ["libs/react-uwp/index.ts"],
       "react-uwp/*": ["libs/react-uwp/src/*"]
     }
   },

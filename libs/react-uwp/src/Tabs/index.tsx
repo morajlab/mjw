@@ -4,7 +4,8 @@ import * as PropTypes from "prop-types";
 import Tab, { DataProps as TabProps } from "./Tab";
 import CustomAnimate, { slideRightInProps } from "../Animate/CustomAnimate";
 
-export { Tab, TabProps };
+export { Tab };
+export type { TabProps };
 
 export interface DataProps {
   /**

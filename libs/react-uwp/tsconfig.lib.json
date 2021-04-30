@@ -2,21 +2,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./build",
-    "types": ["node"]
+    "typeRoots": ["./typings", "../../node_modules/@types"]
   },
   "files": [
     "../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
     "../../node_modules/@nrwl/react/typings/image.d.ts"
   ],
-  "exclude": [
-    "**/*.spec.ts",
-    "**/*.spec.tsx",
-    "./build",
-    "./scripts",
-    "./docs",
-    "./packages",
-    "./__mocks__",
-    "./node_modules"
-  ],
-  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+  "exclude": ["**/*.spec.ts", "**/*.spec.tsx"],
+  "include": ["src/**/*"]
 }

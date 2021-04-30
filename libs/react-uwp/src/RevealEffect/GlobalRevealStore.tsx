@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Theme } from "../styles/getTheme";
 import { createRadialGradient, inRectInside, drawBorder, drawHover, updateCanvasRect } from "./helper";
-import * as tinyColor from "tinycolor2";
+import tinyColor from "tinycolor2";
 import { Theme as ThemeType } from "react-uwp/styles/getTheme";
 import { Throttle } from "../utils/Throttle";
 import { ResizeObserver as ResizeObserverPolyfill } from "@juggle/resize-observer";
-const ResizeObserver: typeof ResizeObserverPolyfill = window["ResizeObserver"] || ResizeObserverPolyfill;
+const ResizeObserver: any = window["ResizeObserver"]  || ResizeObserverPolyfill;
 
 // TODO: CSS border gradient.
 const borderStyle = {

@@ -45,7 +45,7 @@
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
-  "types": "index.d.ts",
+  "types": "typings/react-uwp.d.ts",
   "devDependencies": {
     "@types/core-js": "^0.9.41",
     "@types/d3-ease": "^1.0.9",
@@ -59,7 +59,7 @@
     "@types/react": "^16.4.1",
     "@types/react-dom": "^16.0.6",
     "@types/react-transition-group": "^2.0.11",
-    "@types/tinycolor2": "^1.1.1",
+    "@types/tinycolor2": "^1.4.2",
     "babel-eslint": "^7.2.3",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",

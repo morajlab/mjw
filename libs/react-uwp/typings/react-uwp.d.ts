@@ -181,3 +181,5 @@ export { Theme as ThemeType } from '../src/styles/getTheme';
 
 export { StyleManager } from '../src/styles/StyleManager';
 export type { CustomCSSProperties } from '../src/styles/StyleManager';
+
+export as namespace ReactUWP;

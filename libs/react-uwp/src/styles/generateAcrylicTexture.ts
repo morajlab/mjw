@@ -1,5 +1,5 @@
 import * as stackBlurCanvas from "stackblur-canvas";
-import * as tinycolor2 from "tinycolor2";
+import tinycolor2 from "tinycolor2";
 import { toUrl } from "../utils/canvasHelper";
 
 export interface AcrylicTextureConfig {

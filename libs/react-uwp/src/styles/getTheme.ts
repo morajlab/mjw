@@ -1,4 +1,4 @@
-import * as tinyColor from "tinycolor2";
+import tinyColor from "tinycolor2";
 import * as createHash from "murmurhash-js/murmurhash3_gc";
 
 import prefixAll from "./prefixAll";

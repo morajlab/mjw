@@ -4,7 +4,8 @@ import { codes } from "keycode";
 
 import AddBlurEvent from "../utils/AddBlurEvent";
 import SplitViewPane, { SplitViewPaneProps } from "./SplitViewPane";
-export { SplitViewPane, SplitViewPaneProps };
+export { SplitViewPane };
+export type { SplitViewPaneProps };
 
 export interface DataProps {
   displayMode?: "compact" | "overlay";

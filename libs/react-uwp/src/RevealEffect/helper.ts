@@ -1,4 +1,4 @@
-import * as tinyColor from "tinycolor2";
+import tinyColor from "tinycolor2";
 import * as easing from "d3-ease";
 
 export function px2numb(px: string | null) {
