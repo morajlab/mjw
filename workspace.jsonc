@@ -7,7 +7,7 @@
     "defaultScope": "morajlab.fluent-app-ui-kit"
   },
   "teambit.dependencies/dependency-resolver": {
-    "packageManager": "teambit.dependencies/pnpm",
+    "packageManager": "teambit.dependencies/yarn",
     "policy": {
       "dependencies": {
         "@testing-library/react": "11.2.6"
