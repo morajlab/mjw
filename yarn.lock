@@ -1446,6 +1446,13 @@
     "@fluentui/set-version" "^8.1.0"
     tslib "^2.1.0"
 
+"@fluentui/example-data@^8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@fluentui/example-data/-/example-data-8.2.0.tgz#dd2fb00c74eb0325c408b856ba5f5e3dc8a77a74"
+  integrity sha512-brh2jEp08c/yJqtGwekfwhxErkv+BUUyljeKWa0PaOevR9u9/CKiw7p2kcoJEOf4x9hjMMNpNXoKDGGRGLLZQg==
+  dependencies:
+    tslib "^2.1.0"
+
 "@fluentui/font-icons-mdl2@^8.1.0":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@fluentui/font-icons-mdl2/-/font-icons-mdl2-8.1.0.tgz#7973dc85080c0ca3ddd03989d25d60e8bd83d0f1"
@@ -1511,10 +1518,10 @@
     "@fluentui/set-version" "^8.1.0"
     tslib "^2.1.0"
 
-"@fluentui/react@^8.13.1":
-  version "8.14.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react/-/react-8.14.0.tgz#47426cb68718fb759adcb9031fabbeb4f1b38fb2"
-  integrity sha512-8UPykCxsG32W7MeoJmgwBde7jKpj3iX/o6odTrzHzUTnfrfhVjaXAcTBkHwFEyb7mclDe+I83BMq+icNXyfNGA==
+"@fluentui/react@^8.14.4":
+  version "8.14.4"
+  resolved "https://registry.yarnpkg.com/@fluentui/react/-/react-8.14.4.tgz#1f8852dc9ae11df7de2e8ae68a776bd1fbe1abb3"
+  integrity sha512-o/vgHd0PYWWKPBBgaWOmy9hYvT8t1/GYW1EtSDkQvkP3xeeqGBhr5/ZjFKwhU86MF6BMIyGuj38iNBB2bks4DA==
   dependencies:
     "@fluentui/date-time-utilities" "^8.1.0"
     "@fluentui/font-icons-mdl2" "^8.1.0"
