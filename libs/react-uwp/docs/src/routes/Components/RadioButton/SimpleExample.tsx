@@ -11,7 +11,6 @@ export default class SimpleExample extends React.Component {
   context: { theme: ReactUWP.ThemeType };
 
   render() {
-    const { theme } = this.context;
     return (
       <div>
         <RadioButton defaultChecked style={baseStyle} label="Checked" />
@@ -21,16 +20,6 @@ export default class SimpleExample extends React.Component {
         <RadioButton style={baseStyle} label="Disabled" disabled />
 
         <RadioButton defaultChecked size={40} style={baseStyle} label="Custom Size" />
-
-        <RadioButton
-          defaultChecked={false}
-          size={40}
-          style={baseStyle}
-          radioStyle={{ background: "none", border: `12px solid ${theme.accent}` }}
-          radioCheckedStyle={{ background: theme.accent, border: "12px solid #fff" }}
-          radioDotStyle={{ display: "none" }}
-          label="Custom Style"
-        />
       </div>
     );
   }

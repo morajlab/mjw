@@ -10,7 +10,6 @@ export interface DoubleThemeRenderProps extends React.HTMLAttributes<HTMLDivElem
   useBorder?: boolean;
   useChromeColor?: boolean;
   useSingleTheme?: boolean;
-  newTheme?: ReactUWP.ThemeType;
 }
 
 export default class DoubleThemeRender extends React.Component<DoubleThemeRenderProps> {
@@ -18,7 +17,7 @@ export default class DoubleThemeRender extends React.Component<DoubleThemeRender
   context: { theme: ReactUWP.ThemeType };
 
   render() {
-    const { children, direction, themeStyle, useBorder, useChromeColor, useSingleTheme, newTheme, ...attributes } = this.props;
+    const { children, direction, themeStyle, useBorder, useChromeColor, useSingleTheme, ...attributes } = this.props;
     const darkTheme = getTheme({ themeName: "dark", accent: this.context.theme.accent });
     const { prefixStyle } = darkTheme;
     const lightTheme = getTheme({ themeName: "light", accent: this.context.theme.accent });
@@ -34,7 +33,7 @@ export default class DoubleThemeRender extends React.Component<DoubleThemeRender
 
     const { theme } = this.context;
 
-    return useSingleTheme || theme.useFluentDesign ? (
+    return  useSingleTheme || theme.useFluentDesign ? (
       <div
         style={prefixStyle({
           width: "100%",
@@ -44,16 +43,7 @@ export default class DoubleThemeRender extends React.Component<DoubleThemeRender
           justifyContent: "center"
         })}
       >
-        {newTheme ? <Theme
-          enableNoiseTexture
-          desktopBackgroundConfig={{
-            renderToScreen: false,
-            enableRender: true
-          }}
-          theme={newTheme}
-        >
-          {children}
-        </Theme> : children}
+        {children}
       </div>
     ) : (
       <div
@@ -67,8 +57,10 @@ export default class DoubleThemeRender extends React.Component<DoubleThemeRender
       >
         <Theme
           theme={darkTheme}
-          enableNoiseTexture
           style={prefixStyle({
+            background: theme.useFluentDesign ? void 0 : (
+              useChromeColor ? darkTheme.chromeLow : darkTheme.altHigh
+            ),
             ...prefixStyle({
               width: "50%",
               padding: "0 4px",
@@ -83,9 +75,11 @@ export default class DoubleThemeRender extends React.Component<DoubleThemeRender
           {children}
         </Theme>
         <Theme
-          enableNoiseTexture
           theme={lightTheme}
           style={prefixStyle({
+            background: theme.useFluentDesign ? void 0 : (
+              useChromeColor ? lightTheme.chromeLow : lightTheme.altHigh
+            ),
             ...currThemeStyle
           })}
         >

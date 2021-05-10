@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as PropTypes from "prop-types";
 
 import Icon from "react-uwp/Icon";
@@ -15,7 +14,6 @@ export interface DataProps {
   doubleThemeStyle?: React.CSSProperties;
   useChromeColor?: boolean;
   direction?: "row" | "column";
-  newTheme?: ReactUWP.ThemeType;
 }
 
 export interface CodeExampleProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
@@ -30,19 +28,7 @@ export default class CodeExample extends React.Component<CodeExampleProps, CodeE
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
-  mdRender: MarkdownRender;
   toggleShowCode = (showCode?: any) => {
-    const el = ReactDOM.findDOMNode(this.mdRender) as HTMLDivElement;
-    if (el) {
-      const codeEl = el.children[0] as HTMLDivElement;
-      const contentEl = codeEl.children[0] as HTMLDivElement;
-      const height = `${contentEl.clientHeight + 20}px`;
-      if (codeEl.style.height !== height) {
-        codeEl.style.height = height;
-      } else {
-        codeEl.style.height = "0px";
-      }
-    }
     if (typeof showCode === "boolean") {
       if (showCode !== this.state.showCode) {
         this.setState({ showCode });
@@ -64,12 +50,10 @@ export default class CodeExample extends React.Component<CodeExampleProps, CodeE
       useChromeColor,
       direction,
       useSingleTheme,
-      newTheme,
       ...attributes
     } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({ styles, className: "CodeExample" });
     const { showCode } = this.state;
     const codeText = `\`\`\`jsx
 ${code}
@@ -78,11 +62,11 @@ ${code}
     return (
       <div
         {...attributes}
-        {...classes.root}
+        style={styles.root}
       >
         <div style={{ width: "100%", border: `1px solid ${theme.accent}` }}>
-          <div onClick={this.toggleShowCode} {...classes.title}>
-            <p>{title}</p>
+          <div onClick={this.toggleShowCode} style={styles.title}>
+            <p style={{ fontSize: 15 }}>{title}</p>
             <Tooltip
               style={{ width: 150 }}
               content={showCode ? "Hide Source Code" : "Show Source Code"}
@@ -94,7 +78,7 @@ ${code}
               </Icon>
             </Tooltip>
           </div>
-          {codeText && <MarkdownRender ref={mdRender => this.mdRender = mdRender} {...classes.code} text={codeText} />}
+          {codeText && <MarkdownRender style={styles.code} text={codeText} />}
           <DoubleThemeRender
             useChromeColor={useChromeColor}
             themeStyle={{
@@ -103,12 +87,11 @@ ${code}
             }}
             useSingleTheme={useSingleTheme}
             direction={direction}
-            newTheme={newTheme}
           >
             {children}
           </DoubleThemeRender>
         </div>
-        {description && <MarkdownRender {...classes.desc} text={description} />}
+        {description && <MarkdownRender style={styles.desc} text={description} />}
       </div>
     );
   }
@@ -141,19 +124,18 @@ function getStyles(codeExample: CodeExample): {
       alignItems: "center",
       justifyContent: "space-between",
       width: "100%",
-      fontSize: 14,
+      fontSize: 18,
       color: "#fff",
       background: theme.accent,
       cursor: "pointer",
-      padding: "4px 8px",
-      lineHeight: 1,
+      padding: "10px 8px",
       ...style
     }),
     code: prefixStyle({
-      overflow: "hidden",
-      height: 0,
+      maxHeight: showCode ? 400 : 0,
+      overflow: "auto",
       width: "100%",
-      transition: "height .25s 0s",
+      transition: "max-height .25s 0s",
       padding: "0px 4px",
       ...style
     }),

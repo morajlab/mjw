@@ -1,26 +1,39 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-export interface DataProps {
-  toastEls?: React.ReactElement<any>[];
-}
+export interface DataProps {}
 
 export interface ToastWrapperProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
 
 export interface ToastWrapperState {
-  toastEls?: React.ReactElement<any>[];
+  toasts?: React.ReactElement<any>[];
 }
 
 export class ToastWrapper extends React.Component<ToastWrapperProps, ToastWrapperState> {
   state: ToastWrapperState = {
-    toastEls: this.props.toastEls || []
+    toasts: []
   };
 
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
 
+  addToast = (toast: React.ReactElement<any>) => {
+    const { theme } = this.context;
+    const { toasts } = this.state;
+    const key = theme.toasts.length;
+    theme.toasts.push(React.cloneElement(toast, { key }));
+    this.setState({ toasts: theme.toasts });
+  }
+
+  updateToast = (toastId: number, toast: React.ReactElement<any>) => {
+    const { theme } = this.context;
+    theme.toasts[toastId] = React.cloneElement(toast, { key: toastId });
+    this.setState({ toasts: theme.toasts });
+  }
+
   render() {
-    const { style, className, toastEls, ...attributes } = this.props;
+    const { style, className, ...attributes } = this.props;
+    const { toasts } = this.state;
     const { theme } = this.context;
 
     const rootStyleClasses = theme.prepareStyle({
@@ -46,9 +59,9 @@ export class ToastWrapper extends React.Component<ToastWrapperProps, ToastWrappe
     });
 
     return (
-      this.state.toastEls && this.state.toastEls.length > 0 && (
+      toasts && toasts.length > 0 && (
         <div {...attributes} {...rootStyleClasses}>
-          {toastEls.map((toastEl, key) => React.cloneElement(toastEl, { key }))}
+          {toasts}
         </div>
       )
     );

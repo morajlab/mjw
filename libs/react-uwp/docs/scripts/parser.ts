@@ -160,7 +160,7 @@ export class Parser {
         break;
       }
       default: {
-        // console.log(`Missing parse kind: ${node.kind}`);
+        console.log(`Missing parse kind: ${node.kind}`);
         break;
       }
     }
@@ -191,12 +191,8 @@ export class Parser {
     const name = symbol.flags !== ts.SymbolFlags.Interface ? symbol.getName() : symbol.name;
     let isRequired: boolean;
     const isSourceFile = symbol.flags === 512;
-    let documentation: string;
-    try {
-      documentation = ts.displayPartsToString(symbol.getDocumentationComment(void 0)) || void 0;
-    } catch (error) {
-      // console.error(error);
-    }
+    const documentation = ts.displayPartsToString(symbol.getDocumentationComment(void 0)) || void 0;
+
     // console.log(name, symbol.flags);
 
     let newSymbol: any = symbol;
@@ -244,9 +240,7 @@ export class Parser {
       const values = symbol.exports.values();
       for (let i = 0; i < symbol.exports.size; i++) {
         const result: any = values.next();
-        if (result.value) {
-          exportsDocEntry.push(this.serializeSymbol(result.value, isSourceFile ? false : true));
-        }
+        exportsDocEntry.push(this.serializeSymbol(result.value, isSourceFile ? false : true));
       }
     }
 

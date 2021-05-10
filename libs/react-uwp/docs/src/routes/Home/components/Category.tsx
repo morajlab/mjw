@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { Link } from "react-router";
-import RevealEffect from "react-uwp/RevealEffect";
 
 export interface DataProps {
   title?: string;
@@ -28,34 +27,30 @@ export default class Category extends React.Component<CategoryProps> {
     } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
-      className: "Category"
-    });
 
     return (
       <Link
-        {...attributes}
+        {...attributes as any}
         to={link}
-        {...classes.root}
+        style={styles.root}
       >
         <div style={styles.iconContainer}>
           {icon}
         </div>
         <div>
-          <h5 {...classes.title}>{title}</h5>
+          <h5 style={styles.title}>{title}</h5>
           <span>{description}</span>
         </div>
-        <RevealEffect
-          effectEnable="both"
-          hoverSize={320}
-        />
       </Link>
     );
   }
 }
 
-function getStyles(Category: Category) {
+function getStyles(Category: Category): {
+  root?: React.CSSProperties;
+  title?: React.CSSProperties;
+  iconContainer?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style }
@@ -64,21 +59,15 @@ function getStyles(Category: Category) {
 
   return {
     root: prefixStyle({
-      position: "relative",
       width: 320,
-      height: 320,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      justifyContent: "space-around",
-      padding: 16,
       textDecoration: "none",
       color: theme.baseHigh,
       textAlign: "center",
       fontSize: 12,
       fontWeight: "lighter",
-      border: `1px solid ${theme.listLow}`,
-      ...theme.acrylicTexture60.style,
       ...style
     }),
     title: {

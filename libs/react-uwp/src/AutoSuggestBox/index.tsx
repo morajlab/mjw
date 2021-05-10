@@ -218,21 +218,22 @@ export class AutoSuggestBox extends React.Component<AutoSuggestBoxProps, AutoSug
     } = this.state;
     const { theme } = this.context;
 
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
+      styles: inlineStyles,
       className: "autosuggest-box"
     });
 
     return (
       <TextBox
         {...attributes}
-        style={styles.root}
+        style={inlineStyles.root}
+        className={theme.classNames(className, styles.root.className)}
         ref={textBox => this.textBox = textBox}
         onClick={this.showListSource}
         onKeyDown={this.handleInputKeyDown}
         rightNode={
-          <PseudoClasses style={styles.icon} onClick={this.handleButtonAction}>
+          <PseudoClasses style={inlineStyles.icon} onClick={this.handleButtonAction}>
             <Icon>
               {typing ? "CancelLegacy" : "Search"}
             </Icon>
@@ -244,7 +245,7 @@ export class AutoSuggestBox extends React.Component<AutoSuggestBoxProps, AutoSug
         {listSource && listSource.length > 0 && (
           <ListView
             ref={listView => this.listView = listView}
-            style={styles.listView}
+            style={inlineStyles.listView}
             listSource={listSource.map((itemNode, index) => ({
               itemNode,
               focus: index === focusListSourceIndex
@@ -260,7 +261,11 @@ export class AutoSuggestBox extends React.Component<AutoSuggestBoxProps, AutoSug
   }
 }
 
-function getStyles(autoSuggestBox: AutoSuggestBox) {
+function getStyles(autoSuggestBox: AutoSuggestBox): {
+  root?: React.CSSProperties;
+  listView?: React.CSSProperties;
+  icon?: ReactUWP.CustomCSSProperties;
+} {
   const { context, props: {
     style,
     iconSize
@@ -286,7 +291,7 @@ function getStyles(autoSuggestBox: AutoSuggestBox) {
       pointerEvents: showListSource ? void 0 : "none",
       transition: "all .25s"
     }),
-    icon: theme.prefixStyle({
+    icon: {
       position: "absolute",
       top: 0,
       right: 0,
@@ -297,7 +302,7 @@ function getStyles(autoSuggestBox: AutoSuggestBox) {
       "&:hover": {
         color: theme.accent
       }
-    })
+    }
   };
 }
 

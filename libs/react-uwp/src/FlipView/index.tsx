@@ -161,25 +161,24 @@ export class FlipView extends React.Component<FlipViewProps, FlipViewState> {
     const isHorizontal = direction === "horizontal";
     const _showNavigation = controlledNavigation ? showNavigation : currShowNavigation;
 
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "flip-view",
-      styles
+      styles: inlineStyles
     });
 
     return (
       <div
         ref={element => this.rootElm = element}
-        className={theme.classNames(classes.root.className, className)}
+        style={styles.root.style}
+        className={theme.classNames(styles.root.className, className)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
-        {...attributes}
-        {...classes.root}
       >
         {count > 1 && _showNavigation && (
           <IconButton
             onClick={this.swipeBackWord}
-            style={styles.iconLeft}
+            style={inlineStyles.iconLeft}
             hoverStyle={{
               background: theme.baseLow
             }}
@@ -209,7 +208,7 @@ export class FlipView extends React.Component<FlipViewProps, FlipViewState> {
         {count > 1 && _showNavigation && (
           <IconButton
             onClick={this.swipeForward}
-            style={styles.iconRight}
+            style={inlineStyles.iconRight}
             hoverStyle={{
               background: theme.baseLow
             }}
@@ -226,9 +225,9 @@ export class FlipView extends React.Component<FlipViewProps, FlipViewState> {
           {...{
             count,
             showControl,
-            controlStyle: styles.control,
-            controlContentStyle: styles.controlContent,
-            iconStyle: styles.icon,
+            controlStyle: inlineStyles.control,
+            controlContentStyle: inlineStyles.controlContent,
+            iconStyle: inlineStyles.icon,
             handleSwipeToIndex: this.handleSwipeToIndex,
             defaultFocusSwipeIndex: focusSwipeIndex,
             toggleCanAutoSwipe: this.toggleCanAutoSwipe,

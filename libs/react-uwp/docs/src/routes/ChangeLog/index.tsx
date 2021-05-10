@@ -13,11 +13,15 @@ export default class ChangeLog extends React.Component<ChangeLogProps> {
   context: { theme: ReactUWP.ThemeType };
 
   render() {
-    const { style } = this.props;
+    const {
+      style,
+      ...attributes
+    } = this.props;
     const { theme } = this.context;
 
     return (
       <MarkdownRender
+        {...attributes}
         style={theme.prefixStyle({ ...style, padding: "0 20px 60px" })}
         text={changeLogText as any}
       />

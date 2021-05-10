@@ -49,7 +49,8 @@ export default class Colors extends React.Component<ColorsProps, ColorsState> {
         })}
       >
         <DropDownMenu
-          style={{ marginLeft: 10, width: 300 }}
+          style={{ marginLeft: 10 }}
+          itemWidth={300}
           values={[
             "All",
             "Accent",

@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import RevealEffect from "react-uwp/RevealEffect";
 import FooterLinks from "./FooterLinks";
 
 export interface DataProps {
@@ -26,17 +25,13 @@ export default class Footer extends React.Component<FooterProps> {
     } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
-      className: "Footer"
-    });
 
     return (
       <footer
         {...attributes}
-        {...classes.root}
+        style={styles.root}
       >
-        <div {...classes.content}>
+        <div style={styles.content}>
           <div>
             <FooterLinks
               style={styles.links}
@@ -70,21 +65,22 @@ export default class Footer extends React.Component<FooterProps> {
           <a
             href="https://github.com/myxvisual/react-uwp/blob/master/LICENSE"
             target="_blank"
-            {...classes.openSource}
+            style={styles.openSource}
           >
             Free & Open Source (MIT)
           </a>
         </div>
-        <RevealEffect
-          effectEnable="border"
-          hoverSize={400}
-        />
       </footer>
     );
   }
 }
 
-function getStyles(footer: Footer) {
+function getStyles(footer: Footer): {
+  root?: React.CSSProperties;
+  content?: React.CSSProperties;
+  links?: React.CSSProperties;
+  openSource?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { footerHeight, renderContentWidth, style }
@@ -93,13 +89,15 @@ function getStyles(footer: Footer) {
 
   return {
     root: prefixStyle({
-      ...theme.acrylicTexture20.style,
       zIndex: theme.zIndex.header,
       fontSize: 14,
       color: theme.baseHigh,
+      background: theme.useFluentDesign ? (
+        theme.isDarkTheme ? "hsla(0, 0%, 0%, 0.95)" : "hsla(0, 0%, 100%, 0.95)"
+      ) : (
+        theme.isDarkTheme ? "hsla(0, 0%, 5%, 0.85)" : "hsla(0, 0%, 95%, 0.85)"
+      ),
       minHeight: footerHeight,
-      borderTop: `1px solid ${theme.listLow}`,
-      position: "relative",
       ...style
     }),
     content: prefixStyle({

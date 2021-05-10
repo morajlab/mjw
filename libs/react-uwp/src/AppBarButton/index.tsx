@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
 
 import PseudoClasses from "../PseudoClasses";
 import Icon from "../Icon";
@@ -26,10 +25,6 @@ export interface DataProps {
    * Set label display position.
    */
   labelPosition?: "right" | "bottom" | "collapsed";
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface AppBarButtonButtonProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
@@ -49,38 +44,46 @@ export class AppBarButtonButton extends React.Component<AppBarButtonButtonProps>
       label,
       className,
       labelPosition,
-      revealConfig,
       ...attributes
     } = this.props;
     const { theme } = this.context;
 
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
+      styles: inlineStyles,
       className: "app-bar-button"
     });
+
+    const rootProps = {
+      ...attributes,
+      style: styles.root.style,
+      className: theme.classNames(className, styles.root.className)
+    };
 
     return (
       <PseudoClasses
         {...attributes}
-        style={classes.root.style}
-        className={theme.classNames(className, classes.root.className)}
+        style={styles.root.style}
+        className={theme.classNames(className, styles.root.className)}
       >
         <div>
-          <Icon style={styles.icon}>
+          <Icon style={inlineStyles.icon}>
             {icon}
           </Icon>
-          {labelPosition !== "collapsed" && <p {...classes.label}>
+          {labelPosition !== "collapsed" && <p {...styles.label}>
             {label}
           </p>}
-          <RevealEffect {...revealConfig} />
         </div>
       </PseudoClasses>
     );
   }
 }
 
-function getStyles(AppBarButtonButton: AppBarButtonButton) {
+function getStyles(AppBarButtonButton: AppBarButtonButton): {
+  root?: React.CSSProperties;
+  icon?: React.CSSProperties;
+  label?: React.CSSProperties;
+} {
   const {
     context,
     props: {
@@ -101,7 +104,6 @@ function getStyles(AppBarButtonButton: AppBarButtonButton) {
 
   return {
     root: prefixStyle({
-      position: "relative",
       fontSize: 14,
       color: theme.baseMediumHigh,
       background: "none",

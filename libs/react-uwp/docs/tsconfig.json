@@ -8,7 +8,6 @@
     "allowJs": false,
     "declaration": true,
     "jsx": "react",
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "removeComments": true,
     "noImplicitAny": false,
@@ -26,8 +25,8 @@
       "components/*": ["./src/components/*"],
       "assets": ["./src/assets"],
       "assets/*": ["./src/assets/*"],
-      "utils": ["./src/utils"],
-      "utils/*": ["./src/utils/*"],
+      "common": ["./src/common"],
+      "common/*": ["./src/common/*"],
       "constant": ["./src/constant"],
       "constant/*": ["./src/constant/*"]
     },
@@ -36,9 +35,6 @@
   "filesGlob": [
     "**/*.ts",
     "**/*.tsx"
-  ],
-  "files": [
-    "../src/index.d.ts"
   ],
   "include": [
     "./server.ts",

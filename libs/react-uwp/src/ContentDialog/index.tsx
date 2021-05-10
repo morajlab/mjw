@@ -2,8 +2,8 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
-import shallowEqual from "../utils/shallowEqual";
+import AddBlurEvent from "../common/AddBlurEvent";
+import shallowEqual from "../common/shallowEqual";
 import Button from "../Button";
 import IconButton from "../IconButton";
 import RenderToBody from "../RenderToBody";
@@ -163,27 +163,27 @@ export class ContentDialog extends React.Component<ContentDialogProps, ContentDi
       ...attributes
     } = this.props;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "content-dialog",
-      styles
+      styles: inlineStyles
     });
 
     return (
       <RenderToBody ref={renderToBody => this.renderToBody = renderToBody}>
         <div
           {...attributes}
-          style={classes.mask.style}
-          className={theme.classNames(classes.mask.className, className)}
+          style={styles.mask.style}
+          className={theme.classNames(styles.mask.className, className)}
         >
           <div
             ref={rootElm => this.rootElm = rootElm}
-            {...classes.container}
+            {...styles.container}
             onMouseEnter={this.containerMouseEnterHandle}
             onMouseLeave={this.containerMouseLeaveHandle}
           >
-            {statusBarTitle && <div {...classes.statusBar}>
-              <p {...classes.statusBarTitle}>
+            {statusBarTitle && <div {...styles.statusBar}>
+              <p {...styles.statusBarTitle}>
                 {statusBarTitle}
               </p>
               {showCloseButton
@@ -191,7 +191,7 @@ export class ContentDialog extends React.Component<ContentDialogProps, ContentDi
                 <IconButton
                   onClick={closeButtonAction}
                   size={24}
-                  style={styles.iconButton}
+                  style={inlineStyles.iconButton}
                   hoverStyle={iconButtonHoverStyle}
                   activeStyle={iconButtonHoverStyle}
                 >
@@ -200,22 +200,22 @@ export class ContentDialog extends React.Component<ContentDialogProps, ContentDi
                 : null
               }
             </div>}
-            <div {...classes.titleWrapper}>
-              {title ? <h5 {...classes.title}>{title}</h5> : null}
+            <div {...styles.titleWrapper}>
+              {title ? <h5 {...styles.title}>{title}</h5> : null}
               {content && <p>{content}</p>}
             </div>
             {contentNode}
-            <div {...classes.content}>
-              {(primaryButtonText || secondaryButtonText) && <div {...classes.buttonGroup}>
+            <div {...styles.content}>
+              {(primaryButtonText || secondaryButtonText) && <div {...styles.buttonGroup}>
                 {primaryButtonText && <Button
                   onClick={e => { primaryButtonAction(e), this.closeDialog(); }}
-                  style={styles.button}
+                  style={inlineStyles.button}
                 >
                   {primaryButtonText}
                 </Button>}
                 {secondaryButtonText && <Button
                   onClick={e => { secondaryButtonAction(e), this.closeDialog(); }}
-                  style={styles.button}
+                  style={inlineStyles.button}
                 >
                   {secondaryButtonText}
                 </Button>}
@@ -274,7 +274,7 @@ function getStyles(contentDialog: ContentDialog): {
       ...style
     }),
     container: prefixStyle({
-      ...theme.acrylicTexture80.style,
+      background: background || (theme.useFluentDesign ? theme.acrylicTexture80.background : theme.altHigh),
       border: `1px solid ${theme.baseLow}`,
       flex: "0 0 auto",
       width: "80%",

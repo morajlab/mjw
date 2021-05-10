@@ -1,722 +1,312 @@
-import tinyColor from "tinycolor2";
-import * as createHash from "murmurhash-js/murmurhash3_gc";
-
-import prefixAll from "./prefixAll";
-import { Toast } from "../Toast";
-import { StyleManager, CustomCSSProperties, StyleClasses } from "./StyleManager";
+import * as tinycolor from "tinycolor2";
+import setSegoeMDL2AssetsFonts from "./fonts/segoe-mdl2-assets";
+import IS_NODE_ENV from "../common/nodeJS/IS_NODE_ENV";
+import prefixAll from "../common/prefixAll";
 import generateAcrylicTexture from "./generateAcrylicTexture";
-import { getAcrylicTextureStyle, AcrylicConfig, isSupportBackdropFilter } from "./getAcrylicTextureStyle";
-import { WebGLRender, getNoiseFrag } from "../utils/WebGLRender";
-import { getThemeBaseCSS, getBaseCSS } from "./getBaseCSSText";
-import { DataProps as RevealConfig } from "../RevealEffect";
 
-export { getThemeBaseCSS, getBaseCSS };
-export { getAcrylicTextureStyle, isSupportBackdropFilter };
-
-export const fonts = {
-  sansSerifFonts: "Segoe UI, Microsoft YaHei, Open Sans, sans-serif, Hiragino Sans GB, Arial, Lantinghei SC, STHeiti, WenQuanYi Micro Hei, SimSun",
-  segoeMDL2Assets: "Segoe MDL2 Assets"
-};
+if (!IS_NODE_ENV) {
+  setSegoeMDL2AssetsFonts();
+}
 
 export function darken(color: string, coefficient: number) {
-  const hsl = tinyColor(color).toHsl();
+  const hsl = tinycolor(color).toHsl();
   hsl.l = hsl.l * (1 - coefficient);
-  return tinyColor(hsl).toRgbString();
+  return tinycolor(hsl).toRgbString();
 }
 
 export function lighten(color: string, coefficient: number) {
-  const hsl = tinyColor(color).toHsl();
-  hsl.l = hsl.l + (1 - hsl.l) * coefficient;
-  return tinyColor(hsl).toRgbString();
-}
-
-export interface AcrylicTexture {
-  style?: React.CSSProperties;
-  background?: string;
-  tintColor?: string;
-  blurSize?: number;
-}
-
-export interface ScrollRevealType {
-  rootElm?: HTMLElement;
-  animated?: boolean;
-  setEnterStyle?: () => void;
-  setLeaveStyle: () => void;
-  props: {
-    speed?: number;
-    style?: React.CSSProperties;
-    animatedStyle?: React.CSSProperties;
-    children?: React.ReactElement<any>;
-    topOffset?: number;
-    bottomOffset?: number;
-  };
+  const hsl = tinycolor(color).toHsl();
+  hsl.l = hsl.l + (100 - hsl.l) * coefficient;
+  return tinycolor(hsl).toRgbString();
 }
 
 export interface ThemeConfig {
   themeName?: "dark" | "light";
   accent?: string;
-  baseHigh?: string;
-  altHigh?: string;
+
   useFluentDesign?: boolean;
   desktopBackgroundImage?: string;
-  acrylicConfig?: {
-    blurSize?: number;
-  };
-  materialBackground?: string;
-  borderWidth?: number;
-  revealConfig?: RevealConfig;
-
+  userAgent?: string;
   useInlineStyle?: boolean;
 }
-type ThemeCallback = (theme?: Theme) => void;
 
-export type ThemeName = "dark" | "light";
-const defaultAcrylicConfig: ThemeConfig["acrylicConfig"] = { blurSize: 12 };
+export default function getTheme(themeConfig?: ThemeConfig): ReactUWP.ThemeType {
+  themeConfig = themeConfig || {};
+  let {
+    themeName,
+    accent,
 
-export class Theme {
-  themeName?: ThemeName;
-  accent?: string;
-  useFluentDesign?: boolean;
-  useInlineStyle?: boolean;
-  desktopBackgroundImage?: string;
-  fonts?: {
-    sansSerifFonts: string;
-    segoeMDL2Assets: string;
-  };
+    useFluentDesign,
+    desktopBackgroundImage,
+    userAgent,
+    useInlineStyle
+  } = themeConfig;
 
-  styleManager?: StyleManager;
-  scrollReveals?: ScrollRevealType[] = [];
+  themeName = themeName || "dark";
+  accent = accent || "#0078D7";
+  useFluentDesign = useFluentDesign === void 0 ? false : useFluentDesign;
 
-  revealConfig: RevealConfig;
-  currHoverSize: number;
-  revealGradientMap: Map<string, CanvasGradient> = new Map();
-  revealEffectMap: Map<HTMLCanvasElement, RevealConfig> = new Map();
-  hoverBorderCanvas: HTMLCanvasElement;
-  addBorderCanvas(borderCanvas: HTMLCanvasElement, revealConfig: RevealConfig) {
-    if (!this.revealEffectMap.get(borderCanvas)) {
-      this.onAddBorderCanvas(borderCanvas, revealConfig);
-    }
-    this.revealEffectMap.set(borderCanvas, revealConfig);
-  }
-  removeBorderCanvas(borderCanvas: HTMLCanvasElement) {
-    if (this.revealEffectMap.get(borderCanvas)) {
-      this.onRemoveBorderCanvas(borderCanvas);
-    }
-    this.revealEffectMap.delete(borderCanvas);
-  }
-  onAddBorderCanvas(borderCanvas?: HTMLCanvasElement, revealConfig?: RevealConfig) {}
-  onRemoveBorderCanvas(borderCanvas?: HTMLCanvasElement) {}
+  const isDark = themeName === "dark";
+  const baseHigh = isDark ? "#fff" : "#000";
+  const altHigh = isDark ? "#000" : "#fff";
+  const baseHighColor = tinycolor(baseHigh);
+  const altHighColor = tinycolor(altHigh);
+  const accentColor = tinycolor(accent);
+  const accentColorHsl = accentColor.toHsl();
 
-  desktopBackground?: string;
+  const altMediumLow = altHighColor.setAlpha(0.4).toRgbString();
+  const altMedium = altHighColor.setAlpha(0.6).toRgbString();
+  const altMediumHigh = altHighColor.setAlpha(0.8).toRgbString();
 
-  borderWidth: number;
-
-  acrylicTextureCount?: number;
-  haveAcrylicTextures?: boolean;
-  materialTexture?: string;
-  materialBackground?: string;
-  acrylicTexture20?: AcrylicTexture;
-  acrylicTexture40?: AcrylicTexture;
-  acrylicTexture60?: AcrylicTexture;
-  acrylicTexture80?: AcrylicTexture;
-  acrylicTexture100?: AcrylicTexture;
-  accentLighter1?: string;
-  accentLighter2?: string;
-  accentLighter3?: string;
-  accentDarker1?: string;
-  accentDarker2?: string;
-  accentDarker3?: string;
-
-  baseLow?: string;
-  baseMediumLow?: string;
-  baseMedium?: string;
-  baseMediumHigh?: string;
-  baseHigh?: string;
-
-  altLow?: string;
-  altMediumLow?: string;
-  altMedium?: string;
-  altMediumHigh?: string;
-  altHigh?: string;
-
-  listLow?: string;
-  listMedium?: string;
-  listAccentLow?: string;
-  listAccentMedium?: string;
-  listAccentHigh?: string;
-
-  chromeLow?: string;
-  chromeMediumLow?: string;
-  chromeMedium?: string;
-  chromeHigh?: string;
-
-  chromeAltLow?: string;
-  chromeAltMediumLow?: string;
-  chromeAltMedium?: string;
-  chromeAltHigh?: string;
-
-  chromeBlack?: string;
-  chromeBlackLow?: string;
-  chromeBlackMediumLow?: string;
-  chromeBlackMedium?: string;
-  chromeBlackHigh?: string;
-
-  chromeWhite?: string;
-  chromeWhiteLow?: string;
-  chromeWhiteMediumLow?: string;
-  chromeWhiteMedium?: string;
-  chromeWhiteHigh?: string;
-
-  typographyStyles?: {
-    header?: React.CSSProperties;
-    subHeader?: React.CSSProperties;
-
-    title?: React.CSSProperties;
-    subTitle?: React.CSSProperties;
-    subTitleAlt?: React.CSSProperties;
-
-    base?: React.CSSProperties;
-    baseAlt?: React.CSSProperties;
-    body?: React.CSSProperties;
-
-    captionAlt?: React.CSSProperties;
-    caption?: React.CSSProperties;
-  };
-  zIndex?: {
-    listView?: number;
-    calendarView?: number;
-    flyout?: number;
-    tooltip?: number;
-    dropDownMenu?: number;
-    commandBar?: number;
-    contentDialog?: number;
-    mediaPlayer?: number;
-    header?: number;
-    toast?: number;
-  };
-
-  prefixStyle: <T>(style?: CustomCSSProperties & T) => React.CSSProperties;
-  prepareStyle: (config?: {
-    style?: CustomCSSProperties;
-    className?: string;
-    extendsClassName?: string;
-  }, callback?: (theme?: Theme) => StyleClasses) => StyleClasses ;
-  prepareStyles: <T>(
-    config?: {
-      styles: T;
-      className?: string;
+  const theme: ReactUWP.ThemeType = {
+    themeName,
+    fonts: {
+      sansSerifFonts: "Segoe UI, Microsoft YaHei, Open Sans, sans-serif, Hiragino Sans GB, Arial, Lantinghei SC, STHeiti, WenQuanYi Micro Hei, SimSun",
+      segoeMDL2Assets: "Segoe MDL2 Assets"
     },
-    callback?: (theme?: Theme) => { [P in keyof T]: StyleClasses }
-  ) => { [P in keyof T]: StyleClasses };
-  classNames?: (...classNames: string[]) => string;
+    useInlineStyle: Boolean(useInlineStyle),
 
-  isDarkTheme?: boolean;
+    styleManager: void 0,
 
-  toasts?: Map<Toast, boolean>;
-  addToast?: (toast: Toast) => void;
-  updateToast?: (toast: Toast) => void;
-  removeToast?: (toast: Toast) => void;
-  onToastsUpdate?: (toasts?: Toast[]) => void;
+    useFluentDesign,
+    desktopBackground: void 0,
+    desktopBackgroundImage,
 
-  getRevealConfig(prevConfig?: RevealConfig, newConfig?: RevealConfig) {
-    let defaultConfig: Required<RevealConfig> = {
-      effectEnable: "both",
-      hoverSize: 100,
-      hoverColor: this.isDarkTheme ? this.baseLow : this.altLow,
-      borderWidth: this.borderWidth,
-      borderColor: this.isDarkTheme ? this.baseMediumHigh : this.altMediumHigh,
-      effectRange: "all",
-      observerResize: false,
-      observerTransition: ""
-    };
+    haveAcrylicTextures: false,
+    acrylicTexture40: {
+      background: altMediumLow
+    },
+    acrylicTexture60: {
+      background: altMedium
+    },
+    acrylicTexture80: {
+      background: altMediumHigh
+    },
 
-    if (prevConfig) {
-      if (newConfig) {
-        defaultConfig = { ...prevConfig } as Required<RevealConfig>;
+    scrollReveals: [],
+    scrollRevealListener: void 0,
+
+    accent,
+    accentLighter1: lighten(accentColor.toHexString(), 0.5),
+    accentLighter2: lighten(accentColor.toHexString(), 0.7),
+    accentLighter3: lighten(accentColor.toHexString(), 0.9),
+    accentDarker1: darken(accentColor.toHexString(), 0.5),
+    accentDarker2: darken(accentColor.toHexString(), 0.7),
+    accentDarker3: darken(accentColor.toHexString(), 0.9),
+
+    baseLow: baseHighColor.setAlpha(0.2).toRgbString(),
+    baseMediumLow: baseHighColor.setAlpha(0.4).toRgbString(),
+    baseMedium: baseHighColor.setAlpha(0.6).toRgbString(),
+    baseMediumHigh: baseHighColor.setAlpha(0.8).toRgbString(),
+    baseHigh,
+
+    altLow: altHighColor.setAlpha(0.2).toRgbString(),
+    altMediumLow,
+    altMedium,
+    altMediumHigh,
+    altHigh,
+
+    listLow: baseHighColor.setAlpha(0.1).toRgbString(),
+    listMedium: baseHighColor.setAlpha(0.2).toRgbString(),
+    listAccentLow: accentColor.setAlpha(0.6).toRgbString(),
+    listAccentMedium: accentColor.setAlpha(0.8).toRgbString(),
+    listAccentHigh: accentColor.setAlpha(0.9).toRgbString(),
+
+    chromeLow: isDark ? "#171717" : "#f2f2f2",
+    chromeMediumLow: isDark ? "#2b2b2b" : "#f2f2f2",
+    chromeMedium: isDark ? "#1f1f1f" : "#e6e6e6",
+    chromeHigh: isDark ? "#767676" : "#ccc",
+
+    chromeAltLow: isDark ? "#f2f2f2" : "#171717",
+    chromeDisabledLow: isDark ? "#858585" : "#7a7a7a",
+    chromeDisabledHigh: isDark ? "#333" : "#ccc",
+
+    chromeBlackLow: tinycolor("#000").setAlpha(0.2).toRgbString(),
+    chromeBlackMediumLow: tinycolor("#000").setAlpha(0.4).toRgbString(),
+    chromeBlackMedium: tinycolor("#000").setAlpha(0.8).toRgbString(),
+    chromeBlackHigh: "#000",
+    chromeWhite: "#fff",
+
+    isDarkTheme: isDark,
+    prefixStyle: prefixAll(userAgent),
+    prepareStyle(config, callback) {
+      if (!this.styleManager) return;
+      const { extendsClassName, ...managerConfig } = config;
+      if (this.useInlineStyle) {
+        managerConfig.className += extendsClassName ? ` ${extendsClassName}` : "";
+        return managerConfig;
       } else {
-        newConfig = prevConfig;
+        const styleClasses = this.styleManager.setStyleToManager(managerConfig, callback);
+        styleClasses.className += extendsClassName ? ` ${extendsClassName}` : "";
+        return styleClasses;
       }
-      for (let key in newConfig) {
-        const value = newConfig[key];
-        if (value !== void 0) {
-          defaultConfig[key] = newConfig[key];
+    },
+    prepareStyles(config, callback) {
+      if (!this.styleManager) return;
+      if (this.useInlineStyle) {
+        const { styles } = config;
+        const result: any = {};
+        for (let key in styles) {
+          result[key] = { style: styles[key] };
         }
+        return result;
+      } else {
+        const styleClasses = this.styleManager.setStylesToManager(config, callback);
+        return styleClasses;
       }
-    }
-    return defaultConfig;
-  }
+    },
 
-  updateTheme: (theme: Theme) => void;
-  themeHash: number;
-  themeClassName: string;
+    classNames(...classNames) {
+      return classNames.reduce((prev, curr) => (prev || "") + (curr ? ` ${curr}` : ""));
+    },
 
-  getAcrylicTextureStyle = getAcrylicTextureStyle;
-
-  generateAcrylicTextures?: (themeCallback?: (theme?: Theme) => void) => void;
-  generateBackgroundTexture?: (themeCallback?: (theme?: Theme) => void) => void;
-
-  getBackgroundFromTexture(texture: string) {
-    return `url(${texture})`;
-  }
-
-  mergeAcrylicStyles(blurSize: number) {
-    let { materialTexture, materialBackground } = this;
-    let backgrounds: string[] = [];
-    if (materialBackground) {
-      backgrounds.push(materialBackground);
-    }
-    if (materialTexture) {
-      backgrounds.push(this.getBackgroundFromTexture(materialTexture));
-    }
-    const background = backgrounds.join(", ");
-    const acrylicTexture20Config: AcrylicConfig = {
-      tintColor: this.useFluentDesign ? this.altMediumHigh : this.chromeLow,
-      blurSize,
-      background
-    };
-    const acrylicTexture40Config: AcrylicConfig = {
-      tintColor: this.useFluentDesign ? this.altMedium : this.chromeMedium,
-      blurSize,
-      background
-    };
-    const acrylicTexture60Config: AcrylicConfig = {
-      tintColor: this.useFluentDesign ? this.altMediumLow : this.chromeMediumLow,
-      blurSize,
-      background
-    };
-    const acrylicTexture80Config: AcrylicConfig = {
-      tintColor: this.useFluentDesign ? this.altLow : this.chromeHigh,
-      blurSize,
-      background
-    };
-    const acrylicTexture100Config: AcrylicConfig = {
-      tintColor: "rgba(0, 0, 0, 0)",
-      blurSize,
-      background
-    };
-
-    this.acrylicTexture20.style = getAcrylicTextureStyle(acrylicTexture20Config, this.useFluentDesign);
-    this.acrylicTexture40.style = getAcrylicTextureStyle(acrylicTexture40Config, this.useFluentDesign);
-    this.acrylicTexture60.style = getAcrylicTextureStyle(acrylicTexture60Config, this.useFluentDesign);
-    this.acrylicTexture80.style = getAcrylicTextureStyle(acrylicTexture80Config, this.useFluentDesign);
-    this.acrylicTexture100.style = getAcrylicTextureStyle(acrylicTexture100Config, this.useFluentDesign);
-
-    this.acrylicTexture20.background = this.acrylicTexture20.style.background as string;
-    this.acrylicTexture40.background = this.acrylicTexture40.style.background as string;
-    this.acrylicTexture60.background = this.acrylicTexture60.style.background as string;
-    this.acrylicTexture80.background = this.acrylicTexture80.style.background as string;
-    this.acrylicTexture100.background = this.acrylicTexture100.style.background as string;
-
-    return {
-      acrylicTexture20Config,
-      acrylicTexture40Config,
-      acrylicTexture60Config,
-      acrylicTexture80Config,
-      acrylicTexture100Config
-    };
-  }
-
-  constructor(themeConfig?: ThemeConfig) {
-    themeConfig = themeConfig || {};
-    let {
-      themeName,
-      accent,
-      baseHigh,
-      altHigh,
-      useFluentDesign,
-      useInlineStyle,
-      desktopBackgroundImage,
-      acrylicConfig,
-      borderWidth,
-      revealConfig,
-      materialBackground
-    } = themeConfig;
-    themeName = themeName || "dark";
-    accent = accent || "#0078D7";
-    useFluentDesign = useFluentDesign === void 0 ? false : useFluentDesign;
-    useInlineStyle = useInlineStyle === void 0 ? false : useInlineStyle;
-    acrylicConfig = acrylicConfig || defaultAcrylicConfig;
-    borderWidth = borderWidth === void 0 ? 2 : borderWidth;
-    acrylicConfig.blurSize = acrylicConfig.blurSize === void 0 ? defaultAcrylicConfig.blurSize : defaultAcrylicConfig.blurSize;
-    const { blurSize } = acrylicConfig;
-    if (materialBackground) this.materialBackground = materialBackground;
-
-    this.themeHash = createHash(JSON.stringify(themeConfig));
-    this.themeClassName = `react-uwp-${this.themeHash}`;
-    const isDarkTheme = themeName === "dark";
-
-    const blackColor = "#000";
-    const whiteColor = "#fff";
-    if (!baseHigh) baseHigh = isDarkTheme ? whiteColor : blackColor;
-    if (!altHigh) altHigh = isDarkTheme ? blackColor : whiteColor;
-    const baseHighColor = tinyColor(baseHigh);
-    const altHighColor = tinyColor(altHigh);
-    const accentColor = tinyColor(accent);
-
-    const altMediumLow = altHighColor.setAlpha(0.4).toRgbString();
-    const altMedium = altHighColor.setAlpha(0.6).toRgbString();
-    const altMediumHigh = altHighColor.setAlpha(0.8).toRgbString();
-
-    // theme base config.
-    Object.assign(this, {
-      themeName,
-      accent,
-      useFluentDesign,
-      useInlineStyle,
-      desktopBackgroundImage
-    });
-
-    // theme base styles.
-    Object.assign(this, {
-      themeName,
-      fonts,
-      useInlineStyle: Boolean(useInlineStyle),
-
-      useFluentDesign,
-      desktopBackground: `url(${desktopBackgroundImage}) no-repeat fixed top left / cover`,
-      desktopBackgroundImage,
-
-      haveAcrylicTextures: false,
-      acrylicTextureCount: 0,
-      acrylicTexture20: {},
-      acrylicTexture40: {},
-      acrylicTexture60: {},
-      acrylicTexture80: {},
-      acrylicTexture100: {},
-
-      scrollReveals: [],
-      borderWidth,
-
-      accent,
-      accentLighter1: lighten(accentColor.toHexString(), 0.5),
-      accentLighter2: lighten(accentColor.toHexString(), 0.7),
-      accentLighter3: lighten(accentColor.toHexString(), 0.9),
-      accentDarker1: darken(accentColor.toHexString(), 0.5),
-      accentDarker2: darken(accentColor.toHexString(), 0.7),
-      accentDarker3: darken(accentColor.toHexString(), 0.9),
-
-      baseLow: baseHighColor.setAlpha(0.2).toRgbString(),
-      baseMediumLow: baseHighColor.setAlpha(0.4).toRgbString(),
-      baseMedium: baseHighColor.setAlpha(0.6).toRgbString(),
-      baseMediumHigh: baseHighColor.setAlpha(0.8).toRgbString(),
-      baseHigh,
-
-      altLow: altHighColor.setAlpha(0.2).toRgbString(),
-      altMediumLow,
-      altMedium,
-      altMediumHigh,
-      altHigh,
-
-      listLow: baseHighColor.setAlpha(0.1).toRgbString(),
-      listMedium: baseHighColor.setAlpha(0.2).toRgbString(),
-      listAccentLow: accentColor.setAlpha(0.6).toRgbString(),
-      listAccentMedium: accentColor.setAlpha(0.8).toRgbString(),
-      listAccentHigh: accentColor.setAlpha(0.9).toRgbString(),
-
-      chromeLow: isDarkTheme ? lighten(altHigh, .05) : darken(altHigh, .05),
-      chromeMediumLow: isDarkTheme ? lighten(altHigh, .075) : darken(altHigh, .075),
-      chromeMedium: isDarkTheme ? lighten(altHigh, .1) : darken(altHigh, .1),
-      chromeHigh: isDarkTheme ? lighten(altHigh, .2) : darken(altHigh, .2),
-
-      chromeAltLow: isDarkTheme ? darken(baseHigh, .05) : lighten(baseHigh, .05),
-      chromeAltMediumLow: isDarkTheme ? darken(baseHigh, .075) : lighten(baseHigh, .075),
-      chromeAltMedium: isDarkTheme ? darken(baseHigh, .1) : lighten(baseHigh, .1),
-      chromeAltHigh: isDarkTheme ? darken(baseHigh, .2) : lighten(baseHigh, .2),
-
-      chromeBlack: blackColor,
-      chromeBlackLow: tinyColor(blackColor).setAlpha(0.2).toRgbString(),
-      chromeBlackMediumLow: tinyColor(blackColor).setAlpha(0.4).toRgbString(),
-      chromeBlackMedium: tinyColor(blackColor).setAlpha(0.8).toRgbString(),
-      chromeBlackHigh: blackColor,
-
-      // Added.
-      chromeWhite: whiteColor,
-      chromeWhiteLow: tinyColor(whiteColor).setAlpha(0.2).toRgbString(),
-      chromeWhiteMediumLow: tinyColor(whiteColor).setAlpha(0.4).toRgbString(),
-      chromeWhiteMedium: tinyColor(whiteColor).setAlpha(0.8).toRgbString(),
-      chromeWhiteHigh: blackColor,
-
-      isDarkTheme: isDarkTheme,
-
-      typographyStyles: {
-        header: {
-          fontWeight: "lighter",
-          fontSize: 46,
-          lineHeight: "56px"
-        },
-        subHeader: {
-          fontWeight: "lighter",
-          fontSize: 34,
-          lineHeight: "40px"
-        },
-
-        title: {
-          fontWeight: "lighter",
-          fontSize: 24,
-          lineHeight: "28px"
-        },
-        subTitle: {
-          fontWeight: "normal",
-          fontSize: 20,
-          lineHeight: "24px"
-        },
-        subTitleAlt: {
-          fontWeight: "normal",
-          fontSize: 18,
-          lineHeight: "20px"
-        },
-
-        base: {
-          fontWeight: 300,
-          fontSize: 15,
-          lineHeight: "20px"
-        },
-        baseAlt: {
-          fontWeight: "bold",
-          fontSize: 15,
-          lineHeight: "20px"
-        },
-        body: {
-          fontWeight: 200,
-          fontSize: 15,
-          lineHeight: "20px"
-        },
-
-        captionAlt: {
-          fontWeight: "lighter",
-          fontSize: 13,
-          lineHeight: "16px"
-        },
-        caption: {
-          fontWeight: "lighter",
-          fontSize: 12,
-          lineHeight: "14px"
-        }
-      },
-      zIndex: {
-        listView: 10,
-        calendarView: 20,
-        dropDownMenu: 102,
-        commandBar: 200,
-        tooltip: 201,
-        flyout: 202,
-        contentDialog: 300,
-        header: 301,
-        mediaPlayer: 2147483647,
-        toast: 310
-      }
-    } as Partial<Theme>);
-
-    // set reveal config, by colors after.
-    this.revealConfig = this.getRevealConfig(revealConfig);
-
-    // theme styleManager.
-    this.styleManager = new StyleManager();
-    const prefixStyle = prefixAll();
-    Object.assign(this, {
-      prefixStyle,
-      prepareStyle: config => {
-        if (!this.styleManager) return;
-
-        const { extendsClassName, ...managerConfig } = config;
-        if (this.useInlineStyle) {
-          if (extendsClassName) {
-            managerConfig.className += ` ${extendsClassName}`;
-          }
-          return managerConfig;
-        } else {
-          const styleClasses = this.styleManager.setStyleToManager(managerConfig);
-          if (extendsClassName) {
-            styleClasses.className += ` ${extendsClassName}`;
-          }
-          return styleClasses;
-        }
-      },
-      prepareStyles: (config) => {
-        if (!this.styleManager) return;
-
-        if (this.useInlineStyle) {
-          const { styles } = config;
-          const result: any = {};
-          for (let key in styles) {
-            result[key] = { style: styles[key] };
-          }
-          return result;
-        } else {
-          const styleClasses = this.styleManager.setStylesToManager(config as any);
-          return styleClasses;
-        }
-      },
-
-      classNames: (...classNames) => {
-        return classNames.filter(className => Boolean(className)).reduce((prev, curr) => `${prev} ${curr}`);
-      }
-    } as Theme);
-
-    const {
-      acrylicTexture20Config,
-      acrylicTexture40Config,
-      acrylicTexture60Config,
-      acrylicTexture80Config,
-      acrylicTexture100Config
-    } = this.mergeAcrylicStyles(blurSize);
-
-    // generateAcrylicTextures method.
-    const generateAcrylicTextures = (themeCallback?: ThemeCallback) => {
+    generateAcrylicTextures(currTheme: ReactUWP.ThemeType, themeCallback?: (theme?: ReactUWP.ThemeType) => void) {
       this.acrylicTextureCount = 0;
-      const callback = (acrylicTextureUrl: string, key: number, isCanvasFilter?: boolean) => {
-        const backgrounds: string[] = [];
-        backgrounds.push(this.getBackgroundFromTexture(acrylicTextureUrl) + " left top / cover no-repeat fixed");
-        if (this.materialTexture) {
-          backgrounds.push(this.getBackgroundFromTexture(this.materialTexture) + " left top repeat fixed");
-        }
-        if (this.materialBackground) {
-          backgrounds.push(this.materialBackground);
-        }
-        const background = backgrounds.join(", ");
+      const baseConfig = {
+        blurSize: 24,
+        noiseSize: 1,
+        noiseOpacity: 0.2
+      };
+      let backgrounds: string[] = [];
 
-        this.acrylicTextureCount += 1;
-        const style: CustomCSSProperties = {
-          background,
-          backgroundBlendMode: "overlay"
-        };
-
-        switch (key) {
-          case 2: {
-            Object.assign(this.acrylicTexture20, {
-              tintColor: acrylicTexture20Config.tintColor,
-              style,
-              background,
-              blurSize
-            });
-            break;
-          }
-          case 4: {
-            Object.assign(this.acrylicTexture40, {
-              tintColor: acrylicTexture40Config.tintColor,
-              style,
-              background,
-              blurSize
-            });
-            break;
-          }
-          case 6: {
-            Object.assign(this.acrylicTexture60, {
-              tintColor: acrylicTexture60Config.tintColor,
-              style,
-              background,
-              blurSize
-            });
-            break;
-          }
-          case 8: {
-            Object.assign(this.acrylicTexture80, {
-              tintColor: acrylicTexture80Config.tintColor,
-              style,
-              background,
-              blurSize
-            });
-            break;
-          }
-          case 10: {
-            Object.assign(this.acrylicTexture100, {
-              tintColor: acrylicTexture100Config.tintColor,
-              style,
-              background,
-              blurSize
-            });
-            break;
-          }
-          default: {
-            break;
-          }
+      const callback = (image: string, key: number) => {
+        if (key === 4) {
+          this.acrylicTextureCount += 1;
+          Object.assign(currTheme.acrylicTexture40, {
+            tintColor: currTheme.chromeMediumLow,
+            tintOpacity: 0.4,
+            background: `url(${image}) no-repeat fixed top left / cover`,
+            ...baseConfig
+          });
+        }
+        if (key === 6) {
+          this.acrylicTextureCount += 1;
+          Object.assign(currTheme.acrylicTexture60, {
+            tintColor: currTheme.chromeLow,
+            tintOpacity: 0.6,
+            background: `url(${image}) no-repeat fixed top left / cover`,
+            ...baseConfig
+          });
+        }
+        if (key === 8) {
+          this.acrylicTextureCount += 1;
+          Object.assign(currTheme.acrylicTexture80, {
+            tintColor: currTheme.chromeLow,
+            tintOpacity: 0.8,
+            background: `url(${image}) no-repeat fixed top left / cover`,
+            ...baseConfig
+          });
         }
 
-        if (this.acrylicTextureCount === 5) {
-          if (themeCallback) themeCallback(this);
+        if (this.acrylicTextureCount === 3) {
+          currTheme.haveAcrylicTextures = true;
+          if (themeCallback) themeCallback(currTheme);
+
+          if (this.generateAcrylicTextures.callback) {
+            this.generateAcrylicTextures.callback(currTheme);
+          }
+          return currTheme;
         }
       };
 
-      generateAcrylicTexture({
-        image: this.desktopBackgroundImage,
-        tintColor: acrylicTexture20Config.tintColor,
-        blurSize,
-        callback: (image, isCanvasFilter) => callback(image, 2, isCanvasFilter)
-      });
-      generateAcrylicTexture({
-        image: this.desktopBackgroundImage,
-        tintColor: acrylicTexture40Config.tintColor,
-        blurSize,
-        callback: (image, isCanvasFilter) => callback(image, 4, isCanvasFilter)
-      });
-      generateAcrylicTexture({
-        image: this.desktopBackgroundImage,
-        tintColor: acrylicTexture60Config.tintColor,
-        blurSize,
-        callback: (image, isCanvasFilter) => callback(image, 6, isCanvasFilter)
-      });
-      generateAcrylicTexture({
-        image: this.desktopBackgroundImage,
-        tintColor: acrylicTexture80Config.tintColor,
-        blurSize,
-        callback: (image, isCanvasFilter) => callback(image, 8, isCanvasFilter)
-      });
-      generateAcrylicTexture({
-        image: this.desktopBackgroundImage,
-        tintColor: acrylicTexture100Config.tintColor,
-        blurSize,
-        callback: (image, isCanvasFilter) => callback(image, 10, isCanvasFilter)
-      });
-    };
+      generateAcrylicTexture(
+        currTheme.desktopBackgroundImage,
+        currTheme.chromeMediumLow,
+        0.4,
+        void 0,
+        void 0,
+        void 0,
+        image => callback(image, 4)
+      );
+      generateAcrylicTexture(
+        currTheme.desktopBackgroundImage,
+        currTheme.chromeLow,
+        0.6,
+        void 0,
+        void 0,
+        void 0,
+        image => callback(image, 6)
+      );
+      generateAcrylicTexture(
+        currTheme.desktopBackgroundImage,
+        currTheme.chromeLow,
+        0.8,
+        void 0,
+        void 0,
+        void 0,
+        image => callback(image, 8)
+      );
+    },
 
-    // add generateBackgroundTexture method to theme.
-    this.generateBackgroundTexture = (callback?: ThemeCallback) => {
-      let webGLRender = new WebGLRender({ fragmentSource: getNoiseFrag(this.isDarkTheme ? { r: "1.", g: "1.", b: "1." } : { r: "0.", g: "0.", b: "0." }), width: screen.availWidth, height: screen.availHeight });
-      webGLRender.render();
-      webGLRender.toUrl(url => {
-        this.materialTexture = url;
-        this.mergeAcrylicStyles(blurSize);
-        if (callback) callback(this);
-        webGLRender.cleanup();
-        webGLRender = null;
-      });
-    };
-    // Add to generateAcrylicTextures method to theme.
-    this.generateAcrylicTextures = generateAcrylicTextures;
+    toasts: [],
 
-    // toasts storage.
-    Object.assign(this, {
-      toasts: new Map<Toast, boolean>(),
-      addToast: toast => {
-        if (!this.toasts.has(toast)) {
-          this.toasts.set(toast, true);
-        }
-        if (this.onToastsUpdate) {
-          this.onToastsUpdate(Array.from(this.toasts.keys()));
-        }
+    typographyStyles: {
+      header: {
+        fontWeight: "lighter",
+        fontSize: 46,
+        lineHeight: "56px"
       },
-      updateToast: toast => {
-        if (this.toasts.has(toast)) {
-          this.toasts.set(toast, true);
-        }
-        if (this.onToastsUpdate) {
-          this.onToastsUpdate(Array.from(this.toasts.keys()));
-        }
+      subHeader: {
+        fontWeight: "lighter",
+        fontSize: 34,
+        lineHeight: "40px"
       },
-      removeToast: toast => {
-        if (this.toasts.has(toast)) {
-          this.toasts.delete(toast);
-        }
-        if (this.onToastsUpdate) {
-          this.onToastsUpdate(Array.from(this.toasts.keys()));
-        }
+
+      title: {
+        fontWeight: "lighter",
+        fontSize: 24,
+        lineHeight: "28px"
+      },
+      subTitle: {
+        fontWeight: "normal",
+        fontSize: 20,
+        lineHeight: "24px"
+      },
+      subTitleAlt: {
+        fontWeight: "normal",
+        fontSize: 18,
+        lineHeight: "20px"
+      },
+
+      base: {
+        fontWeight: 300,
+        fontSize: 15,
+        lineHeight: "20px"
+      },
+      baseAlt: {
+        fontWeight: "bold",
+        fontSize: 15,
+        lineHeight: "20px"
+      },
+      body: {
+        fontWeight: 200,
+        fontSize: 15,
+        lineHeight: "20px"
+      },
+
+      captionAlt: {
+        fontWeight: "lighter",
+        fontSize: 13,
+        lineHeight: "16px"
+      },
+      caption: {
+        fontWeight: "lighter",
+        fontSize: 12,
+        lineHeight: "14px"
       }
-    } as Theme);
-  }
-}
-
-export default function getTheme(themeConfig?: ThemeConfig): Theme {
-  const theme = new Theme(themeConfig);
-
+    },
+    zIndex: {
+      listView: 10,
+      calendarView: 20,
+      dropDownMenu: 102,
+      commandBar: 200,
+      tooltip: 201,
+      flyout: 202,
+      contentDialog: 300,
+      header: 301,
+      mediaPlayer: 2147483647,
+      toast: 310
+    }
+  } as ReactUWP.ThemeType;
   return theme;
 }

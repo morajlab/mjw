@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import RevealEffect from "../RevealEffect";
 
 export interface DataProps {
   /**
@@ -123,7 +122,6 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState> {
     };
 
     const rootWrapperStyle: React.CSSProperties = {
-      position: "relative",
       lineHeight: "32px",
       height: 32,
       width: 296,
@@ -134,30 +132,29 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState> {
       alignItems: "center",
       color: focused ? "#000" : theme.baseHigh,
       background: focused ? "#fff" : currBackground || "none",
-      border: focused ? `${theme.borderWidth}px solid ${theme.accent}` : hovered ? `${theme.borderWidth}px solid ${theme.baseMedium}` : `${theme.borderWidth}px solid ${theme.baseLow}`,
+      boxShadow: focused ? `inset 0px 0px 0 2px ${this.context.theme.accent}` : hovered ? `inset 0px 0px 0 2px ${theme.baseMedium}` : `inset 0px 0px 0 2px ${theme.baseLow}`,
+      border: "none",
       transition: "all .25s"
     };
 
     const inlineStyles = {
-      root: theme.prefixStyle({
+      root: haveChild ? theme.prefixStyle({
         ...rootWrapperStyle,
         ...style
-      }),
+      }) : {} as React.CSSProperties,
       input: theme.prefixStyle({
-        display: "block",
-        paddingLeft: rightNode ? 8 : void 0,
-        paddingRight: leftNode ? 8 : void 0,
-        width: "100%",
-        height: "100%",
-        background: "none",
-        border: "none",
-        outline: "none",
-        color: "inherit",
-        transition: "all .25s",
-        margin: 0,
-        "&::placeholder": {
-          color: theme.baseMediumHigh
-        },
+        ...(haveChild ? {
+          paddingLeft: rightNode ? 8 : void 0,
+          paddingRight: leftNode ? 8 : void 0,
+          width: "100%",
+          height: "100%",
+          background: "none",
+          border: "none",
+          outline: "none",
+          color: "inherit",
+          transition: "all .25s"
+        } : rootWrapperStyle),
+        ...(haveChild ? void 0 : style),
         ...textBoxStyle
       }) as React.CSSProperties
     };
@@ -185,7 +182,7 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState> {
       />
     );
 
-    return (
+    return haveChild ? (
       <div
         ref={rootElm => this.rootElm = rootElm}
         {...attributes as any}
@@ -197,9 +194,8 @@ export class TextBox extends React.Component<TextBoxProps, TextBoxState> {
         {normalRender}
         {children}
         {rightNode}
-        {!focused && <RevealEffect />}
       </div>
-    );
+    ) : normalRender;
   }
 }
 

@@ -2,8 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import ComponentDetail from "components/ComponentDetail";
-import * as sourceCode from "!raw!react-uwp/FlyoutContent/index.tsx";
-import sourceCode2docEntry from "utils/sourceCode2docEntry";
+import * as docEntry from "react-uwp/FlyoutContent/index.doc.json";
 import * as readmeText from "!raw!./README.md";
 
 export default class FlyoutContent extends React.Component<any> {
@@ -19,7 +18,6 @@ export default class FlyoutContent extends React.Component<any> {
       routes,
       ...attributes
     } = this.props;
-    const docEntry = sourceCode2docEntry(sourceCode);
 
     return (
       <ComponentDetail

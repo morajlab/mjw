@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import IS_NODE_ENV from "../utils/nodeJS/IS_NODE_ENV";
+import IS_NODE_ENV from "../common/nodeJS/IS_NODE_ENV";
 
 export interface DataProps {
   /**
@@ -425,9 +425,9 @@ function getStyles(slider: Slider): {
       height: "100%",
       left: 0,
       top: 0,
-      inlineStyle: {
+      dynamicStyle: {
         transform: useCustomBackground ? void 0 : `translate${isHorizonMode ? "X" : "Y"}(${(isHorizonMode ? (valueRatio - 1) : (1 - valueRatio)) * 100}%)`
-      } as React.CSSProperties
+      }
     }),
     controllerWrapper: prefixStyle({
       position: "absolute",
@@ -437,9 +437,9 @@ function getStyles(slider: Slider): {
       height: "100%",
       pointerEvents: "none",
       transition: currTransition,
-      inlineStyle: {
+      dynamicStyle: {
         transform: `translate${isHorizonMode ? "X" : "Y"}(${(isHorizonMode ? valueRatio : 1 - valueRatio) * 100}%)`
-      } as React.CSSProperties
+      }
     }),
     controller: prefixStyle({
       pointerEvents: "none",

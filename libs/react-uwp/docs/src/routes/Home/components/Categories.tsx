@@ -9,7 +9,7 @@ import IconLayout from "components/Icons/IconLayout";
 import IconStyle from "components/Icons/IconStyle";
 import IconToolkits from "components/Icons/IconToolkits";
 import ScrollReveal from "react-uwp/ScrollReveal";
-import getRootPath from "utils/getRootPath";
+import getRootPath from "common/getRootPath";
 
 export interface DataProps {}
 export interface CategoriesProps extends DataProps, React.HTMLAttributes<HTMLDivElement>, WrapperState {}
@@ -27,24 +27,20 @@ export default class Categories extends React.Component<CategoriesProps> {
     const { renderContentHeight, renderContentWidth, screenType, ...attributes } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
-      className: "Categories"
-    });
     const slideInProps = {
-      leaveStyle: { transform: "translateY(400px)", opacity: 0 } as React.CSSProperties,
-      enterStyle: { transform: "translateY(0)", opacity: 1 } as React.CSSProperties,
+      leaveStyle: { transform: "translateY(400px)", opacity: 0 },
+      enterStyle: { transform: "translateY(0)", opacity: 1 },
       speed: 850,
       wrapperStyle: {
         overflow: "hidden"
       },
       useWrapper: true
-    };
+    } as any;
 
     return (
       <div
         {...attributes}
-        {...classes.root}
+        style={styles.root}
       >
         <ScrollReveal speed={1000}>
           <MainTitleCenter
@@ -59,7 +55,7 @@ export default class Categories extends React.Component<CategoriesProps> {
             link={`${rootPath}/get-started`}
           />
         </ScrollReveal>
-        <div {...classes.categories}>
+        <div style={styles.categories}>
           <ScrollReveal {...slideInProps}>
             <Category
               style={CATEGORY_STYLE}
@@ -102,7 +98,10 @@ export default class Categories extends React.Component<CategoriesProps> {
   }
 }
 
-function getStyles(categories: Categories){
+function getStyles(categories: Categories): {
+  root?: React.CSSProperties;
+  categories?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style, renderContentWidth }

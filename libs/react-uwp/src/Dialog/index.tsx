@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
+import AddBlurEvent from "../common/AddBlurEvent";
 import RenderToBody from "../RenderToBody";
 
 export interface DataProps {
@@ -111,20 +111,20 @@ export class Dialog extends React.Component<DialogProps, DialogState> {
       ...attributes
     } = this.props;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "dialog",
-      styles
+      styles: inlineStyles
     });
 
     return (
       <RenderToBody
         {...attributes}
-        style={classes.root.style}
+        style={styles.root.style}
         ref={renderToBody => this.renderToBody = renderToBody}
-        className={theme.classNames(classes.root.className, className)}
+        className={theme.classNames(styles.root.className, className)}
       >
-        <div ref={rootElm => this.rootElm = rootElm} {...classes.content}>
+        <div ref={rootElm => this.rootElm = rootElm} {...styles.content}>
           {children}
         </div>
       </RenderToBody>

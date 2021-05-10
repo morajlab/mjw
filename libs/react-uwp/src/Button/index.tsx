@@ -4,13 +4,12 @@ import * as PropTypes from "prop-types";
 import PseudoClasses from "../PseudoClasses";
 import Icon from "../Icon";
 import Tooltip from "../Tooltip";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
 
 export interface DataProps {
   /**
-   * Control `Button` borderWidth.
+   * Control `Button` border size.
    */
-  borderWidth?: number;
+  borderSize?: string;
   /**
    * Is onMouseEnter Inline Style will assign to default `hoverStyle`.
    */
@@ -43,10 +42,6 @@ export interface DataProps {
    * Set custom Button `background`.
    */
   background?: string;
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface ButtonProps extends DataProps, React.HTMLAttributes<HTMLButtonElement> {}
@@ -56,6 +51,7 @@ const labelStyle: React.CSSProperties = {
 };
 export class Button extends React.Component<ButtonProps> {
   static defaultProps: ButtonProps = {
+    borderSize: "2px",
     iconPosition: "left"
   };
 
@@ -66,7 +62,7 @@ export class Button extends React.Component<ButtonProps> {
 
   render() {
     const {
-      borderWidth: borderSize,
+      borderSize,
       style,
       className,
       hoverStyle,
@@ -78,16 +74,13 @@ export class Button extends React.Component<ButtonProps> {
       tooltip,
       background,
       activeStyle,
-      revealConfig,
       ...attributes
     } = this.props;
     const { theme } = this.context;
-    const currBorderWidth = borderSize === void 0 ? theme.borderWidth : borderSize;
 
     const buttonStyles = theme.prepareStyle({
       className: "button-root",
       style: {
-        position: "relative",
         display: "inline-block",
         verticalAlign: "middle",
         cursor: "pointer",
@@ -95,11 +88,11 @@ export class Button extends React.Component<ButtonProps> {
         outline: "none",
         padding: "4px 16px",
         transition: "all .25s",
-        border: `${currBorderWidth}px solid transparent`,
+        border: `${borderSize} solid transparent`,
         background: background || theme.baseLow,
         ...theme.prefixStyle(style),
         "&:hover": disabled ? void 0 : {
-          border: `${currBorderWidth}px solid ${theme.baseMediumLow}`
+          border: `2px solid ${theme.baseMediumLow}`
         },
         "&:active": disabled ? void 0 : {
           background: theme.baseMediumLow
@@ -108,7 +101,7 @@ export class Button extends React.Component<ButtonProps> {
           background: theme.baseMedium,
           cursor: "not-allowed",
           color: theme.baseMedium
-        },
+        }
       },
       extendsClassName: className
     });
@@ -133,7 +126,6 @@ export class Button extends React.Component<ButtonProps> {
               <Icon {...iconStyles}>
                 {icon}
               </Icon>
-              <RevealEffect />
             </button>
           ) : (
             <button>
@@ -143,12 +135,10 @@ export class Button extends React.Component<ButtonProps> {
               <span style={labelStyle}>
                 {children}
               </span>
-              <RevealEffect />
             </button>
           )) : (
             <button>
               {children}
-              <RevealEffect {...revealConfig} />
             </button>
           )
         )}

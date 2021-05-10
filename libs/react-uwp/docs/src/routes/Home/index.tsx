@@ -5,8 +5,7 @@ import * as PropTypes from "prop-types";
 import Image from "react-uwp/Image";
 import MediaPlayer from "react-uwp/MediaPlayer";
 import Toast from "react-uwp/Toast";
-import RevealEffect from "react-uwp/RevealEffect";
-import getRootPath from "utils/getRootPath";
+import getRootPath from "common/getRootPath";
 
 import FlipView, { FlipViewProps } from "react-uwp/FlipView";
 import { WrapperState } from "components/Wrapper";
@@ -14,6 +13,7 @@ import FlipViewItem from "./components/FlipViewItem";
 import Categories from "./components/Categories";
 import Banner from "./components/Banner";
 import CustomTheme from "./components/CustomTheme";
+import IndexOfComponentsByFunction from "../Components/IndexOfComponentsByFunction";
 
 const docVersion = getRootPath();
 export interface DataProps extends WrapperState {}
@@ -62,15 +62,16 @@ export default class Home extends React.Component<HomeProps, HomeState> {
     const { showToast } = this.state;
     const isPhoneScreen = screenType === "phone";
     const FLIP_HEIGHT = isPhoneScreen ? 240 : 500;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
-      className: "Home"
-    });
 
     return (
       <div style={{ width: "100%" }}>
-        <div {...classes.flipViewWrp}>
+        <div
+          style={{
+            width: "100%",
+            height: FLIP_HEIGHT,
+            background: theme.useFluentDesign ? theme.acrylicTexture80.background : theme.listLow
+          }}
+        >
           <FlipView
             style={{
               height: FLIP_HEIGHT,
@@ -104,10 +105,6 @@ export default class Home extends React.Component<HomeProps, HomeState> {
               image={require("../../assets/images/toolkits.png")}
             />
           </FlipView>
-          <RevealEffect
-            effectEnable="border"
-            hoverSize={300}
-          />
         </div>
         <Categories
           renderContentWidth={renderContentWidth}
@@ -122,9 +119,9 @@ export default class Home extends React.Component<HomeProps, HomeState> {
         <CustomTheme
           renderContentWidth={renderContentWidth}
           screenType={screenType}
-          style={{ padding: "140px 0", ...theme.acrylicTexture40.style }}
+          style={{ background: theme.useFluentDesign ? theme.acrylicTexture40.background : `linear-gradient(90deg, ${theme.listLow}, transparent)` }}
         />
-        <div style={{ padding: "120px 0", ...theme.acrylicTexture80.style }}>
+        <div style={{ background: theme.useFluentDesign ? theme.acrylicTexture40.background : void 0 }}>
           <MediaPlayer
             displayMode={isPhoneScreen ? "minimum" : "default"}
             style={{ margin: "0 auto", width: isPhoneScreen ? window.innerWidth : renderContentWidth, display: "block" }}
@@ -133,6 +130,16 @@ export default class Home extends React.Component<HomeProps, HomeState> {
             height={((isPhoneScreen ? window.innerWidth : renderContentWidth) as any) / 2}
           />
         </div>
+        <IndexOfComponentsByFunction
+          style={{
+            padding: 20,
+            margin: "0 auto",
+            width: renderContentWidth,
+            background: theme.useFluentDesign ? theme.acrylicTexture80.background : (
+              theme.isDarkTheme ? "hsla(0, 0%, 3%, 1)" : "hsla(0, 0%, 97%, 1)"
+            )
+          }}
+        />
 
         <Toast
           defaultShow={showToast}
@@ -145,28 +152,4 @@ export default class Home extends React.Component<HomeProps, HomeState> {
       </div>
     );
   }
-}
-
-function getStyles(Home: Home) {
-  const {
-    context: { theme },
-    props: { style, screenType }
-  } = Home;
-
-  const { prefixStyle } = theme;
-  const isPhoneScreen = screenType === "phone";
-  const FLIP_HEIGHT = isPhoneScreen ? 240 : 500;
-
-  return {
-    root: prefixStyle({
-      ...style
-    }),
-    flipViewWrp: prefixStyle({
-      width: "100%",
-      height: FLIP_HEIGHT,
-      position: "relative",
-      borderBottom: `1px solid ${theme.listLow}`,
-      ...theme.acrylicTexture60.style
-    })
-  };
 }

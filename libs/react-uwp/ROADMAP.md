@@ -1,19 +1,5 @@
 # RoadMap
 
-### New StyleManager
-- [ ] ProgressBar
-- [ ] ProgressRing
-- [ ] All Base Componnents
-- [ ] MarkdownRender
-- [ ] Table
-- [x] NoiseTexture
-- [ ] RevealEffect
-- [ ] Tooltip performance
-- [ ] AcrylicStyles support other theme
-
-### Dynamic BorderSize
-- [ ] Todo
-
 ### Commands
 - [x] CommandBar
 
@@ -79,5 +65,3 @@
 ### TODO
 - [ ] Slider Add with Step
 - [ ] Add StyleManager support child Style
-- [ ] Split StyleManager to package
-- [ ] Update Docs Parser

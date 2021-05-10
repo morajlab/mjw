@@ -1,39 +1,27 @@
 import * as stackBlurCanvas from "stackblur-canvas";
-import tinycolor2 from "tinycolor2";
-import { toUrl } from "../utils/canvasHelper";
+import * as tinycolor2 from "tinycolor2";
 
-export interface AcrylicTextureConfig {
-  image: string;
-  tintColor: string;
-  blurSize?: number;
-  callback?: (image?: string, isCanvasFilter?: boolean) => void;
-}
-
-const acrylicTextureMap = new Map<string, { texture?: string; isCanvasFilter?: boolean; }>();
-export default function generateAcrylicTexture(config: AcrylicTextureConfig) {
-  let { image, tintColor, blurSize, callback } = config;
-  blurSize = blurSize || 24;
-  const configStr = JSON.stringify({ image, tintColor, blurSize });
-  let acrylicTexture = acrylicTextureMap.get(configStr);
-
-  function updateAcrylicTexture() {
-    if (callback) callback(acrylicTexture.texture, acrylicTexture.isCanvasFilter);
-    acrylicTextureMap.set(configStr, acrylicTexture);
+export default function generateAcrylicTexture(
+  image?: string,
+  tintColor = "#fff",
+  tintOpacity = 0.4,
+  blurSize = 24,
+  noiseSize = 1,
+  noiseOpacity = 0.2,
+  callback = (image?: string) => {}
+) {
+  if (!image) return "none";
+  const id = `react-uwp-AcrylicTexture-${tintColor}-${tintOpacity}`;
+  let canvas: HTMLCanvasElement = document.getElementById(id) as any;
+  if (!canvas) {
+    canvas = document.createElement("canvas");
+    canvas.id = id;
+    document.body.appendChild(canvas);
   }
-
-  if (acrylicTexture) {
-    callback(acrylicTexture.texture, acrylicTexture.isCanvasFilter);
-    return;
-  } else {
-    acrylicTexture = {};
-  }
-
-  const canvas = document.createElement("canvas");
+  canvas.style.display = "none";
   const context = canvas.getContext("2d");
   const imageNode = new Image();
   imageNode.crossOrigin = "Anonymous";
-  imageNode.src = image;
-
   imageNode.onload = () => {
     let { naturalWidth, naturalHeight } = imageNode;
     if (naturalWidth > 1000) {
@@ -45,37 +33,34 @@ export default function generateAcrylicTexture(config: AcrylicTextureConfig) {
       naturalHeight = 1000;
     }
 
+
     canvas.width = naturalWidth;
     canvas.height = naturalHeight;
+    context.drawImage(imageNode, 0, 0, naturalWidth, naturalHeight);
 
-    const fillRect = () => {
-      context.fillStyle = tinycolor2(tintColor).toRgbString();
-      context.fillRect(0, 0, naturalWidth, naturalHeight);
-    };
-    const drawImage = () => {
-      context.drawImage(imageNode, 0, 0, naturalWidth, naturalHeight);
-    };
-    // const now = performance.now();
-    // blur image.
-    const isCanvasFilter = false && "filter" in context; // canvas filter is not good.
-    if (isCanvasFilter) {
-      context.filter = `blur(${blurSize}px)`;
-      drawImage();
-      context.filter = "blur(0px)";
-      fillRect();
+    stackBlurCanvas.canvasRGBA(canvas, 0, 0, naturalWidth, naturalHeight, blurSize);
+
+    context.fillStyle = tinycolor2(tintColor).setAlpha(tintOpacity).toRgbString();
+    context.fillRect(0, 0, naturalWidth, naturalHeight);
+
+    // const noiseWidth = 40;
+    // const noiseHeight = 40;
+    // const noiseImageDate = generateNoise(canvas, context, noiseWidth, noiseHeight, noiseSize, noiseOpacity);
+
+    if (HTMLCanvasElement.prototype.toBlob) {
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        callback(url);
+      });
+    } else if (HTMLCanvasElement.prototype.msToBlob) {
+      const blob = canvas.msToBlob();
+      const url = URL.createObjectURL(blob);
+      callback(url);
     } else {
-      drawImage();
-      stackBlurCanvas.canvasRGBA(canvas, 0, 0, naturalWidth, naturalHeight, blurSize);
-      fillRect();
+      callback(canvas.toDataURL("image/jpg"));
     }
-    // console.log(performance.now() - now);
-
-    toUrl(canvas, imageUrl => {
-      acrylicTexture.texture = imageUrl;
-      acrylicTexture.isCanvasFilter = isCanvasFilter;
-      updateAcrylicTexture();
-    });
   };
+  imageNode.src = image;
 }
 
 

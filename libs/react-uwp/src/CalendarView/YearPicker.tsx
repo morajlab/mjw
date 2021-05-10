@@ -2,7 +2,6 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import SlideInOut from "./SlideInOut";
-import RevealEffect from "../RevealEffect";
 
 export interface DataProps {
   date?: Date;
@@ -28,12 +27,12 @@ export default class YearPicker extends React.Component<YearPickerProps, {}> {
 
   handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, isNow: boolean) => {
     const { theme } = this.context;
-    e.currentTarget.style.border = `${theme.borderWidth}px solid ${isNow ? theme.baseHigh : theme.baseLow}`;
+    e.currentTarget.style.border = `2px solid ${isNow ? theme.baseHigh : theme.baseLow}`;
   }
 
   handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>, isNow: boolean) => {
     const { theme } = this.context;
-    e.currentTarget.style.border = `${theme.borderWidth}px solid transparent`;
+    e.currentTarget.style.border = "2px solid transparent";
   }
 
   getYearsArray = () => {
@@ -50,17 +49,17 @@ export default class YearPicker extends React.Component<YearPickerProps, {}> {
   render() {
     const { date, maxYear, minYear, direction, onChooseYear, ...attributes } = this.props;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "calendar-view-year",
-      styles
+      styles: inlineStyles
     });
     const years: number[] = this.getYearsArray();
 
     return (
       <SlideInOut
         {...(attributes as any)}
-        style={styles.root}
+        style={inlineStyles.root}
         mode="both"
         speed={350}
         direction={direction}
@@ -73,17 +72,15 @@ export default class YearPicker extends React.Component<YearPickerProps, {}> {
               onMouseEnter={(e) => this.handleMouseEnter(e, isNow)}
               onMouseLeave={(e) => this.handleMouseLeave(e, isNow)}
               style={{
-                ...classes.yearItem.style,
-                position: "relative",
+                ...styles.yearItem.style,
                 background: isNow ? theme.accent : theme.useFluentDesign ? theme.altLow : theme.altHigh,
-                border: `${theme.borderWidth}px solid transparent`
+                border: "2px solid transparent"
               } as React.CSSProperties}
-              className={classes.yearItem.className}
+              className={styles.yearItem.className}
               onClick={() => onChooseYear(year)}
               key={`${index}`}
             >
               {year}
-              <RevealEffect observerTransition="transform" hoverSize={80} />
             </button>;
           })}
         </div>
@@ -92,18 +89,20 @@ export default class YearPicker extends React.Component<YearPickerProps, {}> {
   }
 }
 
-function getStyles(YearPicker: YearPicker) {
+function getStyles(YearPicker: YearPicker): {
+  root?: React.CSSProperties;
+  yearItem?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style }
   } = YearPicker;
   const { prefixStyle } = theme;
 
-  const fullHeight = 296 - theme.borderWidth * 2;
   return {
     root: prefixStyle({
       width: 296,
-      height: fullHeight,
+      height: 292,
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
@@ -115,8 +114,8 @@ function getStyles(YearPicker: YearPicker) {
       outline: "none",
       color: theme.baseHigh,
       border: "none",
-      width: fullHeight / 4,
-      height: fullHeight / 4
+      width: 292 / 4,
+      height: 292 / 4
     }
   };
 }

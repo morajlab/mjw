@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import vendors from "../utils/browser/vendors";
+import vendors from "../common/browser/vendors";
 const vendorPrefixes: string[] = vendors.map(str => str ? `-${str}-` : str);
 
 export interface DataProps {
@@ -94,7 +94,7 @@ ${vendorPrefixes.map(str => `@${str}keyframes ProgressBar {
       styles: inlineStyles
     });
     const onlyClassName = this.getOnlyClassName();
-    theme.styleManager.addCSSText(this.getCSSText(onlyClassName));
+    theme.styleManager.addCSSTextWithUpdate(this.getCSSText(onlyClassName));
 
     return (
       <div

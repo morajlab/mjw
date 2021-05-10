@@ -2,7 +2,6 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import SlideInOut from "./SlideInOut";
-import RevealEffect from "../RevealEffect";
 
 export interface DataProps {
   date?: Date;
@@ -24,12 +23,12 @@ export default class MonthPicker extends React.Component<MonthPickerProps, {}> {
 
   handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>, isNow: boolean) => {
     const { theme } = this.context;
-    e.currentTarget.style.border = `${theme.borderWidth}px solid ${isNow ? theme.baseHigh : theme.baseLow}`;
+    e.currentTarget.style.border = `2px solid ${isNow ? theme.baseHigh : theme.baseLow}`;
   }
 
   handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>, isNow: boolean) => {
     const { theme } = this.context;
-    e.currentTarget.style.border = `${theme.borderWidth}px solid transparent`;
+    e.currentTarget.style.border = "2px solid transparent";
   }
 
   getMonthsArray = () => {
@@ -71,7 +70,6 @@ export default class MonthPicker extends React.Component<MonthPickerProps, {}> {
               onMouseLeave={(e) => this.handleMouseLeave(e, isNow)}
               style={{
                 ...styles.monthItem.style,
-                position: "relative",
                 background: isNow ? theme.accent : (
                   theme.useFluentDesign ? (
                     isCurrYear ? theme.altLow : theme.listLow
@@ -79,14 +77,13 @@ export default class MonthPicker extends React.Component<MonthPickerProps, {}> {
                     isCurrYear ? theme.altHigh : theme.chromeLow
                   )
                 ),
-                border: `${theme.borderWidth}px solid transparent`
+                border: "2px solid transparent"
               } as React.CSSProperties}
               className={styles.monthItem.className}
               onClick={() => onChooseMonth(index)}
               key={`${index}`}
             >
               {`${month}`}
-              <RevealEffect observerTransition="transform" hoverSize={80} />
             </button>;
           })}
         </div>
@@ -95,31 +92,33 @@ export default class MonthPicker extends React.Component<MonthPickerProps, {}> {
   }
 }
 
-function getStyles(monthPicker: MonthPicker) {
+function getStyles(monthPicker: MonthPicker): {
+  root?: React.CSSProperties;
+  monthItem?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style }
   } = monthPicker;
   const { prefixStyle } = theme;
 
-  const fullHeight = 296 - theme.borderWidth * 2;
   return {
     root: prefixStyle({
       width: 296,
-      height: fullHeight,
+      height: 292,
       display: "flex",
       flexDirection: "row",
       flexWrap: "wrap",
       ...style
     }),
-    monthItem: prefixStyle({
+    monthItem: {
       transition: "all .25s 0s ease-in-out",
       background: "none",
       outline: "none",
       color: theme.baseHigh,
       border: "none",
-      width: fullHeight / 4,
-      height: fullHeight / 4
-    })
+      width: 292 / 4,
+      height: 292 / 4
+    }
   };
 }
