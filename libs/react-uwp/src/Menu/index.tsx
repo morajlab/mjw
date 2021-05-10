@@ -93,7 +93,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyle({
+    const styleClasses = theme.prepareStyle({
       className: "menu",
       style: styles.root,
       extendsClassName: className
@@ -102,7 +102,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     return (
       <div
         {...attributes}
-        {...classes}
+        {...styleClasses}
       >
         {children && React.Children.map(children, (child: any, index) => {
           return child.type === MenuItem ? React.cloneElement(child, {
@@ -117,7 +117,9 @@ export class Menu extends React.Component<MenuProps, MenuState> {
   }
 }
 
-function getStyles(menu: Menu) {
+function getStyles(menu: Menu): {
+  root?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style }
@@ -126,9 +128,9 @@ function getStyles(menu: Menu) {
 
   return {
     root: prefixStyle({
-      ...theme.acrylicTexture60.style,
       width: 240,
       color: theme.baseHigh,
+      background: theme.useFluentDesign ? theme.acrylicTexture60.background : theme.chromeLow,
       border: `1px solid ${theme.listLow}`,
       ...style
     })

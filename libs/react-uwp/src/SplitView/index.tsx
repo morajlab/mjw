@@ -2,10 +2,9 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
+import AddBlurEvent from "../common/AddBlurEvent";
 import SplitViewPane, { SplitViewPaneProps } from "./SplitViewPane";
-export { SplitViewPane };
-export type { SplitViewPaneProps };
+export { SplitViewPane, SplitViewPaneProps };
 
 export interface DataProps {
   displayMode?: "compact" | "overlay";
@@ -153,7 +152,7 @@ function getStyles(splitView: SplitView): {
   return {
     root: prefixStyle({
       color: theme.baseHigh,
-      ...theme.acrylicTexture60.style,
+      background: theme.useFluentDesign ? theme.acrylicTexture60.background : theme.chromeLow,
       display: "inline-block",
       position: "relative",
       margin: 0,
@@ -175,7 +174,7 @@ function getStyles(splitView: SplitView): {
       overflow: "hidden"
     }),
     pane: prefixStyle({
-      ...theme.acrylicTexture40.style,
+      background: theme.useFluentDesign ? theme.acrylicTexture40.background : theme.altHigh,
       transition,
       boxShadow: theme.useFluentDesign ? `rgba(0, 0, 0, 0.34) 0px 4px 24px` : void 0,
       ...(isCompact ? {

@@ -2,30 +2,13 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import PseudoClasses from "../PseudoClasses";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
-import Separator from "../Separator";
-import AppBarSeparator from "../AppBarSeparator";
+import vendors from "../common/browser/vendors";
 
 export interface ListItem {
-  /**
-   * set react node to item.
-   */
   itemNode?: React.ReactNode;
-  /**
-   * set to disabled.
-   */
   disabled?: boolean;
-  /**
-   * set to focused.
-   */
   focus?: boolean;
-  /**
-   * set to style to item node.
-   */
   style?: React.CSSProperties;
-  /**
-   * add onClick event callback.
-   */
   onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -50,14 +33,6 @@ export interface DataProps {
    * Set Custom Background.
    */
   background?: string;
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
-  /**
-   * Set reveal-effect enable resize event.
-   */
-  enableResizeObserver?: boolean;
 }
 
 export interface ListViewProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
@@ -69,8 +44,7 @@ export interface ListViewState {
 const emptyFunc = () => {};
 export class ListView extends React.Component<ListViewProps, ListViewState> {
   static defaultProps: ListViewProps = {
-    onChooseItem: emptyFunc,
-    revealConfig: { effectRange: "self" }
+    onChooseItem: emptyFunc
   };
 
   state: ListViewState = {
@@ -80,7 +54,7 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
   rootElm: HTMLDivElement;
-  styles: {
+  inlineStyles: {
     [key: string]: React.CSSProperties;
   } = null;
 
@@ -91,40 +65,34 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
   }
 
   getItemNode = (itemNode: any, index: number, disabled?: boolean, focus?: boolean, style?: React.CSSProperties, onClick?: () => void) => {
-    const { revealConfig, enableResizeObserver } = this.props;
-    const { styles } = this;
+    const { inlineStyles } = this;
     const { theme } = this.context;
     const { onChooseItem, background } = this.props;
     const { focusIndex } = this.state;
+    const { isDarkTheme } = theme;
     const isFocus = focus || focusIndex === index;
     const defaultBG = isFocus ? theme.listAccentLow : "none";
+    const focusBG = isFocus ? theme.listAccentHigh : (theme.useFluentDesign ? theme.acrylicTexture40.background : theme.listLow);
+    const clickBG = isFocus ? theme.accent : theme.chromeHigh;
 
-    const classes = theme.prepareStyle({
+    const itemStyles = theme.prepareStyle({
       className: "list-view-item",
       style: theme.prefixStyle({
-        ...styles.item,
-        flex: "0 0 auto",
-        position: "relative",
         background: defaultBG,
-        borderTop: "1px solid transparent",
-        borderBottom: "1px solid transparent",
         color: disabled ? theme.baseLow : theme.baseHigh,
-        ...(isFocus ? theme.acrylicTexture40.style : theme.acrylicTexture60.style),
         "&:hover": {
-          ...(isFocus ? theme.acrylicTexture20.style : theme.acrylicTexture60.style),
+          background: focusBG
         },
         "&:active": {
           transform: "scale(0.99)"
         },
+        ...inlineStyles.item,
         ...style
       })
     });
-    const isSeparator = itemNode && typeof itemNode === "object" && (
-      itemNode.type === Separator || itemNode.type === AppBarSeparator
-    );
 
     return (
-      <PseudoClasses {...classes} key={`${index}`}>
+      <PseudoClasses {...itemStyles} key={`${index}`}>
         <div
           onClick={onClick}
           onMouseDown={disabled ? void 0 : e => {
@@ -132,7 +100,6 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
           }}
         >
           {itemNode}
-        {!isSeparator && <RevealEffect {...revealConfig} />}
         </div>
       </PseudoClasses>
     );
@@ -145,17 +112,15 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
       onChooseItem,
       background,
       defaultFocusListIndex,
-      revealConfig,
-      enableResizeObserver,
       ...attributes
     } = this.props;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "list-view",
-      styles
+      styles: inlineStyles
     });
-    this.styles = styles;
+    this.inlineStyles = inlineStyles;
 
     const listSourceAny: any = listSource;
 
@@ -163,7 +128,7 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
       <div
         ref={rootElm => this.rootElm = rootElm}
         {...attributes}
-        {...classes.root}
+        {...styles.root}
       >
         {listSourceAny && listSourceAny.map((listItem: any, index: number) => {
           if (React.isValidElement(listItem)) {
@@ -184,9 +149,13 @@ export class ListView extends React.Component<ListViewProps, ListViewState> {
   }
 }
 
-function getStyles(listView: ListView) {
+function getStyles(listView: ListView): {
+  root?: React.CSSProperties;
+  item?: React.CSSProperties;
+} {
   const { context, props: { listItemStyle, background, style } } = listView;
   const { theme } = context;
+  const { prefixStyle } = theme;
 
   return {
     root: theme.prefixStyle({
@@ -197,6 +166,7 @@ function getStyles(listView: ListView) {
       padding: "8px 0",
       color: theme.baseMediumHigh,
       border: `1px solid ${theme.useFluentDesign ? theme.listLow : theme.altHigh}`,
+      background: background || (theme.useFluentDesign ? theme.acrylicTexture60.background : theme.chromeLow),
       transition: "all .25s",
       ...style
     }),

@@ -128,7 +128,6 @@ function getStyles(passwordBox: PasswordBox): {
       fontWeight: "lighter",
       fontSize: passwordBoxHeight / 2,
       padding: 0,
-      paddingLeft: 8,
       ...style,
       height: passwordBoxHeight
     })

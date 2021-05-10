@@ -21,20 +21,9 @@ export class HyperLink extends React.Component<HyperLinkProps> {
     return (
       <Link
         {...{
-          ...this.props,
-          style: {
-            position: "relative",
-            lineHeight: 1.8,
-            padding: "2px 4px",
-            textDecoration: "underline",
-            ...this.props.style
-          }
+          style: { textDecoration: "underline", ...this.props.style },
+          ...this.props
         }}
-        children={
-          <React.Fragment>
-            {this.props.children}
-          </React.Fragment>
-        }
       />
     );
   }

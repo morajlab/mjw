@@ -2,10 +2,9 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
+import AddBlurEvent from "../common/AddBlurEvent";
 import Icon from "../Icon";
 import PseudoClasses from "../PseudoClasses";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
 
 export interface DataProps {
   /**
@@ -40,10 +39,6 @@ export interface DataProps {
    * Set Menu Item expanded method.
    */
   expandedMethod?: "active" | "hover";
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface AnyAttributes {
@@ -129,7 +124,6 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState> {
       className,
       hoverStyle,
       expandedMethod,
-      revealConfig,
       ...attributes
     } = this.props;
     const { theme } = this.context;
@@ -184,7 +178,6 @@ export class MenuItem extends React.Component<MenuItemProps, MenuItemState> {
             })}
           </div>
         )}
-        <RevealEffect effectRange="self" {...revealConfig} />
       </div>
       </PseudoClasses>
     );
@@ -211,9 +204,6 @@ function getStyles(menuItem: MenuItem): {
 
   return {
     root: prefixStyle({
-      position: "relative",
-      border: `${theme.borderWidth}px solid transparent`,
-      borderWidth: `${theme.borderWidth}px 0px`,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
@@ -222,7 +212,7 @@ function getStyles(menuItem: MenuItem): {
       fontSize: itemHeight / 3,
       lineHeight: `${itemHeight}px`,
       width: "100%",
-      // position: children ? "relative" : void 0,
+      position: children ? "relative" : void 0,
       "&:hover": hoverStyle || {
         background: theme.listLow
       },
@@ -236,7 +226,6 @@ function getStyles(menuItem: MenuItem): {
       textOverflow: "ellipsis"
     },
     child: prefixStyle({
-      ...theme.acrylicTexture60.style,
       transform: `translate3d(${expanded ? 0 : `-${itemHeight}px`}, 0, 0)`,
       opacity: expanded ? 1 : 0,
       pointerEvents: expanded ? "all" : "none",
@@ -245,6 +234,7 @@ function getStyles(menuItem: MenuItem): {
       top: -1,
       left: "100%",
       width: "100%",
+      background: theme.useFluentDesign ? theme.acrylicTexture60.background : theme.chromeLow,
       border: `1px solid ${theme.listLow}`
     })
   };

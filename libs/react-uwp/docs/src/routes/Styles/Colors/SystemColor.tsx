@@ -49,22 +49,19 @@ const getColorInfos = (theme: ReactUWP.ThemeType) => {
     "break-4": "",
 
     chromeAltLow: `100% ${theme.chromeAltLow}`,
-    chromeAltMediumLow: `100% ${theme.chromeAltMediumLow}`,
-    chromeAltMedium: `100% ${theme.chromeAltMedium}`,
-    chromeAltHigh: `100% ${theme.chromeAltHigh}`,
     "break-5": "",
 
-    chromeWhiteLow: `20% Black`,
-    chromeWhiteMediumLow: `40% Black`,
-    chromeWhiteMedium: `80% Black`,
-    chromeWhiteHigh: `100% Black`,
+    chromeDisabledLow: `100% ${theme.chromeDisabledLow}`,
+    chromeDisabledHigh: `100% ${theme.chromeDisabledHigh}`,
     "break-6": "",
 
     chromeBlackLow: `20% Black`,
     chromeBlackMediumLow: `40% Black`,
     chromeBlackMedium: `80% Black`,
     chromeBlackHigh: `100% Black`,
-    "break-7": ""
+    "break-7": "",
+
+    chromeWhite: "100% White"
   };
 };
 

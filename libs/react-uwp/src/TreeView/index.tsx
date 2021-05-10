@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import RevealEffect from "../RevealEffect";
 
 import Icon from "../Icon";
 
@@ -292,9 +291,7 @@ export class TreeView extends React.Component<TreeViewProps, TreeViewState> {
                 )
               } as React.CSSProperties}
               ref={elm => behindElm = elm}
-            >
-              <RevealEffect effectRange="self" />
-            </div>
+            />
           </div>
           {haveChild && (
             <div {...listStyles.child}>
@@ -354,11 +351,11 @@ function getStyles(treeView: TreeView): {
   const { prefixStyle } = theme;
   return {
     root: prefixStyle({
-      // ...(background ? { ...theme.acrylicTexture60.style, background } : theme.acrylicTexture60.style),
       fontSize: 14,
       overflowX: "hidden",
       overflowY: "auto",
       color: theme.baseMediumHigh,
+      background: background || (theme.useFluentDesign ? theme.acrylicTexture60.background : "none"),
       width: itemHeight * 10,
       padding: "0 16px",
       ...style
@@ -377,7 +374,6 @@ function getStyles(treeView: TreeView): {
       transition: "all .25s 0s ease-in-out"
     }),
     titleNode: prefixStyle({
-      pointerEvents: "none",
       color: "inherit",
       zIndex: 1,
       width: "100%",

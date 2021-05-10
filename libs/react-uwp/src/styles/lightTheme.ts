@@ -1,3 +1,3 @@
 import getTheme from "./getTheme";
-const lightTheme = getTheme({ themeName: "light" });
+const lightTheme: ReactUWP.ThemeType = getTheme({ themeName: "light" });
 export default lightTheme;

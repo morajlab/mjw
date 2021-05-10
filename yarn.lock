@@ -1446,6 +1446,13 @@
     "@fluentui/set-version" "^8.1.0"
     tslib "^2.1.0"
 
+"@fluentui/example-data@^8.2.0":
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/@fluentui/example-data/-/example-data-8.2.0.tgz#dd2fb00c74eb0325c408b856ba5f5e3dc8a77a74"
+  integrity sha512-brh2jEp08c/yJqtGwekfwhxErkv+BUUyljeKWa0PaOevR9u9/CKiw7p2kcoJEOf4x9hjMMNpNXoKDGGRGLLZQg==
+  dependencies:
+    tslib "^2.1.0"
+
 "@fluentui/font-icons-mdl2@^8.1.0":
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/@fluentui/font-icons-mdl2/-/font-icons-mdl2-8.1.0.tgz#7973dc85080c0ca3ddd03989d25d60e8bd83d0f1"
@@ -1511,10 +1518,10 @@
     "@fluentui/set-version" "^8.1.0"
     tslib "^2.1.0"
 
-"@fluentui/react@^8.13.1":
-  version "8.14.0"
-  resolved "https://registry.yarnpkg.com/@fluentui/react/-/react-8.14.0.tgz#47426cb68718fb759adcb9031fabbeb4f1b38fb2"
-  integrity sha512-8UPykCxsG32W7MeoJmgwBde7jKpj3iX/o6odTrzHzUTnfrfhVjaXAcTBkHwFEyb7mclDe+I83BMq+icNXyfNGA==
+"@fluentui/react@^8.14.4":
+  version "8.14.4"
+  resolved "https://registry.yarnpkg.com/@fluentui/react/-/react-8.14.4.tgz#1f8852dc9ae11df7de2e8ae68a776bd1fbe1abb3"
+  integrity sha512-o/vgHd0PYWWKPBBgaWOmy9hYvT8t1/GYW1EtSDkQvkP3xeeqGBhr5/ZjFKwhU86MF6BMIyGuj38iNBB2bks4DA==
   dependencies:
     "@fluentui/date-time-utilities" "^8.1.0"
     "@fluentui/font-icons-mdl2" "^8.1.0"
@@ -2680,11 +2687,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/core-js@^0.9.41":
-  version "0.9.46"
-  resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-0.9.46.tgz#ea701ee34cbb6dfe6d100f1530319547c93c8d79"
-  integrity sha512-LooLR6XHes9V+kNYRz1Qm8w3atw9QMn7XeZUmIpUelllF9BdryeUKd/u0Wh5ErcjpWfG39NrToU9MF7ngsTFVw==
-
 "@types/estree@*":
   version "0.0.47"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.47.tgz#d7a51db20f0650efec24cd04994f523d93172ed4"
@@ -2770,11 +2772,6 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/marked@0.0.28":
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-0.0.28.tgz#44ba754e9fa51432583e8eb30a7c4dd249b52faa"
-  integrity sha1-RLp1Tp+lFDJYPo6zCnxN0km1L6o=
-
 "@types/minimatch@*":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.4.tgz#f0ec25dbf2f0e4b18647313ac031134ca5b24b21"
@@ -2795,11 +2792,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.33.tgz#9e4f8c64345522e4e8ce77b334a8aaa64e2b6c78"
   integrity sha512-oJqcTrgPUF29oUP8AsUqbXGJNuPutsetaa9kTQAQce5Lx5dTYWV02ScBiT/k1BX/Z7pKeqedmvp39Wu4zR7N7g==
 
-"@types/node@^8.0.1":
-  version "8.10.66"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.66.tgz#dd035d409df322acc83dff62a602f12a5783bbb3"
-  integrity sha512-tktOkFUA4kXx2hhhrB8bIFb5TbwzS4uOhKEmwiD+NoiL0qtP2OQ9mFldbgD4dV1djrlBYP6eBuQZiWjuHUpqFw==
-
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
@@ -2815,12 +2807,7 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.2.3.tgz#ef65165aea2924c9359205bf748865b8881753c0"
   integrity sha512-PijRCG/K3s3w1We6ynUKdxEc5AcuuH3NBmMDP8uvKVp6X43UY7NQlTzczakXP3DJR0F4dfNQIGjU2cUeRYs2AA==
 
-"@types/prismjs@^1.6.2":
-  version "1.16.5"
-  resolved "https://registry.yarnpkg.com/@types/prismjs/-/prismjs-1.16.5.tgz#378f491ff02304ce50924b05283111d4a286ecba"
-  integrity sha512-nSU7U6FQDJJCraFNwaHmH5YDsd/VA9rTnJ7B7AGFdn+m+VSt3FjLWN7+AbqxZ67dbFazqtrDFUto3HK4ljrHIg==
-
-"@types/prop-types@*", "@types/prop-types@^15.5.1":
+"@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
@@ -2886,7 +2873,7 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.0.tgz#7036640b4e21cc2f259ae826ce843d277dad8cff"
   integrity sha512-RJJrrySY7A8havqpGObOB4W92QXKJo63/jFLLgpvOtsGUqbQZ9Sbgl35KMm1DjC6j7AvmmU2bIno+3IyEaemaw==
 
-"@types/tinycolor2@^1.1.1", "@types/tinycolor2@^1.4.2":
+"@types/tinycolor2@^1.4.2":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@types/tinycolor2/-/tinycolor2-1.4.2.tgz#721ca5c5d1a2988b4a886e35c2ffc5735b6afbdf"
   integrity sha512-PeHg/AtdW6aaIO2a+98Xj7rWY4KC1E6yOy7AFknJQ7VXUGNrMlyxDFxJo7HqLtjQms/ZhhQX52mLVW/EX3JGOw==
@@ -9120,11 +9107,6 @@ markdown-it@^11.0.0:
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
-marked@^0.3.6:
-  version "0.3.19"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.3.19.tgz#5d47f709c4c9fc3c216b6d46127280f40b39d790"
-  integrity sha512-ea2eGWOqNxPcXv8dyERdSr/6FmzvWwzjMxpfGB/sbMccXoct+xY+YukPD+QTUZwyvK7BZwcr4m21WBOW41pAkg==
-
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -10967,7 +10949,7 @@ pretty-format@^26.0.0, pretty-format@^26.6.2:
     ansi-styles "^4.0.0"
     react-is "^17.0.1"
 
-prismjs@^1.17.1, prismjs@^1.6.0:
+prismjs@^1.17.1:
   version "1.23.0"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.23.0.tgz#d3b3967f7d72440690497652a9d40ff046067f33"
   integrity sha512-c29LVsqOaLbBHuIbsTxaKENh1N2EQBOHaWv7gkHN4dgRbxSREqDnDbtFJYdpPauS4YCplMSNCABQ6Eeor69bAA==
@@ -11241,11 +11223,6 @@ react-refresh@0.8.3:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
 
-react-title-component@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-title-component/-/react-title-component-1.0.1.tgz#cfd51418f46e8bd42bb01c6cccab51baea0f5700"
-  integrity sha1-z9UUGPRui9QrsBxszKtRuuoPVwA=
-
 react-transition-group@^1.1.3:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-1.2.1.tgz#e11f72b257f921b213229a774df46612346c7ca6"
@@ -11255,31 +11232,6 @@ react-transition-group@^1.1.3:
     dom-helpers "^3.2.0"
     loose-envify "^1.3.1"
     prop-types "^15.5.6"
-    warning "^3.0.0"
-
-react-uwp@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/react-uwp/-/react-uwp-1.2.2.tgz#cf1035cdac5e661c6d3f5c1b7bcf3f97cc3403f1"
-  integrity sha512-YHG98Dsih/R7WvFYd8KRyWWo45addu/6tQUV1OkP33pi47mjnyaoN8g0v67dBbZoFY4h3O2EFEIROddZe7/udQ==
-  dependencies:
-    "@types/core-js" "^0.9.41"
-    "@types/marked" "0.0.28"
-    "@types/node" "^8.0.1"
-    "@types/prismjs" "^1.6.2"
-    "@types/prop-types" "^15.5.1"
-    "@types/tinycolor2" "^1.1.1"
-    inline-style-prefixer "^3.0.5"
-    keycode "^2.1.8"
-    marked "^0.3.6"
-    murmurhash-js "^1.0.0"
-    prismjs "^1.6.0"
-    prop-types "^15.5.8"
-    react-lazyload "^2.2.7"
-    react-player "^0.20.0"
-    react-title-component "^1.0.1"
-    react-transition-group "^1.1.3"
-    stackblur-canvas "^1.4.0"
-    tinycolor2 "^1.4.1"
     warning "^3.0.0"
 
 react@17.0.1:

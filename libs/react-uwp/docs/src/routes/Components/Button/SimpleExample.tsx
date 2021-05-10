@@ -27,13 +27,13 @@ export default class SimpleExample extends React.Component {
 
         <Button
           style={{
-            border: `${theme.borderWidth}px solid ${theme.listLow}`,
+            border: `2px solid ${theme.listLow}`,
             ...baseStyle
           }}
           background="none"
           activeStyle={{
             background: "none",
-            width: 320
+            border: `2px solid ${theme.baseMedium}`
           }}
         >
           Button without Background

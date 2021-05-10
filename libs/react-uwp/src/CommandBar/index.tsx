@@ -1,9 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
+import AddBlurEvent from "../common/AddBlurEvent";
 import AppBarButton from "../AppBarButton";
 import AppBarSeparator from "../AppBarSeparator";
 import ListView from "../ListView";
@@ -53,10 +52,6 @@ export interface DataProps {
    * Set custom background.
    */
   background?: string;
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface CommandBarProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
@@ -132,34 +127,31 @@ export class CommandBar extends React.Component<CommandBarProps, CommandBarState
       expanded,
       isMinimal,
       verticalPosition,
-      revealConfig,
       background,
       ...attributes
     } = this.props;
     const { currExpanded } = this.state;
     const { theme } = this.context;
     const defaultHeight = isMinimal ? 24 : 48;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const expandedHeight = 72;
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "command-bar",
-      styles
+      styles: inlineStyles
     });
 
     return (
-      <div {...classes.wrapper} ref={rootElm => this.rootElm = rootElm}>
-        <div {...attributes} {...classes.root}>
+      <div {...styles.wrapper} ref={rootElm => this.rootElm = rootElm}>
+        <div {...attributes} {...styles.root}>
           {(content !== void 0 || contentNode !== void 0) && (
-            <div {...classes.content}>{content || contentNode}</div>
+            <div {...styles.content}>{content || contentNode}</div>
           )}
-          <div {...classes.commands}>
+          <div {...styles.commands}>
             {(isMinimal && !currExpanded) || React.Children.toArray(primaryCommands).filter((child: any) => (
               child.type === AppBarButton || child.type === AppBarSeparator
             )).map((child: any, index: number) => (
               React.cloneElement(child, {
                 labelPosition,
-                revealConfig: {
-                  effectEnable: "disabled"
-                },
                 key: index,
                 style: child.type === AppBarSeparator ? {
                   height: 24
@@ -168,10 +160,7 @@ export class CommandBar extends React.Component<CommandBarProps, CommandBarState
             ))}
             <AppBarButton
               labelPosition="bottom"
-              revealConfig={{
-                effectEnable: "disabled"
-              }}
-              style={styles.moreLegacy}
+              style={inlineStyles.moreLegacy}
               iconStyle={{
                 maxWidth: defaultHeight,
                 height: defaultHeight,
@@ -183,7 +172,7 @@ export class CommandBar extends React.Component<CommandBarProps, CommandBarState
             />
             {secondaryCommands && (
               <ListView
-                style={styles.secondaryCommands}
+                style={inlineStyles.secondaryCommands}
                 listSource={secondaryCommands.map(itemNode => {
                   if (itemNode.type === AppBarSeparator) {
                     itemNode = React.cloneElement(itemNode, { direction: "row" });
@@ -194,7 +183,6 @@ export class CommandBar extends React.Component<CommandBarProps, CommandBarState
               />
             )}
           </div>
-          <RevealEffect observerTransition="height" {...revealConfig} />
         </div>
       </div>
     );
@@ -241,7 +229,6 @@ function getStyles(commandBar: CommandBar): {
   }
   return {
     wrapper: theme.prefixStyle({
-      position: "relative",
       height: inBottom ? "auto" : defaultHeight,
       display: "block",
       zIndex: currExpanded ? theme.zIndex.commandBar : void 0,
@@ -277,7 +264,6 @@ function getStyles(commandBar: CommandBar): {
       transition
     }),
     secondaryCommands: {
-      ...theme.acrylicTexture60.style,
       width: "auto",
       maxWidth: 240,
       zIndex: theme.zIndex.commandBar,

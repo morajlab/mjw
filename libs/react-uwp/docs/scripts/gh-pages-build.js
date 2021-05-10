@@ -6,6 +6,7 @@ const buildBowerRelease = require('./bower-release-build')
 
 process.chdir(__dirname)
 
+const rootDir = path.join('../../../', __dirname)
 const usage = '\nbuild <vn.n.n[-pre[.n]]> | <HEAD> [-p]\n'
 const versionsFile = './versions.json'
 const { publicPath } = require('../config')
@@ -25,7 +26,7 @@ const versions = JSON.parse(fs.readFileSync(versionsFile, 'utf8'))
 const versionIsHEAD = version === 'HEAD'
 const useForcePush = args[3] === '-p'
 const versionNumber = versionIsHEAD ? (
-  execSync('git describe --abbrev=0 --tags').toString().trim() || 'v1.0.0'
+  `v${JSON.parse(fs.readFileSync('../../package.json', 'utf8')).version}`
 ) : version
 
 function execSyncWithLog(command) {

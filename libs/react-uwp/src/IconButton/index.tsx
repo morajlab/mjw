@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
+import PseudoClasses from "../PseudoClasses";
 import Icon from "../Icon";
 
 export interface DataProps {
@@ -21,20 +21,13 @@ export interface DataProps {
    * The control IconButton disabled.
    */
   disabled?: boolean;
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface IconButtonProps extends DataProps, React.HTMLAttributes<HTMLButtonElement> {}
 
 export class IconButton extends React.Component<IconButtonProps> {
   static defaultProps: IconButtonProps = {
-    size: 48,
-    revealConfig: {
-      effectEnable: "disabled"
-    }
+    size: 48
   };
   static contextTypes = { theme: PropTypes.object };
   context: { theme: ReactUWP.ThemeType };
@@ -47,7 +40,6 @@ export class IconButton extends React.Component<IconButtonProps> {
       children,
       size,
       disabled,
-      revealConfig,
       ...attributes
     } = this.props;
     const { theme } = this.context;
@@ -56,7 +48,6 @@ export class IconButton extends React.Component<IconButtonProps> {
       <Icon
         {...attributes}
         style={{
-          position: "relative",
           display: "inline-block",
           fontFamily: theme.fonts.segoeMDL2Assets,
           verticalAlign: "middle",
@@ -86,7 +77,6 @@ export class IconButton extends React.Component<IconButtonProps> {
         }
       >
         {children}
-        <RevealEffect {...revealConfig} />
       </Icon>
     );
   }

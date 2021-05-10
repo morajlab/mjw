@@ -92,20 +92,20 @@ export class CheckBox extends React.Component<CheckBoxProps, CheckBoxState> {
     } = this.props;
     const { checked } = this.state;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "checkbox",
-      styles
+      styles: inlineStyles
     });
     const haveLabel = label !== void 0;
 
     const checkbox = (
       <PseudoClasses
-        {...classes.iconParent}
+        {...styles.iconParent}
         disabled={disabled}
       >
       <div ref={rootElm => this.rootElm = rootElm}>
-        <Icon style={styles.icon}>
+        <Icon style={inlineStyles.icon}>
           CheckMarkZeroWidthLegacy
         </Icon>
       </div>
@@ -116,13 +116,13 @@ export class CheckBox extends React.Component<CheckBoxProps, CheckBoxState> {
       <div
         {...attributes}
         onClick={this.handleClick}
-        {...classes.wrapper}
+        {...styles.wrapper}
       >
         {haveLabel ? (
-          <div {...classes.root}>
+          <div {...styles.root}>
             {checkbox}
             {label !== void 0 && (
-              <span {...classes.label}>
+              <span {...styles.label}>
                 {label}
               </span>
             )}
@@ -155,7 +155,7 @@ function getStyles(checkBox: CheckBox): {
     alignItems: "center",
     justifyContent: "center",
     color: theme.altHigh,
-    border: `${theme.borderWidth}px solid ${theme.baseMediumHigh}`,
+    border: `2px solid ${theme.baseMediumHigh}`,
     width: `${size}px`,
     height: `${size}px`,
     background: background || "none",
@@ -163,17 +163,17 @@ function getStyles(checkBox: CheckBox): {
     overflow: "hidden"
   });
 
-  const iconParentHover = { border: `${theme.borderWidth}px solid ${theme.baseHigh}` };
+  const iconParentHover = { border: `2px solid ${theme.baseHigh}` };
   let iconParent: ReactUWP.CustomCSSProperties;
 
   switch (checked) {
     case true: {
       iconParent = {
         ...iconParentBase,
-        border: disabled ? `${theme.borderWidth}px solid ${theme.baseLow}` : `${theme.borderWidth}px solid ${theme.accent}`,
+        border: disabled ? `2px solid ${theme.baseLow}` : `2px solid ${theme.accent}`,
         "&:hover": disabled ? void 0 : iconParentHover,
         "&:disabled": {
-          border: `${theme.borderWidth}px solid ${theme.baseLow}`
+          border: `2px solid ${theme.baseLow}`
         }
       };
       break;
@@ -181,10 +181,10 @@ function getStyles(checkBox: CheckBox): {
     case false: {
       iconParent = {
         ...iconParentBase,
-        border: disabled ? `${theme.borderWidth}px solid ${theme.baseLow}` : `${theme.borderWidth}px solid ${theme.baseMediumHigh}`,
+        border: disabled ? `2px solid ${theme.baseLow}` : `2px solid ${theme.baseMediumHigh}`,
         "&:hover": disabled ? void 0 : iconParentHover,
         "&:disabled": {
-          border: `${theme.borderWidth}px solid ${theme.baseLow}`
+          border: `2px solid ${theme.baseLow}`
         }
       };
       break;
@@ -192,10 +192,10 @@ function getStyles(checkBox: CheckBox): {
     case null: {
       iconParent = {
         ...iconParentBase,
-        border: disabled ? `${theme.borderWidth}px solid ${theme.baseLow}` : `${theme.borderWidth}px solid ${theme.baseMediumHigh}`,
+        border: disabled ? `2px solid ${theme.baseLow}` : `2px solid ${theme.baseMediumHigh}`,
         "&:hover": disabled ? void 0 : iconParentHover,
         "&:disabled": {
-          border: `${theme.borderWidth}px solid ${theme.baseLow}`
+          border: `2px solid ${theme.baseLow}`
         }
       };
       break;
@@ -209,7 +209,6 @@ function getStyles(checkBox: CheckBox): {
 
   return {
     wrapper: theme.prefixStyle({
-      position: "relative",
       display: "inline-block",
       verticalAlign: "middle",
       ...style

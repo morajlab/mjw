@@ -8,7 +8,6 @@ import DropDownMenu from "react-uwp/DropDownMenu";
 import ColorPicker from "react-uwp/ColorPicker";
 import CheckBox from "react-uwp/CheckBox";
 import TextBox from "react-uwp/TextBox";
-import RevealEffect from "react-uwp/RevealEffect";
 import ScrollReveal, { slideLeftInProps, slideBottomInProps, scaleInProps } from "react-uwp/ScrollReveal";
 
 export interface DataProps {}
@@ -29,17 +28,13 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
     } = this.props;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
-      className: "CustomTheme"
-    });
 
     return (
       <div
         {...attributes}
-        {...classes.root}
+        style={styles.root}
       >
-        <div {...classes.content}>
+        <div style={styles.content}>
           <div>
             <ScrollReveal {...{ ...slideLeftInProps, speed: 850 }}>
             <div style={{ width: 320, fontWeight: "lighter" }}>
@@ -50,7 +45,7 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
             </ScrollReveal>
             <ScrollReveal {...{ ...slideBottomInProps, speed: 850, useWrapper: false }}>
             <div style={{ marginTop: 24 }}>
-              <p style={{ fontSize: 18, lineHeight: 1.6, margin: "8px 0" }}>
+              <p style={{ fontSize: 18, lineHeight: 1.6 }}>
                 Choose Theme
               </p>
               <DropDownMenu
@@ -58,10 +53,10 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
                   "Dark",
                   "Light"
                 ]}
-                wrapperStyle={{ margin: "8px 0" }}
+                background={theme.useFluentDesign ? theme.acrylicTexture40.background : theme.chromeLow}
                 defaultValue={theme.isDarkTheme ? "Dark" : "Light"}
                 onChangeValue={value => {
-                  theme.updateTheme(getTheme({
+                  theme.saveTheme(getTheme({
                     themeName: value.toLowerCase() as any,
                     accent: theme.accent,
                     useFluentDesign: theme.useFluentDesign,
@@ -70,11 +65,11 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
                 }}
               />
               <CheckBox
-                style={{ margin: "8px 0" }}
+                style={{ marginLeft: 8 }}
                 defaultChecked={theme.useFluentDesign}
                 label="Use New Fluent Design"
                 onCheck={useFluentDesign => {
-                  theme.updateTheme(getTheme({
+                  theme.saveTheme(getTheme({
                     themeName: theme.themeName,
                     accent: theme.accent,
                     useFluentDesign,
@@ -89,7 +84,7 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
                 onChangeValue={desktopBackgroundImage => {
                   const image = new Image();
                   image.addEventListener("load", function(e) {
-                    theme.updateTheme(getTheme({
+                    theme.saveTheme(getTheme({
                       themeName: theme.themeName,
                       accent: theme.accent,
                       useFluentDesign: theme.useFluentDesign,
@@ -126,11 +121,11 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
                   const file = e.currentTarget.files[0];
                   const reader  = new FileReader();
                     reader.addEventListener("load", () => {
-                      theme.updateTheme(getTheme({
+                      theme.saveTheme(getTheme({
                         themeName: theme.themeName,
                         accent: theme.accent,
                         useFluentDesign: theme.useFluentDesign,
-                        desktopBackgroundImage: reader.result.toString()
+                        desktopBackgroundImage: reader.result
                       }));
                     }, false);
                   if (file) {
@@ -146,7 +141,7 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
             style={{ margin: "10px 0" }}
             defaultColor={theme.accent}
             onChangedColor={accent => {
-              theme.updateTheme(getTheme({
+              theme.saveTheme(getTheme({
                 themeName: theme.themeName,
                 accent,
                 useFluentDesign: theme.useFluentDesign,
@@ -156,16 +151,15 @@ export default class CustomTheme extends React.Component<CustomThemeProps> {
           />
           </ScrollReveal>
         </div>
-        <RevealEffect
-          effectEnable="border"
-          hoverSize={400}
-        />
       </div>
     );
   }
 }
 
-function getStyles(customTheme: CustomTheme) {
+function getStyles(customTheme: CustomTheme): {
+  root?: React.CSSProperties;
+  content?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style, renderContentWidth }
@@ -173,11 +167,7 @@ function getStyles(customTheme: CustomTheme) {
   const { prefixStyle } = theme;
 
   return {
-    root: prefixStyle({
-      position: "relative",
-      borderBottom: `1px solid ${theme.listLow}`,
-      ...style
-    }),
+    root: prefixStyle(style),
     content: prefixStyle({
       padding: 20,
       width: renderContentWidth,

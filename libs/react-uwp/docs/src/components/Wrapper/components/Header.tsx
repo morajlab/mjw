@@ -14,10 +14,9 @@ export interface DataProps extends WrapperState {
   headerHeight?: number;
   docVersion?: string;
 }
-import getCurrVersion from "utils/getCurrVersion";
-import RevealEffect from "react-uwp/RevealEffect";
+import getCurrVersion from "common/getCurrVersion";
 
-export interface HeaderProps extends DataProps, React.HTMLAttributes<HTMLDivElement> { }
+export interface HeaderProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
 export interface HeaderState {
   currVersion?: string;
   currVersions?: string[];
@@ -118,10 +117,6 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
     const { currVersion, currVersions, showDocsTreeView } = this.state;
     const { theme } = this.context;
     const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      className: "Header",
-      styles
-    });
     const isPhoneScreen = screenType === "phone";
     const isBigScreen = screenType === "pc" || screenType === "laptop";
 
@@ -143,9 +138,9 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
         ) : null}
         <div
           {...attributes}
-          {...classes.root}
+          style={styles.root}
         >
-          <div {...classes.content}>
+          <div style={styles.content}>
             {!isBigScreen && (
               <IconButton
                 ref={navButton => this.navButton = navButton}
@@ -156,11 +151,11 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
                 GlobalNavButton
               </IconButton>
             )}
-            <Link {...classes.logo} to={`${docVersion}/`}>
+            <Link style={styles.logo} to={`${docVersion}/`}>
               <ReactIcon height={isPhoneScreen ? 36 : 48} fill={theme.accent} />
               <p style={{ marginLeft: 2 }}>React UWP</p>
             </Link>
-            <div {...classes.navContent}>
+            <div style={styles.navContent}>
               {!isPhoneScreen && (
                 <div style={styles.links}>
                   <NavLink headerHeight={headerHeight} to={`${docVersion}/get-started`}>
@@ -172,42 +167,46 @@ export default class Header extends React.Component<HeaderProps, HeaderState> {
                   <NavLink headerHeight={headerHeight} to={`${docVersion}/resources`}>
                     Resources
                   </NavLink>
-                  {/* <NavLink headerHeight={headerHeight} to={`${docVersion}/showcase`}>
+                  <NavLink headerHeight={headerHeight} to={`${docVersion}/showcase`}>
                     Showcase
-                  </NavLink> */}
+                  </NavLink>
                 </div>
               )}
               <div style={{ width: isPhoneScreen ? 80 : 120 }}>
                 <DropDownMenu
+                  wrapperAttributes={{
+                    style: {
+                      maxHeight: 174
+                    }
+                  }}
                   style={{
-                    maxHeight: 140,
-                    width: isPhoneScreen ? 80 : 120,
                     zIndex: theme.zIndex.header + 1,
                     position: "fixed",
-                    overflowY: "auto",
                     top: isPhoneScreen ? 9 : 14,
                     right: isPhoneScreen ? 20 : (window.innerWidth - (renderContentWidth as any)) / 2
                   }}
+                  itemWidth={isPhoneScreen ? 80 : 120}
                   defaultValue={currVersion}
+                  background={theme.altHigh}
                   values={currVersions}
-                  key={Math.random()}
                   onChangeValue={this.handleChangeVersion}
                 />
               </div>
             </div>
           </div>
-          <RevealEffect
-            effectEnable="both"
-            hoverSize={200}
-            effectRange="all"
-          />
         </div>
       </header>
     );
   }
 }
 
-function getStyles(header: Header) {
+function getStyles(header: Header): {
+  root?: React.CSSProperties;
+  content?: React.CSSProperties;
+  logo?: React.CSSProperties;
+  navContent?: React.CSSProperties;
+  links?: React.CSSProperties;
+} {
   const {
     context: { theme },
     props: { style, renderContentWidth, screenType, headerHeight }
@@ -219,6 +218,11 @@ function getStyles(header: Header) {
     root: prefixStyle({
       fontSize: 14,
       color: theme.baseHigh,
+      background: theme.useFluentDesign ? (
+        theme.isDarkTheme ? "hsla(0, 0%, 0%, 0.95)" : "hsla(0, 0%, 100%, 0.95)"
+      ) : (
+        theme.isDarkTheme ? "hsla(0, 0%, 5%, 0.85)" : "hsla(0, 0%, 95%, 0.85)"
+      ),
       boxShadow: theme.isDarkTheme ? void 0 : `0 2px 8px ${theme.listLow}`,
       width: "100%",
       height: headerHeight,
@@ -230,18 +234,15 @@ function getStyles(header: Header) {
       left: 0,
       top: 0,
       zIndex: theme.zIndex.header,
-      borderBottom: `1px solid ${theme.listLow}`,
-      ...style,
-      ...theme.acrylicTexture20.style
+      ...style
     }),
     content: prefixStyle({
-      position: "relative",
       display: "flex",
       flexDirection: "row",
       justifyContent: isPhoneScreen ? "space-between" : void 0,
       width: renderContentWidth,
       height: "100%",
-      overflow: "hidden",
+      overflow: "auto",
       flexWrap: "nowrap"
     }),
     logo: prefixStyle({

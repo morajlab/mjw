@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
+import AddBlurEvent from "../common/AddBlurEvent";
 import Icon from "../Icon";
 import TextBox from "../TextBox";
 import CalendarView from "../CalendarView";
@@ -120,9 +120,9 @@ export class CalendarDatePicker extends React.Component<CalendarDatePickerProps,
       showCalendarView
     } = this.state;
     const { theme } = this.context;
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
-      styles,
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
+      styles: inlineStyles,
       className: "calendar-picker"
     });
 
@@ -134,24 +134,24 @@ export class CalendarDatePicker extends React.Component<CalendarDatePickerProps,
 
     return (
       <div
-        {...classes.root}
+        {...styles.root}
         onClick={this.toggleShowCalendarView}
         ref={rootElm => this.rootElm = rootElm}
       >
         <TextBox
           {...attributes}
           ref={textBox => this.textBox = textBox}
-          style={styles.input}
+          style={inlineStyles.input}
           placeholder={isInit ? placeholder : mmddyy }
           disabled
           rightNode={
-            <Icon style={styles.icon}>
+            <Icon style={inlineStyles.icon}>
               Calendar
             </Icon>
           }
         />
         <CalendarView
-          style={styles.calendarView}
+          style={inlineStyles.calendarView}
           defaultDate={defaultDate}
           onChangeDate={this.handleChangeDate}
         />
@@ -160,7 +160,12 @@ export class CalendarDatePicker extends React.Component<CalendarDatePickerProps,
   }
 }
 
-function getStyles(calendarDatePicker: CalendarDatePicker) {
+function getStyles(calendarDatePicker: CalendarDatePicker): {
+  root?: React.CSSProperties;
+  input?: React.CSSProperties;
+  icon?: React.CSSProperties;
+  calendarView?: React.CSSProperties;
+} {
   const {
     context,
     props: {
@@ -191,7 +196,7 @@ function getStyles(calendarDatePicker: CalendarDatePicker) {
       cursor: "pointer",
       color: theme.baseHigh
     },
-    calendarView: theme.prefixStyle({
+    calendarView: {
       position: "absolute",
       top: height,
       left: 0,
@@ -204,7 +209,7 @@ function getStyles(calendarDatePicker: CalendarDatePicker) {
       opacity: showCalendarView ? 1 : 0,
       pointerEvents: showCalendarView ? "all" : "none",
       transition: "all .25s ease"
-    })
+    }
   };
 }
 

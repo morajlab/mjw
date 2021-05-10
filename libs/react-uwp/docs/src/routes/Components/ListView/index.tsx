@@ -3,9 +3,9 @@ import * as PropTypes from "prop-types";
 
 import ComponentDetail from "components/ComponentDetail";
 import MarkdownRender from "react-uwp/MarkdownRender";
-import * as sourceCode from "!raw!react-uwp/ListView/index.tsx";
-import sourceCode2docEntry from "utils/sourceCode2docEntry";
+import * as docEntry from "react-uwp/ListView/index.doc.json";
 import * as readmeText from "!raw!./README.md";
+import * as itemTypeText from "!raw!./ListItemType.md";
 
 import CodeExample from "components/CodeExample";
 
@@ -26,13 +26,11 @@ export default class ListView extends React.Component<any> {
       routes,
       ...attributes
     } = this.props;
-    const docEntry = sourceCode2docEntry(sourceCode);
 
     return (
       <ComponentDetail
         readmeText={readmeText as any}
         docEntry={docEntry}
-        renderOtherTypes={["ListItem"]}
       >
         <CodeExample
           title="Simple Examples"
@@ -43,6 +41,7 @@ export default class ListView extends React.Component<any> {
         >
           <SimpleExample />
         </CodeExample>
+        <MarkdownRender text={itemTypeText as any} />
       </ComponentDetail>
     );
   }

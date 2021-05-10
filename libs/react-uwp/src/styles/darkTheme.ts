@@ -1,3 +1,3 @@
 import getTheme from "./getTheme";
-const darkTheme = getTheme({ themeName: "dark" });
+const darkTheme: ReactUWP.ThemeType = getTheme({ themeName: "dark" });
 export default darkTheme;

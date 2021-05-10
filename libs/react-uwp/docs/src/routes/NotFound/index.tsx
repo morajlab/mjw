@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import * as tinyColor from "tinycolor2";
-import { getStriped } from "react-uwp/styles/backgrounds";
+import * as tinycolor from "tinycolor2";
+import getStripedBackground from "react-uwp/styles/getStripedBackground";
 import Icon from "react-uwp/Icon";
 
 export interface DataProps {
@@ -61,11 +61,7 @@ function getStyles(notFound: NotFound): {
 
   return {
     root: prefixStyle({
-      background: getStriped({
-        size: 4,
-        primaryColor: tinyColor(theme.baseHigh).setAlpha(0.025).toRgbString(),
-        secondaryColor: "transparent"
-      }),
+      ...getStripedBackground(4, tinycolor(theme.baseHigh).setAlpha(0.025).toRgbString(), "transparent"),
       fontSize: 14,
       color: theme.baseMediumHigh,
       padding: 40,

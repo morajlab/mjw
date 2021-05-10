@@ -1,6 +1,5 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import RevealEffect, { RevealEffectProps } from "../RevealEffect";
 
 export interface ExpandedItem {
   /**
@@ -25,6 +24,7 @@ export interface ExpandedItem {
   focusColor?: string;
 }
 import IconButton from "../IconButton";
+import { Theme } from "react-uwp/Theme";
 
 export interface DataProps {
   /**
@@ -59,10 +59,6 @@ export interface DataProps {
    * HightLight expanded item ny index.
    */
   onFocusItem?: (itemIndex?: number) => void;
-  /**
-   * Set RevealEffect, check the styles/reveal-effect.
-   */
-  revealConfig?: RevealEffectProps;
 }
 
 export interface FloatNavProps extends DataProps, React.HTMLAttributes<HTMLDivElement> {}
@@ -120,7 +116,6 @@ export class FloatNav extends React.Component<FloatNavProps, FloatNavState> {
       initWidth,
       focusItemIndex,
       className,
-      revealConfig,
       ...attributes
     } = this.props;
     const { theme } = this.context;
@@ -135,21 +130,21 @@ export class FloatNav extends React.Component<FloatNavProps, FloatNavState> {
       fontSize: 12
     });
 
-    const styles = getStyles(this);
-    const classes = theme.prepareStyles({
+    const inlineStyles = getStyles(this);
+    const styles = theme.prepareStyles({
       className: "float-nav",
-      styles
+      styles: inlineStyles
     });
 
     return (
       <div
         {...attributes}
-        {...classes.root}
-        className={theme.classNames(classes.root.className, className)}
+        style={styles.root.style}
+        className={theme.classNames(styles.root.className, className)}
       >
         <div
           {...attributes}
-          {...classes.wrapper}
+          {...styles.wrapper}
         >
           {React.Children.map(topNode, (child: React.ReactElement<any>, index) => (
             <div
@@ -169,10 +164,7 @@ export class FloatNav extends React.Component<FloatNavProps, FloatNavState> {
             const isHovered = hoverItem === index;
             const padding = initWidth / 2;
             const linkStyle: React.CSSProperties = theme.prefixStyle({
-              position: "relative",
               overflow: "hidden",
-              borderTop: `${theme.borderWidth}px solid transparent`,
-              borderBottom: `${theme.borderWidth}px solid transparent`,
               display: "flex",
               alignItems: "center",
               boxSizing: "border-box",
@@ -198,9 +190,6 @@ export class FloatNav extends React.Component<FloatNavProps, FloatNavState> {
                 onClick={e => { onFocusItem(index); if (onClick) onClick(e); }}
                 style={theme.prefixStyle({
                   ...linkStyleClasses.style,
-                  margin: 0,
-                  border: "none",
-                  outline: "none",
                   flexDirection: isFloatRight ? "row" : "row-reverse",
                   justifyContent: isHovered ? "space-between" : "center",
                   color: hoverIndexArray[index] ? "#fff" : theme.baseHigh,
@@ -216,7 +205,6 @@ export class FloatNav extends React.Component<FloatNavProps, FloatNavState> {
                     style: { color: hoverIndexArray[index] || isFirst ? "#fff" : theme.baseHigh }
                   })
                 ) : iconNode}
-                {/* <RevealEffect effectRange="all" {...revealConfig} /> */}
               </a>
             );
           })}
@@ -257,7 +245,7 @@ function getStyles(floatNav: FloatNav) {
   const { prefixStyle } = theme;
   return {
     root: prefixStyle({
-      width: initWidth,
+      width: 48,
       background: theme.altHigh,
       ...style
     }) as React.CSSProperties,
@@ -266,8 +254,7 @@ function getStyles(floatNav: FloatNav) {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      alignItems: isFloatRight ? "flex-end" : "flex-start",
-      ...style
+      alignItems: isFloatRight ? "flex-end" : "flex-start"
     }),
     button: {
       background: theme.accent,

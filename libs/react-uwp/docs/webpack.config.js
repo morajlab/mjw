@@ -25,7 +25,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(`${outputPath}/${publicPath}/`),
-    publicPath: `/${publicPath}/`,
+    publicPath: __DEV__ ? `http://${hostName}:${port}/${publicPath}/` : `/${publicPath}/`,
     filename: `js/[name]${__DEV__ ? '' : '.[hash:5]'}.js`,
     chunkFilename: `js/[name]${__DEV__ ? '' : '.[chunkhash:5]'}.js`
   },
@@ -74,11 +74,11 @@ module.exports = {
     }]
   },
   plugins: [
-    new WebpackMd5Hash(),
-    new ManifestPlugin({ fileName: 'webpack-manifest.json' }),
     new WebpackBuildDllPlugin({
       dllConfigPath: './webpack.dll.config.js'
     }),
+    new WebpackMd5Hash(),
+    new ManifestPlugin({ fileName: 'webpack-manifest.json' }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       __DEV__,
@@ -94,7 +94,6 @@ module.exports = {
       manifest: require(`./${outputPath}/${publicPath}/vendor-manifest${__DEV__ ? '.dev' : '.prod'}.json`)
     })
   ].concat(__DEV__ ? [
-    // new (require('webpack-bundle-analyzer').BundleAnalyzerPlugin)(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ] : [

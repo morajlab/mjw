@@ -5,7 +5,8 @@ import ComponentDetail from "../../../components/ComponentDetail";
 import CodeExample from "../../../components/CodeExample";
 
 import * as sourceCode from "!raw!react-uwp/Button/index.tsx";
-import sourceCode2docEntry from "utils/sourceCode2docEntry";
+import sourceCode2docEntry from "common/sourceCode2docEntry";
+const docEntry = sourceCode2docEntry(sourceCode);
 
 import * as readmeText from "!raw!./README.md";
 
@@ -34,7 +35,6 @@ export default class Button extends React.Component {
       routeParams,
       routes
     } = this.props;
-    const docEntry = sourceCode2docEntry(sourceCode);
 
     return (
       <ComponentDetail

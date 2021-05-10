@@ -2,13 +2,13 @@ import * as React from "react";
 import * as Router from "react-router";
 import * as PropTypes from "prop-types";
 
-import scrollToYEasing from "react-uwp/utils/browser/scrollToYEasing";
+import scrollToYEasing from "react-uwp/common/browser/scrollToYEasing";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import getTheme from "react-uwp/styles/getTheme";
-import getRootPath from "utils/getRootPath";
-import addCSSRule from "react-uwp/utils/browser/addCSSRule";
+import getRootPath from "common/getRootPath";
+import addCSSRule from "react-uwp/common/browser/addCSSRule";
 
 import IconButton from "react-uwp/IconButton";
 import FloatNav from "react-uwp/FloatNav";
@@ -158,7 +158,7 @@ export default class Wrapper extends React.Component<WrapperProps, WrapperState>
               </IconButton>,
               title: "Toggle Fluent Design",
               onClick: () => {
-                theme.updateTheme(getTheme({
+                theme.saveTheme(getTheme({
                   themeName: theme.themeName,
                   accent: theme.accent,
                   useFluentDesign: !theme.useFluentDesign,
@@ -174,7 +174,7 @@ export default class Wrapper extends React.Component<WrapperProps, WrapperState>
               </IconButton>,
               title: "Toggle Theme",
               onClick: () => {
-                theme.updateTheme(getTheme({
+                theme.saveTheme(getTheme({
                   themeName: theme.isDarkTheme ? "light" : "dark",
                   accent: theme.accent,
                   useFluentDesign: theme.useFluentDesign,

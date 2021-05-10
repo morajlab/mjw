@@ -1,12 +1,11 @@
 import * as React from "react";
-import { Router, browserHistory } from "react-router";
-import * as MobileDetect from "mobile-detect";
-const md = new MobileDetect(window.navigator.userAgent);
+import { Router, RouteComponent, browserHistory } from "react-router";
 
 import Theme from "react-uwp/Theme";
 import getTheme from "react-uwp/styles/getTheme";
 import Wrapper from "../components/Wrapper";
 import WrapperWithCategories from "../components/WrapperWithCategories";
+import setStaticAcrylicTexture from "common/setStaticAcrylicTexture";
 
 export interface RouterCallback {
   (error: any, component?: any): void;
@@ -16,24 +15,16 @@ const useFluentDesign = true;
 const desktopBackgroundImage = require<string>("assets/images/blurBackground/jennifer-bailey-10753.jpg");
 const theme = getTheme({ useFluentDesign, desktopBackgroundImage });
 
-// if use backdrop css, the browser performance had some issue.
-const useBackdropCSS = {
-  enableNoiseTexture: true,
-  forceGenerateAcrylicTextures: false
-};
-const useCanvasAcrylic = {
-  enableNoiseTexture: true,
-  forceGenerateAcrylicTextures: true
-};
-
+localStorage.setItem("__REACT_UWP__", "");
 export class ThemeWrapper extends React.Component {
   render() {
     const { children } = this.props;
     return (
       <Theme
-        enableGlobalThemeCSSText
         theme={theme}
-        {...useCanvasAcrylic}
+        autoSaveTheme
+        needGenerateAcrylic={false}
+        themeWillUpdate={setStaticAcrylicTexture}
       >
         {children}
       </Theme>
@@ -64,15 +55,6 @@ function getRoutes(path = "/") {
       }
     },
     childRoutes: [{
-      path: "test",
-      indexRoute: {
-        getComponent: (location: Location, cb: RouterCallback) => {
-          require.ensure([], (require) => {
-            cb(null, require("./Test").default);
-          }, "react-uwp-Test");
-        }
-      }
-    }, {
       path: "get-started",
       component: CategoriesWrapper,
       indexRoute: {

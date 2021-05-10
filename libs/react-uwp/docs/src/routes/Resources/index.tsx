@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import * as tinyColor from "tinycolor2";
-import { getStriped } from "react-uwp/styles/backgrounds";
+import * as tinycolor from "tinycolor2";
+import getStripedBackground from "react-uwp/styles/getStripedBackground";
 import { WrapperState } from "components/Wrapper";
 import Category from "./components/Category";
 
@@ -88,11 +88,7 @@ function getStyles(resources: Resources): {
       padding: 20,
       height: "100%",
       display: "flex",
-      background: getStriped({
-        size: 4,
-        primaryColor: tinyColor(theme.baseHigh).setAlpha(0.025).toRgbString(),
-        secondaryColor: "transparent"
-      }),
+      ...getStripedBackground(4, tinycolor(theme.baseHigh).setAlpha(0.025).toRgbString(), "transparent"),
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",

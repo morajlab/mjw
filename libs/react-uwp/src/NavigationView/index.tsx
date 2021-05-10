@@ -2,8 +2,8 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 import { codes } from "keycode";
 
-import AddBlurEvent from "../utils/AddBlurEvent";
-import shallowEqual from "../utils/shallowEqual";
+import AddBlurEvent from "../common/AddBlurEvent";
+import shallowEqual from "../common/shallowEqual";
 import SlideInOut from "../Animate/SlideInOut";
 import IconButton from "../IconButton";
 import SplitViewCommand from "../SplitViewCommand";
@@ -172,10 +172,8 @@ export class NavigationView extends React.Component<NavigationViewProps, Navigat
   }
 
   toggleExpanded = (expanded?: boolean) => {
-    if (typeof expanded === "boolean") {
-      if (expanded !== this.state.expanded) {
-        this.setState({ expanded });
-      }
+    if (typeof expanded === "boolean" && expanded !== this.state.expanded) {
+      this.setState({ expanded });
     } else {
       this.setState((prevState, prevProps) => ({  expanded: !prevState.expanded }));
     }
@@ -345,6 +343,7 @@ function getStyles(NavigationView: NavigationView): {
   let minHeight = isMinimal ? 0 : 48;
   if (navigationTopNodes) minHeight += 48 * navigationTopNodes.length;
   if (navigationBottomNodes) minHeight += 48 * navigationBottomNodes.length;
+  const currBackground = background || (theme.useFluentDesign ? theme.acrylicTexture40.background : theme.altHigh);
   const transition = "width .25s ease-in-out";
 
   return {
@@ -357,12 +356,12 @@ function getStyles(NavigationView: NavigationView): {
       ...style
     }),
     topIcon: prefixStyle({
-      ...theme.acrylicTexture40.style,
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "flex-start",
       width: isMinimal ? "100%" : expandedWidth,
+      background: currBackground,
       flex: "0 0 auto",
       zIndex: 1
     }),
@@ -376,7 +375,6 @@ function getStyles(NavigationView: NavigationView): {
       textOverflow: "ellipsis"
     }),
     paneParent: prefixStyle({
-      ...(isMinimal ? theme.acrylicTexture40.style : {}),
       display: "inline-block",
       verticalAlign: "top",
       width: isMinimal ? "100%" : (isOverLay ? currInitWidth : (expanded ? expandedWidth : currInitWidth)),
@@ -385,20 +383,22 @@ function getStyles(NavigationView: NavigationView): {
       zIndex: isOverLay || isMinimal ? 1 : void 0,
       position: isOverLay ? "absolute" : void 0,
       top: isOverLay ? 0 : void 0,
+      background: isMinimal ? currBackground : void 0,
       transition
     }),
     pane: prefixStyle({
-      ...theme.acrylicTexture40.style,
       display: "flex",
       flexDirection: "column",
       alignItems: "flex-start",
       justifyContent: "space-between",
+      background: currBackground,
       overflow: isMinimal ? void 0 : "hidden",
       width: expanded ? expandedWidth : (isMinimal ? 0 : currInitWidth),
       ...(isMinimal ? {
         position: "absolute",
         top: 0,
         left: 0,
+        background: currBackground
       } as React.CSSProperties : void 0),
       height: "100%",
       transition,

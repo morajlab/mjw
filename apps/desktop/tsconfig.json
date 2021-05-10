@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
+  "files": ["../../libs/react-uwp/typings/index.d.ts"],
   "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }
