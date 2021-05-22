@@ -41,3 +41,7 @@ Thumbs.db
 # Bit.dev Files and Directories
 /public/*
 !/public/.gitkeep
+
+/apps/website/node_modules
+/apps/website/public
+/apps/website/.cache
