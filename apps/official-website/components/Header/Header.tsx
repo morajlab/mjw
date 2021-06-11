@@ -11,6 +11,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({}) => {
     slogan,
     leftCol,
     rightCol,
+    firstLeftLayer,
     secondLeftLayer,
     thirdLeftLayer,
   } = Styles({});
@@ -18,8 +19,8 @@ export const Header: FunctionComponent<IHeaderProps> = ({}) => {
   return (
     <Container className="p-5" fluid {...root}>
       <Row>
-        <Col>
-          <div {...leftCol}>
+        <Col {...leftCol}>
+          <div className="shadow" {...firstLeftLayer}>
             <div {...secondLeftLayer}>
               <div {...thirdLeftLayer}>
                 <h1 className="display-4 text-uppercase font-weight-bolder d-flex flex-column">

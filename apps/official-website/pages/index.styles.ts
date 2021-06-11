@@ -5,6 +5,7 @@ export const Styles = ({}: IIndexPageStyleProps) => {
   return {
     root: css({
       backgroundColor: '#343a40',
+      overflowX: 'hidden',
     }),
   };
 };

@@ -15,6 +15,9 @@ export const Styles = ({}: IHeaderStyleProps) => {
       fontSize: '1.5rem',
     }),
     leftCol: css({
+      zIndex: '2',
+    }),
+    firstLeftLayer: css({
       background: '#ffffff',
       marginLeft: '-50px',
       padding: '10px',
