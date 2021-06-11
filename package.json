@@ -50,6 +50,7 @@
     "gatsby-plugin-typescript": "3.5.0",
     "gatsby-source-filesystem": "3.5.0",
     "gatsby-transformer-sharp": "3.5.0",
+    "glamor": "^2.20.40",
     "inline-style-prefixer": "^3.0.5",
     "keycode": "^2.1.8",
     "lodash": "^4.17.20",
