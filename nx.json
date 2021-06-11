@@ -25,5 +25,13 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "official-website": {
+      "tags": []
+    },
+    "official-website-e2e": {
+      "tags": [],
+      "implicitDependencies": ["official-website"]
+    }
+  }
 }
