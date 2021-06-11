@@ -6,10 +6,30 @@ export const Styles = ({}: IHeaderStyleProps) => {
     root: css({}),
     caption: css({
       background:
-        'linear-gradient(90deg, rgb(90, 24, 154, 0.4) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%)',
+        'linear-gradient(-95deg, #750ebe 0%, rgb(171, 71, 241, 0.3) 90%, rgba(255,255,255,1) 100%)',
+      '& h1': {
+        lineHeight: '1.3',
+      },
     }),
     slogan: css({
       fontSize: '1.5rem',
+    }),
+    leftCol: css({
+      background: '#ffffff',
+      marginLeft: '-50px',
+      padding: '10px',
+    }),
+    secondLeftLayer: css({
+      background:
+        'linear-gradient(-95deg, #750ebe 0%, rgba(255,255,255,1) 90%, rgba(255,255,255,1) 100%)',
+      padding: '10px',
+    }),
+    thirdLeftLayer: css({
+      background: '#ffffff',
+      paddingLeft: '80px',
+      paddingBottom: '80px',
+      paddingTop: '80px',
+      paddingRight: '0px',
     }),
   };
 };

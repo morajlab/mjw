@@ -1,10 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import { Button } from 'shards-react';
+import { Styles } from './index.styles';
 import { Header } from '../components/.';
+import type { IIndexPageProps } from './index.types';
 
-export const Index: FunctionComponent = () => {
+export const Index: FunctionComponent<IIndexPageProps> = ({}) => {
+  const { root } = Styles({});
+
   return (
-    <div className="user-select-none">
+    <div className="user-select-none position-fixed" {...root}>
       <Header />
     </div>
   );
