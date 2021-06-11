@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { AppProps } from 'next/app';
+import { Favicon } from '../components/.';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'shards-ui/dist/css/shards.min.css';
 import './styles.module.scss';
 
 const CustomApp = ({ Component, pageProps }: AppProps) => (
-  <Component {...pageProps} />
+  <Fragment>
+    <Favicon />
+    <Component {...pageProps} />
+  </Fragment>
 );
 
 export default CustomApp;
