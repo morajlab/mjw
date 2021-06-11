@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import Head from 'next/head';
 import type { IFaviconProps } from './Favicon.types';
 
-export const Favicon: FunctionComponent<IFaviconProps> = ({}) => {
+export const Favicon: FunctionComponent<IFaviconProps> = ({ ...rest }) => {
   return (
-    <Head>
+    <Head {...rest}>
       <link
         rel="apple-touch-icon"
         sizes="180x180"

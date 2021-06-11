@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Container, Row, Col } from 'shards-react';
 import { Styles } from './Header.styles';
-import { Logo, AboutUS } from '../../components/.';
+import { Logo, AboutUS } from '..';
 import type { IHeaderProps } from './Header.types';
 
 export const Header: FunctionComponent<IHeaderProps> = ({}) => {
