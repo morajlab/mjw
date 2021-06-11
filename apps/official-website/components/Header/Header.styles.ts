@@ -31,6 +31,9 @@ export const Styles = ({}: IHeaderStyleProps) => {
       paddingTop: '80px',
       paddingRight: '0px',
     }),
+    rightCol: css({
+      zIndex: '1',
+    }),
   };
 };
 

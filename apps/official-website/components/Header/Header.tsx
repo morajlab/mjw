@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Container, Row, Col } from 'shards-react';
 import { Styles } from './Header.styles';
+import { Logo } from '../../components/.';
 import type { IHeaderProps } from './Header.types';
 
 export const Header: FunctionComponent<IHeaderProps> = ({}) => {
@@ -9,6 +10,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({}) => {
     caption,
     slogan,
     leftCol,
+    rightCol,
     secondLeftLayer,
     thirdLeftLayer,
   } = Styles({});
@@ -34,7 +36,9 @@ export const Header: FunctionComponent<IHeaderProps> = ({}) => {
             </div>
           </div>
         </Col>
-        <Col lg={5}>Right side</Col>
+        <Col lg={5} {...rightCol}>
+          <Logo />
+        </Col>
       </Row>
     </Container>
   );

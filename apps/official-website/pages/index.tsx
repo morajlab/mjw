@@ -7,7 +7,7 @@ export const Index: FunctionComponent<IIndexPageProps> = ({}) => {
   const { root } = Styles({});
 
   return (
-    <div className="user-select-none position-fixed" {...root}>
+    <div className="user-select-none" {...root}>
       <Header />
     </div>
   );
