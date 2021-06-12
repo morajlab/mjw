@@ -4,7 +4,7 @@ import { Styles } from './Header.styles';
 import { Logo, AboutUS } from '..';
 import type { IHeaderProps } from './Header.types';
 
-export const Header: FunctionComponent<IHeaderProps> = ({}) => {
+export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
   const {
     root,
     caption,
@@ -17,7 +17,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({}) => {
   } = Styles({});
 
   return (
-    <Container className="p-5" fluid {...root}>
+    <Container className="p-5" fluid {...root} {...rest}>
       <Row>
         <Col {...leftCol}>
           <div className="shadow" {...firstLeftLayer}>

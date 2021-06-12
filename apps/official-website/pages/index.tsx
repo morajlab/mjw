@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Styles } from './index.styles';
-import { Header } from '../components/.';
+import { Header, Technologies } from '../components/.';
 import type { IIndexPageProps } from './index.types';
 
 export const Index: FunctionComponent<IIndexPageProps> = ({}) => {
@@ -9,6 +9,7 @@ export const Index: FunctionComponent<IIndexPageProps> = ({}) => {
   return (
     <div className="user-select-none" {...root}>
       <Header />
+      <Technologies />
     </div>
   );
 };
