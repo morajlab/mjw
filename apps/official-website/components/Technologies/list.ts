@@ -1,5 +1,3 @@
-//import {} from 'simple-icons/icons/mdnwebdocs';
-
 export const IconsList: string[] = [
   'hotjar',
   'dotnet',

@@ -1,4 +1,5 @@
-import React, { FunctionComponent } from 'react';
+import React, { createElement, FunctionComponent, Fragment } from 'react';
+import { renderToString } from 'react-dom/server';
 import { Get } from 'simple-icons';
 import { Styles } from './Icon.styles';
 import type { IIconProps } from './Icon.types';
@@ -11,7 +12,6 @@ export const SvgRenderer: FunctionComponent<{ svg: string; size?: string }> = ({
   const { root } = Styles({
     svg,
     size,
-    color: (rest as any)?.style?.color,
   });
 
   return <i {...Object.assign(rest, { style: { color: null } })} {...root}></i>;
@@ -27,11 +27,27 @@ export const Icon: FunctionComponent<IIconProps> = ({
   }
 
   return (
-    <div>
-      {name.map((value, index) => (
-        <SvgRenderer svg={Get(value).svg} size={size} key={index} {...rest} />
-      ))}
-    </div>
+    <Fragment>
+      {name.map(({ name, ...svgRest }, index) => {
+        const { path, title } = Get(name);
+        const svg: string = renderToString(
+          <svg
+            role="img"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>{title}</title>
+            {createElement('path', {
+              d: path,
+              fill: (rest as any)?.style?.color ?? svgRest.fill ?? '#000000',
+              ...svgRest,
+            })}
+          </svg>
+        );
+
+        return <SvgRenderer svg={svg} size={size} key={index} {...rest} />;
+      })}
+    </Fragment>
   );
 };
 

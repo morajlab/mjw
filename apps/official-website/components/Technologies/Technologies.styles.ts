@@ -5,8 +5,21 @@ export const Styles = ({}: ITechnologiesStyleProps) => {
   return {
     root: css({}),
     icons: {
-      color: '#eeeeee',
+      color: 'rgba(0, 0, 0, 0.5)',
     },
+    iconsContainer: css({
+      position: 'relative',
+      ':before': {
+        content: "''",
+        display: 'block',
+        position: 'absolute',
+        margin: '-10rem',
+        inset: 0,
+        boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)',
+        background:
+          'radial-gradient(circle, transparent 0%, rgba(0,0,0,0.3) 100%)',
+      },
+    }),
   };
 };
 

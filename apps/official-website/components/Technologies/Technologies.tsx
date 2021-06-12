@@ -1,14 +1,23 @@
 import React, { FunctionComponent } from 'react';
 import { Container } from 'shards-react';
 import { Styles } from './Technologies.styles';
-import { Icon } from '..';
+import { Icon, IIconSVGProps } from '..';
 import { IconsList } from './list';
 import type { ITechnologiesProps } from './Technologies.types';
 
 export const Technologies: FunctionComponent<ITechnologiesProps> = ({
   ...rest
 }) => {
-  const { root, icons } = Styles({});
+  const { root, icons, iconsContainer } = Styles({});
+  const ChangedIconsList: IIconSVGProps[] = IconsList.map((name, index) => {
+    let rand: number = Math.floor(Math.random() * 2) + 1;
+
+    if (index % rand === 0) {
+      return { name, fill: '#2f82ff' };
+    }
+
+    return { name };
+  });
 
   return (
     <Container className="p-5 text-center" fluid {...root} {...rest}>
@@ -21,7 +30,14 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
         aspernatur possimus et tempore autem vero tempora dolorem, ratione
         facilis eius consectetur?
       </p>
-      <Icon name={IconsList} style={icons} />
+      <div {...iconsContainer}>
+        <Icon
+          className="m-2"
+          name={ChangedIconsList}
+          style={icons}
+          size="50px"
+        />
+      </div>
     </Container>
   );
 };
