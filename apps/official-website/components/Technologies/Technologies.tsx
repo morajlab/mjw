@@ -2,12 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { Container } from 'shards-react';
 import { Styles } from './Technologies.styles';
 import { Icon } from '..';
+import { IconsList } from './list';
 import type { ITechnologiesProps } from './Technologies.types';
 
 export const Technologies: FunctionComponent<ITechnologiesProps> = ({
   ...rest
 }) => {
-  const { root } = Styles({});
+  const { root, icons } = Styles({});
 
   return (
     <Container className="p-5 text-center" fluid {...root} {...rest}>
@@ -20,7 +21,7 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
         aspernatur possimus et tempore autem vero tempora dolorem, ratione
         facilis eius consectetur?
       </p>
-      <Icon name={['4d', 'adobe', 'airbnb']} style={{ color: '#2f82ff' }} />
+      <Icon name={IconsList} style={icons} />
     </Container>
   );
 };
