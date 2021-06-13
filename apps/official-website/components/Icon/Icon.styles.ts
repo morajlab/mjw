@@ -22,4 +22,8 @@ export const Styles = ({ svg, size }: IIconStyleProps) => {
   };
 };
 
+export const BootstrapIconStyles = ({}: Partial<IIconStyleProps>) => {
+  return { root: css({}) };
+};
+
 export default Styles;

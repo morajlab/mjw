@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import { Container } from 'shards-react';
 import { Styles } from './Technologies.styles';
-import { Icon, IIconSVGProps } from '..';
+import { Section, Icon, IIconSVGProps } from '..';
 import { IconsList } from './list';
 import type { ITechnologiesProps } from './Technologies.types';
 
@@ -19,7 +18,7 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
   });
 
   return (
-    <Container className="p-5 text-center" fluid {...root} {...rest}>
+    <Section className="text-center" {...root} {...rest}>
       <h1 className="text-white fw-bolder">
         _What technologies we are using ?
       </h1>
@@ -37,7 +36,7 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
           size="50px"
         />
       </div>
-    </Container>
+    </Section>
   );
 };
 

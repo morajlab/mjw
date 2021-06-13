@@ -5,3 +5,5 @@ export * from './Favicon/.';
 export * from './Head/.';
 export * from './Technologies/.';
 export * from './Icon/.';
+export * from './Footer/.';
+export * from './Section/.';

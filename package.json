@@ -37,6 +37,8 @@
     "@uifabric/icons": "^7.5.23",
     "assign-deep": "^1.0.1",
     "assign-symbols": "^2.0.2",
+    "bootstrap-icons": "^1.5.0",
+    "copyright": "^0.0.5",
     "core-js": "^3.6.5",
     "d3-ease": "^1.0.6",
     "document-register-element": "1.13.1",

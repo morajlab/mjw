@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import { Container, Row, Col } from 'shards-react';
+import { Row, Col } from 'shards-react';
 import { Styles } from './Header.styles';
-import { Logo, AboutUS } from '..';
+import { Section, Logo, AboutUS } from '..';
 import type { IHeaderProps } from './Header.types';
 
 export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
@@ -17,7 +17,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
   } = Styles({});
 
   return (
-    <Container className="p-5" fluid {...root} {...rest}>
+    <Section {...root} {...rest}>
       <Row>
         <Col {...leftCol}>
           <div className="shadow" {...firstLeftLayer}>
@@ -42,7 +42,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
           <Logo />
         </Col>
       </Row>
-    </Container>
+    </Section>
   );
 };
 
