@@ -1,8 +1,24 @@
 import React, { FunctionComponent } from 'react';
 import { Row, Col } from 'shards-react';
 import { Styles } from './Header.styles';
-import { Section, Logo, AboutUS } from '..';
+import { INavItemProps, Section, Logo, Navbar, AboutUS } from '..';
 import type { IHeaderProps } from './Header.types';
+
+const NavbarItems: INavItemProps[] = [
+  {
+    title: 'About us',
+    href: '#aboutus',
+  },
+  {
+    title: 'Projects',
+    href: '#projects',
+  },
+  {
+    title: 'Tools',
+    href: '#tools',
+    disabled: true,
+  },
+];
 
 export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
   const {
@@ -36,6 +52,7 @@ export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
               </div>
             </div>
           </div>
+          <Navbar items={NavbarItems} className="py-3" />
           <AboutUS />
         </Col>
         <Col lg={5} {...rightCol}>

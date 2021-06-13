@@ -1,4 +1,4 @@
-const { Container } = require('shards-react');
+const { Container } = await import('shards-react');
 type IContainer = typeof Container;
 
 export interface ISectionProps extends IContainer {}

@@ -7,3 +7,4 @@ export * from './Technologies/.';
 export * from './Icon/.';
 export * from './Footer/.';
 export * from './Section/.';
+export * from './Navbar/.';
