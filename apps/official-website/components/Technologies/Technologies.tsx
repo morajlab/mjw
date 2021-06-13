@@ -9,14 +9,13 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
   ...rest
 }) => {
   const { root, icons, iconsContainer } = Styles({});
-  const ChangedIconsList: IIconSVGProps[] = IconsList.map((name, index) => {
-    let rand: number = Math.floor(Math.random() * 2) + 1;
+  let ChangedIconsList: IIconSVGProps[] = IconsList.map((name, index) => {
+    let result =
+      (index * 10) % 6 === 0
+        ? { name, fillOpacity: 0, stroke: 'rgba(133, 84, 246, 0.6)' }
+        : { name };
 
-    if (index % rand === 0) {
-      return { name, fill: '#2f82ff' };
-    }
-
-    return { name };
+    return result;
   });
 
   return (

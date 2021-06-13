@@ -35,12 +35,21 @@ export const Icon: FunctionComponent<IIconProps> = ({
             role="img"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
+            key={index}
           >
             <title>{title}</title>
             {createElement('path', {
               d: path,
-              fill: (rest as any)?.style?.color ?? svgRest.fill ?? '#000000',
-              ...svgRest,
+              ...Object.assign(
+                {},
+                {
+                  ...svgRest,
+                  ...{
+                    fill:
+                      svgRest?.fill ?? (rest as any)?.style?.color ?? '#000000',
+                  },
+                }
+              ),
             })}
           </svg>
         );

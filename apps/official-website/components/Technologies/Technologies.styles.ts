@@ -5,7 +5,7 @@ export const Styles = ({}: ITechnologiesStyleProps) => {
   return {
     root: css({}),
     icons: {
-      color: 'rgba(0, 0, 0, 0.5)',
+      color: 'rgba(13, 13, 13, 0.3)',
     },
     iconsContainer: css({
       position: 'relative',
