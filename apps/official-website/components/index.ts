@@ -10,3 +10,4 @@ export * from './Section/.';
 export * from './Navbar/.';
 export * from './Projects/.';
 export * from './Heading/.';
+export * from './Link/.';

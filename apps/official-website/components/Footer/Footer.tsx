@@ -2,8 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Styles } from './Footer.styles';
 import copyRight from 'copyright';
 import { Row, Col } from 'shards-react';
-import { BootstrapIcon, Section } from '..';
+import { BootstrapIcon, Section, Link } from '..';
 import { extendProperties } from '../../utilities/.';
+import NextLink from 'next/link';
 import type { IFooterProps } from './Footer.types';
 
 export const Footer: FunctionComponent<IFooterProps> = ({ ...rest }) => {
@@ -14,8 +15,16 @@ export const Footer: FunctionComponent<IFooterProps> = ({ ...rest }) => {
       <Row>
         <Col>{copyRight('Morajlab')}</Col>
         <Col lg={2} className="text-center" {...icons}>
-          <BootstrapIcon name="github" />
-          <BootstrapIcon name="twitter" />
+          <NextLink href="#github" passHref>
+            <Link>
+              <BootstrapIcon name="github" />
+            </Link>
+          </NextLink>
+          <NextLink href="#twitter" passHref>
+            <Link>
+              <BootstrapIcon name="twitter" />
+            </Link>
+          </NextLink>
         </Col>
       </Row>
     </Section>

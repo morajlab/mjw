@@ -20,6 +20,11 @@ export const Styles = ({}: ITechnologiesStyleProps) => {
           'radial-gradient(circle, transparent 0%, rgba(0,0,0,0.3) 100%)',
       },
     }),
+    heading: css({
+      '&:before': {
+        transform: 'rotate(50deg)',
+      },
+    }),
   };
 };
 
