@@ -8,3 +8,5 @@ export * from './Icon/.';
 export * from './Footer/.';
 export * from './Section/.';
 export * from './Navbar/.';
+export * from './Projects/.';
+export * from './Heading/.';

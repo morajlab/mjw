@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Styles } from './Technologies.styles';
 import { Section, Icon, IIconSVGProps } from '..';
+import { extendProperties } from '../../utilities/.';
 import { IconsList } from './list';
 import type { ITechnologiesProps } from './Technologies.types';
 
@@ -9,16 +10,23 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
 }) => {
   const { root, icons, iconsContainer } = Styles({});
   let ChangedIconsList: IIconSVGProps[] = IconsList.map((name, index) => {
-    let result =
-      (index * 10) % 6 === 0
-        ? { name, fillOpacity: 0, stroke: 'rgba(133, 84, 246, 0.6)' }
-        : { name };
+    let result = { name };
+
+    if ((index * 10) % 6 === 0) {
+      result = extendProperties(result, {
+        fillOpacity: 0,
+        stroke: 'rgba(133, 84, 246, 0.6)',
+      });
+    }
 
     return result;
   });
 
   return (
-    <Section className="text-center" {...root} {...rest}>
+    <Section
+      {...root}
+      {...extendProperties(rest, { className: 'text-center' })}
+    >
       <h1 className="text-white fw-bolder">
         _What technologies we are using ?
       </h1>
