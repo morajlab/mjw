@@ -1,26 +1,12 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { Row, Col } from 'shards-react';
 import { Styles } from './Header.styles';
 import { INavItemProps, Section, Logo, Navbar, AboutUS } from '..';
 import type { IHeaderProps } from './Header.types';
 
-const NavbarItems: INavItemProps[] = [
-  {
-    title: 'About us',
-    href: '#aboutus',
-  },
-  {
-    title: 'Projects',
-    href: '#projects',
-  },
-  {
-    title: 'Tools',
-    href: '#tools',
-    disabled: true,
-  },
-];
-
 export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
+  const [langDropdownOpenState, setLangDropdownOpenState] = useState(false);
+  const [langItemState, setLangItemState] = useState('English');
   const {
     root,
     caption,
@@ -31,6 +17,36 @@ export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
     secondLeftLayer,
     thirdLeftLayer,
   } = Styles({});
+  const NavbarItems: INavItemProps[] = [
+    {
+      title: 'About us',
+      href: '#aboutus',
+    },
+    {
+      title: 'Projects',
+      href: '#projects',
+    },
+    {
+      title: 'Tools',
+      href: '#tools',
+      disabled: true,
+    },
+    {
+      title: langItemState,
+      dropdownItems: [
+        {
+          title: 'English',
+          onClick: () => setLangItemState('English'),
+        },
+        {
+          title: 'فارسی',
+          onClick: () => setLangItemState('فارسی'),
+        },
+      ],
+      openState: langDropdownOpenState,
+      stateFunction: () => setLangDropdownOpenState(!langDropdownOpenState),
+    },
+  ];
 
   return (
     <Section {...root} {...rest}>

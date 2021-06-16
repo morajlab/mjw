@@ -23,7 +23,7 @@ export const Project: FunctionComponent<IProjectProps> = ({
       <CardBody>
         <CardTitle className="text-white">{title}</CardTitle>
         <p>{description}</p>
-        <Button>Read more</Button>
+        <Button className="position-relative">Read more</Button>
       </CardBody>
     </Card>
   );

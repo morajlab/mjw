@@ -31,10 +31,21 @@ export const ProjectStyles = ({ nth }: IProjectStyleProps) => {
       backgroundPosition: 'center',
       '& button': {
         borderRadius: 0,
+        zIndex: 1,
+      },
+      '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: '25%',
+        left: '1rem',
+        right: '25%',
+        bottom: '1rem',
+        border: '1px dashed #fff',
       },
     }),
     img: css({
       width: '50%',
+      zIndex: 1,
     }),
   };
 };
