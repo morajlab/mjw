@@ -6,3 +6,5 @@ declare module '*.svg' {
 }
 declare module 'shards-react';
 declare module 'svg-to-dataurl';
+declare module 'remark-html';
+declare module 'remark';
