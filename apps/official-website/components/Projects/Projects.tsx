@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Section, Heading } from '..';
 import { extendProperties } from '../../utilities/.';
+import { getAllPosts } from '../../lib/api';
 import { Card, CardTitle, CardImg, CardBody, Button } from 'shards-react';
 import { Styles, ProjectStyles } from './Projects.styles';
 import type { IProjectsProps, IProjectProps } from './Projects.types';
@@ -29,11 +30,21 @@ export const Project: FunctionComponent<IProjectProps> = ({
   );
 };
 
-export const Projects: FunctionComponent<IProjectsProps> = ({ ...rest }) => {
+export const Projects: FunctionComponent<IProjectsProps> = ({
+  allPosts,
+  ...rest
+}) => {
   const { root } = Styles({});
 
+  console.log(allPosts);
+
   return (
-    <Section className="d-flex flex-wrap position-relative" {...root} {...rest}>
+    <Section
+      {...root}
+      {...extendProperties(rest, {
+        className: 'd-flex flex-wrap position-relative',
+      })}
+    >
       <Heading content="Our projects" />
       <p className="text-light">
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi
@@ -61,3 +72,11 @@ export const Projects: FunctionComponent<IProjectsProps> = ({ ...rest }) => {
 };
 
 export default Projects;
+
+export const getStaticProps = async () => {
+  const allPosts = getAllPosts(['title', 'slug', 'coverImage', 'excerpt']);
+
+  return {
+    props: { allPosts },
+  };
+};

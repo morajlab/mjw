@@ -1,13 +1,7 @@
-import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const postsDirectory = join(
-  process.cwd(),
-  'apps',
-  'official-website',
-  '_posts'
-);
+const postsDirectory = join('..', '_posts');
 
 export const getPostSlugs = () => readdirSync(postsDirectory);
 
@@ -42,9 +36,7 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
 
 export const getAllPosts = (fields: string[] = []) => {
   const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+  const posts = slugs.map((slug) => getPostBySlug(slug, fields));
+
   return posts;
 };

@@ -1,23 +1,22 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 import ErrorPage from 'next/error';
-import { getPostBySlug, getAllPosts, markdownToHtml } from '../../lib/.';
-import Head from 'next/head';
-import PostType from '../../types/post';
+import { useRouter } from 'next/router';
+import { getPostBySlug, getAllPosts } from '../../lib/api';
+import { markdownToHtml } from '../../utilities/markdownToHtml';
+import type { IProject } from '../../types/project';
 
-type Props = {
-  post: PostType;
-  morePosts: PostType[];
-  preview?: boolean;
-};
+export interface IProjectProps {
+  project: IProject;
+}
 
-const Project = ({ post, morePosts, preview }: Props) => {
+const Project = ({ project }: IProjectProps) => {
   const router = useRouter();
 
-  if (!router.isFallback && !post?.slug) {
+  if (!router.isFallback && !project?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
-  console.log(post);
+  console.log(project);
 
   return (
     <p>
@@ -30,20 +29,19 @@ const Project = ({ post, morePosts, preview }: Props) => {
 
 export default Project;
 
-type Params = {
+export interface IGetStaticPropsFunctionProps {
   params: {
     slug: string;
   };
-};
+}
 
-export const getStaticProps = async ({ params }: Params) => {
+export const getStaticProps = async ({
+  params,
+}: IGetStaticPropsFunctionProps) => {
   const post = getPostBySlug(params.slug, [
     'title',
-    'date',
     'slug',
-    'author',
     'content',
-    'ogImage',
     'coverImage',
   ]);
   const content = await markdownToHtml(post.content || '');
