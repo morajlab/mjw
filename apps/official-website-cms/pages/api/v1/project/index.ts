@@ -2,9 +2,14 @@ import { getAllPosts, errorResponse, successResponse } from '../../../../lib/.';
 import type { IProjectPost } from '../../../../types/.';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default (_req: NextApiRequest, response: NextApiResponse) => {
+export default async (_req: NextApiRequest, response: NextApiResponse) => {
   try {
-    const content = getAllPosts(['slug', 'title', 'coverImage', 'excerpt']);
+    const content = await getAllPosts<Partial<IProjectPost>>([
+      'slug',
+      'title',
+      'coverImage',
+      'excerpt',
+    ]);
 
     successResponse<Partial<IProjectPost>[]>({
       response,

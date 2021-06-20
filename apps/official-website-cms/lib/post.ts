@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { markdownToHtml, resolveURL } from '../utilities/.';
 import matter from 'gray-matter';
 
 const postsDirectory = join(
@@ -11,7 +12,10 @@ const postsDirectory = join(
 
 export const getPostSlugs = () => readdirSync(postsDirectory);
 
-export const getPostBySlug = (slug: string, fields: string[] = []) => {
+export const getPostBySlug = async <Type>(
+  slug: string,
+  fields: string[] = []
+): Promise<Type> => {
   const realSlug = slug.replace(/\.md$/, '');
   const fullPath = join(postsDirectory, `${realSlug}.md`);
   const fileContents = readFileSync(fullPath, 'utf8');
@@ -23,11 +27,11 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
 
   const items: Items = {};
 
-  // Ensure only the minimal needed data is exposed
   fields.forEach((field) => {
     if (field === 'slug') {
       items[field] = realSlug;
     }
+
     if (field === 'content') {
       items[field] = content;
     }
@@ -37,12 +41,38 @@ export const getPostBySlug = (slug: string, fields: string[] = []) => {
     }
   });
 
-  return items;
+  return (await normalizePostData(items)) as Promise<Type>;
 };
 
-export const getAllPosts = (fields: string[] = []) => {
+export const getAllPosts = async <Type>(fields: string[] = []) => {
   const slugs = getPostSlugs();
-  const posts = slugs.map((slug) => getPostBySlug(slug, fields));
+  const posts = Promise.all(
+    slugs.map((slug) => getPostBySlug<Type>(slug, fields))
+  );
 
   return posts;
 };
+
+export interface INormalizePostData {
+  content?: string;
+  coverImage?: string;
+}
+
+export const normalizePostData = async ({
+  content,
+  coverImage,
+  ...rest
+}: INormalizePostData): Promise<INormalizePostData> =>
+  Object.assign(
+    { ...rest },
+    content
+      ? {
+          content: (await markdownToHtml(content)) || '',
+        }
+      : {},
+    coverImage
+      ? {
+          coverImage: resolveURL(coverImage),
+        }
+      : {}
+  );
