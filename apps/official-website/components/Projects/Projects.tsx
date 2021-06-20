@@ -3,6 +3,7 @@ import { Section, Heading } from '..';
 import { extendProperties } from '../../utilities/.';
 import { Card, CardTitle, CardImg, CardBody, Button } from 'shards-react';
 import { Styles, ProjectStyles } from './Projects.styles';
+import type { GetServerSideProps } from 'next';
 import type { IProjectsProps, IProjectProps } from './Projects.types';
 
 export const Project: FunctionComponent<IProjectProps> = ({
@@ -29,8 +30,13 @@ export const Project: FunctionComponent<IProjectProps> = ({
   );
 };
 
-export const Projects: FunctionComponent<IProjectsProps> = ({ ...rest }) => {
+export const Projects: FunctionComponent<IProjectsProps> = ({
+  projects,
+  ...rest
+}) => {
   const { root } = Styles({});
+
+  console.log(projects);
 
   return (
     <Section
@@ -66,3 +72,20 @@ export const Projects: FunctionComponent<IProjectsProps> = ({ ...rest }) => {
 };
 
 export default Projects;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch(`http://localhost:4200/api/v1/project`);
+  const projects = await res.json();
+
+  console.log('getServerSideProps:', projects);
+
+  if (!projects) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { projects },
+  };
+};

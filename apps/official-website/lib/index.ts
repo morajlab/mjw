@@ -1,3 +1,3 @@
-export * from './api';
+export * from './post';
 export * from './constants';
 export * from './api/response';
