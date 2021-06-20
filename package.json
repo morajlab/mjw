@@ -34,6 +34,7 @@
     "@juggle/resize-observer": "^2.5.0",
     "@material-ui/core": "^4.3.3",
     "@material-ui/icons": "^4.2.1",
+    "@nrwl/next": "12.3.6",
     "@uifabric/icons": "^7.5.23",
     "assign-deep": "^1.0.1",
     "assign-symbols": "^2.0.2",

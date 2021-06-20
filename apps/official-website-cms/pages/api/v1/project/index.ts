@@ -1,5 +1,5 @@
 import { getAllPosts, errorResponse, successResponse } from '../../../../lib/.';
-import type { IProjectPost } from '../../../../types/project';
+import type { IProjectPost } from '../../../../types/.';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default (_req: NextApiRequest, response: NextApiResponse) => {

@@ -3,8 +3,8 @@ import {
   errorResponse,
   successResponse,
 } from '../../../../lib/.';
-import { markdownToHtml } from '../../../../utilities/markdownToHtml';
-import type { IProjectPost } from '../../../../types/project';
+import { markdownToHtml } from '../../../../utilities/.';
+import type { IProjectPost } from '../../../../types/.';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async ({ query }: NextApiRequest, response: NextApiResponse) => {

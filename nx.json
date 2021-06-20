@@ -32,6 +32,13 @@
     "official-website-e2e": {
       "tags": [],
       "implicitDependencies": ["official-website"]
+    },
+    "official-website-cms": {
+      "tags": []
+    },
+    "official-website-cms-e2e": {
+      "tags": [],
+      "implicitDependencies": ["official-website-cms"]
     }
   }
 }

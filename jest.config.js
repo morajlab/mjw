@@ -1,3 +1,6 @@
 module.exports = {
-  projects: ['<rootDir>/apps/official-website'],
+  projects: [
+    '<rootDir>/apps/official-website',
+    '<rootDir>/apps/official-website-cms',
+  ],
 };
