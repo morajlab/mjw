@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 const postsDirectory = join(
   process.cwd(),
   'apps',
-  'official-website',
+  'official-website-cms',
   '_posts'
 );
 
