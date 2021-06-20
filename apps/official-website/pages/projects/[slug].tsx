@@ -1,22 +1,13 @@
 import React from 'react';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
-import { getPostBySlug, getAllPosts } from '../../lib/api';
-import { markdownToHtml } from '../../utilities/markdownToHtml';
-import type { IProject } from '../../types/project';
 
-export interface IProjectProps {
-  project: IProject;
-}
-
-const Project = ({ project }: IProjectProps) => {
+const Project = ({ project }) => {
   const router = useRouter();
 
   if (!router.isFallback && !project?.slug) {
     return <ErrorPage statusCode={404} />;
   }
-
-  console.log(project);
 
   return (
     <p>
@@ -28,45 +19,3 @@ const Project = ({ project }: IProjectProps) => {
 };
 
 export default Project;
-
-export interface IGetStaticPropsFunctionProps {
-  params: {
-    slug: string;
-  };
-}
-
-export const getStaticProps = async ({
-  params,
-}: IGetStaticPropsFunctionProps) => {
-  const post = getPostBySlug(params.slug, [
-    'title',
-    'slug',
-    'content',
-    'coverImage',
-  ]);
-  const content = await markdownToHtml(post.content || '');
-
-  return {
-    props: {
-      post: {
-        ...post,
-        content,
-      },
-    },
-  };
-};
-
-export const getStaticPaths = async () => {
-  const posts = getAllPosts(['slug']);
-
-  return {
-    paths: posts.map((posts) => {
-      return {
-        params: {
-          slug: posts.slug,
-        },
-      };
-    }),
-    fallback: false,
-  };
-};

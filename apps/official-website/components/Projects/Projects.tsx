@@ -3,8 +3,8 @@ import { Section, Heading } from '..';
 import { extendProperties } from '../../utilities/.';
 import { Card, CardTitle, CardImg, CardBody, Button } from 'shards-react';
 import { Styles, ProjectStyles } from './Projects.styles';
-import type { GetServerSideProps } from 'next';
 import type { IProjectsProps, IProjectProps } from './Projects.types';
+import type { IProjectPost } from '../../types/project';
 
 export const Project: FunctionComponent<IProjectProps> = ({
   image,
@@ -34,9 +34,11 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
   projects,
   ...rest
 }) => {
-  const { root } = Styles({});
+  if (projects.type === 'error') {
+    return null;
+  }
 
-  console.log(projects);
+  const { root } = Styles({});
 
   return (
     <Section
@@ -52,40 +54,21 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
         quibusdam explicabo, quod doloribus perferendis? Eaque ipsam fugiat
         temporibus magnam perferendis?
       </p>
-      {Array(6)
-        .fill(0)
-        .map((_value, index) => {
-          return (
-            <Project
-              className="mx-2 my-5 flex-grow-1 flex-shrink-1"
-              image="./projects/electronos.png"
-              title="Lorem Ipsum"
-              description="Lorem ipsum dolor sit amet."
-              link="#!"
-              key={index}
-              nth={index}
-            />
-          );
-        })}
+      {(projects.content as Partial<IProjectPost>[]).map(
+        ({ title, coverImage, excerpt, slug }, index) => (
+          <Project
+            className="mx-2 my-5 flex-grow-1 flex-shrink-1"
+            image={coverImage}
+            title={title}
+            description={excerpt}
+            link={`#!${slug}`}
+            key={index}
+            nth={index}
+          />
+        )
+      )}
     </Section>
   );
 };
 
 export default Projects;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:4200/api/v1/project`);
-  const projects = await res.json();
-
-  console.log('getServerSideProps:', projects);
-
-  if (!projects) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: { projects },
-  };
-};

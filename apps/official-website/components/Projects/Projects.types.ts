@@ -9,7 +9,10 @@ export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
   nth?: number;
 }
 export interface IProjectsProps extends HTMLAttributes<HTMLDivElement> {
-  projects?: Partial<IProjectPost>[];
+  projects: {
+    type: 'success' | 'error';
+    content: string | Error | Partial<IProjectPost>[];
+  };
 }
 export interface IProjectStyleProps {
   nth: IProjectProps['nth'];
