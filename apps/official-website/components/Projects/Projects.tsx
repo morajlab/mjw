@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Section, Heading } from '..';
 import { extendProperties } from '../../utilities/.';
-import { getAllPosts } from '../../lib/api';
 import { Card, CardTitle, CardImg, CardBody, Button } from 'shards-react';
 import { Styles, ProjectStyles } from './Projects.styles';
 import type { IProjectsProps, IProjectProps } from './Projects.types';
@@ -30,13 +29,8 @@ export const Project: FunctionComponent<IProjectProps> = ({
   );
 };
 
-export const Projects: FunctionComponent<IProjectsProps> = ({
-  allPosts,
-  ...rest
-}) => {
+export const Projects: FunctionComponent<IProjectsProps> = ({ ...rest }) => {
   const { root } = Styles({});
-
-  console.log(allPosts);
 
   return (
     <Section
@@ -72,11 +66,3 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
 };
 
 export default Projects;
-
-export const getStaticProps = async () => {
-  const allPosts = getAllPosts(['title', 'slug', 'coverImage', 'excerpt']);
-
-  return {
-    props: { allPosts },
-  };
-};

@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "incremental": true,
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,

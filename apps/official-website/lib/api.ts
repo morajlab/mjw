@@ -1,7 +1,13 @@
+import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const postsDirectory = join('..', '_posts');
+const postsDirectory = join(
+  process.cwd(),
+  'apps',
+  'official-website',
+  '_posts'
+);
 
 export const getPostSlugs = () => readdirSync(postsDirectory);
 

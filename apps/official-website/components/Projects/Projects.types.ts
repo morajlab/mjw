@@ -1,5 +1,4 @@
 import type { HTMLAttributes } from 'react';
-import type { IProject } from '../../types/project';
 
 export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
   image?: string;
@@ -8,9 +7,7 @@ export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
   link: string;
   nth?: number;
 }
-export interface IProjectsProps extends HTMLAttributes<HTMLDivElement> {
-  allPosts: IProject[];
-}
+export interface IProjectsProps extends HTMLAttributes<HTMLDivElement> {}
 export interface IProjectStyleProps {
   nth: IProjectProps['nth'];
 }

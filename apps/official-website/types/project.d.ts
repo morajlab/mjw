@@ -1,4 +1,4 @@
-export interface IProject {
+export interface IProjectPost {
   slug: string;
   title: string;
   coverImage: string;
