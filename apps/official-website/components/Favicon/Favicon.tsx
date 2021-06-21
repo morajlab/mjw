@@ -5,7 +5,7 @@ import type { IFaviconProps } from './Favicon.types';
 
 export const Favicon: FunctionComponent<IFaviconProps> = ({ ...rest }) => {
   const FAVICON_PATH = `${new URL(process.env).getWebsiteDomain()}/${
-    process.env.FAVICON_IMAGES
+    process.env.IMAGES_FAVICON
   }`;
 
   return (

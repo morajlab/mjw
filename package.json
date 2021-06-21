@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "official-website:serve": "doppler run --command=\"yarn start official-website\" --scope=\"apps/official-website\"",
+    "official-website-cms:serve": "doppler run --command=\"yarn start official-website-cms --port=4300\" --scope=\"apps/official-website\"",
     "nx": "nx",
     "start": "nx serve",
     "build": "nx build",

@@ -6,8 +6,6 @@ import type { IIndexPageProps } from './index.types';
 import type { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (_context) => {
-  console.log(new URL(process.env).getApiURL('project'));
-
   const response = await fetch(new URL(process.env).getApiURL('project'));
   const projects = await response.json();
 
