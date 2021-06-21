@@ -6,14 +6,8 @@ import type { IIndexPageProps } from './index.types';
 import type { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async (_context) => {
-  const response = await fetch(new URL(process.env).getApiURL('project'));
+  const response = await fetch(new URL().getApiURL('project'));
   const projects = await response.json();
-
-  if (!projects) {
-    return {
-      notFound: true,
-    };
-  }
 
   return {
     props: { projects },
@@ -32,7 +26,7 @@ export const Index: FunctionComponent<IIndexPageProps> = ({
       {...extendProperties(rest, { className: 'user-select-none' })}
     >
       <Header />
-      <Projects projects={projects} />
+      {projects?.type === 'success' ? <Projects projects={projects} /> : null}
       <Technologies />
       <Footer />
     </div>

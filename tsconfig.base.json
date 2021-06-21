@@ -18,7 +18,8 @@
     "paths": {
       "@official-website/utilities": [
         "libs/official-website/utilities/src/index.ts"
-      ]
+      ],
+      "@official-website/types": ["libs/official-website/types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

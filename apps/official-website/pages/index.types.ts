@@ -1,6 +1,7 @@
-import type { IProjectsProps } from '../components/Projects/.';
+import type { ProjectPostAPIResponseProps } from '../types/.';
 
 export interface IIndexPageProps {
-  projects?: IProjectsProps['projects'];
+  projects?: ProjectPostAPIResponseProps;
 }
+
 export interface IIndexPageStyleProps {}

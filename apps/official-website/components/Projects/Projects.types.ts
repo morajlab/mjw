@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import type { IProjectPost } from '../../types/project';
+import type { ProjectPostAPIResponseProps } from '../../types/.';
 
 export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
   image?: string;
@@ -8,13 +8,13 @@ export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
   link: string;
   nth?: number;
 }
+
 export interface IProjectsProps extends HTMLAttributes<HTMLDivElement> {
-  projects: {
-    type: 'success' | 'error';
-    content: string | Error | Partial<IProjectPost>[];
-  };
+  projects: ProjectPostAPIResponseProps;
 }
+
 export interface IProjectStyleProps {
   nth: IProjectProps['nth'];
 }
+
 export interface IProjectsStyleProps {}

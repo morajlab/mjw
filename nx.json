@@ -42,6 +42,9 @@
     },
     "official-website-utilities": {
       "tags": []
+    },
+    "official-website-types": {
+      "tags": []
     }
   }
 }

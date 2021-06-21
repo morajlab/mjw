@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import ErrorPage from 'next/error';
 import { useRouter } from 'next/router';
+import { URL } from '../../utilities/.';
+import type { ProjectPostAPIResponseProps } from '../../types/.';
+import type { GetServerSideProps } from 'next';
 
-const Project = ({ project }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const response = await fetch(new URL().getApiURL(`project/${params.slug}`));
+  const project = await response.json();
+
+  return {
+    props: { project },
+  };
+};
+
+export const Project: FunctionComponent<{
+  project: ProjectPostAPIResponseProps;
+}> = ({ project }) => {
   const router = useRouter();
 
-  if (!router.isFallback && !project?.slug) {
+  console.log(project);
+
+  if (!router.isFallback && project.type !== 'success') {
     return <ErrorPage statusCode={404} />;
   }
 
