@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Styles } from './index.styles';
-import { DEVELOPMENT_DOMAIN, PRODUCTION_DOMAIN, API } from '../lib/.';
 import { Header, Projects, Technologies, Footer } from '../components/.';
 import { extendProperties } from '../utilities/.';
 import type { IIndexPageProps } from './index.types';
