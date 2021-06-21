@@ -23,7 +23,6 @@ export const ProjectStyles = ({ nth }: IProjectStyleProps) => {
     root: css({
       borderRadius: 0,
       boxShadow: 'none',
-      minWidth: '400px',
       backgroundColor: 'transparent',
       backgroundImage: `url("./tile${(nth % bgNumber) + 3}.svg")`,
       backgroundRepeat: 'no-repeat',
@@ -38,9 +37,10 @@ export const ProjectStyles = ({ nth }: IProjectStyleProps) => {
         position: 'absolute',
         top: '25%',
         left: '1rem',
-        right: '25%',
+        right: '1rem',
         bottom: '1rem',
         border: '1px dashed #fff',
+        backgroundColor: 'rgba(255,255,255,0.1)',
       },
     }),
     img: css({

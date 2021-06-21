@@ -44,7 +44,7 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
     <Section
       {...root}
       {...extendProperties(rest, {
-        className: 'd-flex flex-wrap position-relative',
+        className: 'position-relative',
       })}
     >
       <Heading content="Our projects" />
@@ -54,19 +54,22 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
         quibusdam explicabo, quod doloribus perferendis? Eaque ipsam fugiat
         temporibus magnam perferendis?
       </p>
-      {(projects.content as Partial<IProjectPost>[]).map(
-        ({ title, coverImage, excerpt, slug }, index) => (
-          <Project
-            className="mx-2 my-5 flex-grow-1 flex-shrink-1"
-            image={coverImage}
-            title={title}
-            description={excerpt}
-            link={`#!${slug}`}
-            key={index}
-            nth={index}
-          />
-        )
-      )}
+      <div className="row row-cols-3">
+        {(projects.content as Partial<IProjectPost>[]).map(
+          ({ title, coverImage, excerpt, slug }, index) => (
+            <div className="col" key={index}>
+              <Project
+                className="mx-2 my-5 w-100"
+                image={coverImage}
+                title={title}
+                description={excerpt}
+                link={`#!${slug}`}
+                nth={index}
+              />
+            </div>
+          )
+        )}
+      </div>
     </Section>
   );
 };
