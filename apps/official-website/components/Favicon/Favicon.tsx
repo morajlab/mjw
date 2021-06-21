@@ -1,38 +1,42 @@
 import React, { FunctionComponent } from 'react';
+import { URL } from '../../utilities/.';
 import Head from 'next/head';
-import { PATHS } from '../../lib/constants';
 import type { IFaviconProps } from './Favicon.types';
 
 export const Favicon: FunctionComponent<IFaviconProps> = ({ ...rest }) => {
+  const FAVICON_PATH = `${new URL(process.env).getWebsiteDomain()}/${
+    process.env.FAVICON_IMAGES
+  }`;
+
   return (
     <Head {...rest}>
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${PATHS.IMAGES.FAVICON}/apple-touch-icon.png`}
+        href={`${FAVICON_PATH}/apple-touch-icon.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="32x32"
-        href={`${PATHS.IMAGES.FAVICON}/favicon-32x32.png`}
+        href={`${FAVICON_PATH}/favicon-32x32.png`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="16x16"
-        href={`${PATHS.IMAGES.FAVICON}/favicon-16x16.png`}
+        href={`${FAVICON_PATH}/favicon-16x16.png`}
       />
-      <link rel="manifest" href={`${PATHS.IMAGES.FAVICON}/site.webmanifest`} />
+      <link rel="manifest" href={`${FAVICON_PATH}/site.webmanifest`} />
       <link
         rel="mask-icon"
-        href={`${PATHS.IMAGES.FAVICON}/safari-pinned-tab.svg`}
+        href={`${FAVICON_PATH}/safari-pinned-tab.svg`}
         color="#750ebe"
       />
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta
         name="msapplication-TileImage"
-        content={`${PATHS.IMAGES.FAVICON}/mstile-144x144.png`}
+        content={`${FAVICON_PATH}/mstile-144x144.png`}
       />
       <meta name="theme-color" content="#ffffff" />
     </Head>

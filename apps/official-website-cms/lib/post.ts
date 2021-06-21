@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
-import { markdownToHtml, resolveURL } from '../utilities/.';
+import { markdownToHtml, URL } from '../utilities/.';
 import matter from 'gray-matter';
 
 const postsDirectory = join(
@@ -72,7 +72,7 @@ export const normalizePostData = async ({
       : {},
     coverImage
       ? {
-          coverImage: resolveURL(coverImage),
+          coverImage: new URL().resolveURL(coverImage),
         }
       : {}
   );

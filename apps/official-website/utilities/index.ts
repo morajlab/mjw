@@ -1,1 +1,1 @@
-export * from './Object';
+export * from '@official-website/utilities';

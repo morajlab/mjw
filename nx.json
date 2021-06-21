@@ -39,6 +39,9 @@
     "official-website-cms-e2e": {
       "tags": [],
       "implicitDependencies": ["official-website-cms"]
+    },
+    "official-website-utilities": {
+      "tags": []
     }
   }
 }

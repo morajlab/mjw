@@ -1,2 +1,1 @@
-export * from './markdownToHtml';
-export * from './url';
+export * from '@official-website/utilities';

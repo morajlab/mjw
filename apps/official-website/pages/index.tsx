@@ -1,18 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { Styles } from './index.styles';
 import { Header, Projects, Technologies, Footer } from '../components/.';
-import { extendProperties } from '../utilities/.';
+import { extendProperties, URL } from '../utilities/.';
 import type { IIndexPageProps } from './index.types';
 import type { GetServerSideProps } from 'next';
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const response = await fetch(
-    `${
-      process.env.NODE_ENV === 'development'
-        ? DEVELOPMENT_DOMAIN
-        : PRODUCTION_DOMAIN
-    }/api/v${API.VERSION}/${API.ENDPOINTS.PROJECT}`
-  );
+export const getServerSideProps: GetServerSideProps = async (_context) => {
+  console.log(new URL(process.env).getApiURL('project'));
+
+  const response = await fetch(new URL(process.env).getApiURL('project'));
   const projects = await response.json();
 
   if (!projects) {

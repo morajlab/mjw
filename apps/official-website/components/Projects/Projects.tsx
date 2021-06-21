@@ -4,7 +4,7 @@ import { extendProperties } from '../../utilities/.';
 import { Card, CardTitle, CardImg, CardBody, Button } from 'shards-react';
 import { Styles, ProjectStyles } from './Projects.styles';
 import type { IProjectsProps, IProjectProps } from './Projects.types';
-import type { IProjectPost } from '../../types/project';
+import type { IProjectPost } from '../../types/.';
 
 export const Project: FunctionComponent<IProjectProps> = ({
   image,
