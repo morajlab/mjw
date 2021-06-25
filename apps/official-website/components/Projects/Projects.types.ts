@@ -10,7 +10,7 @@ export interface IProjectProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface IProjectsProps extends HTMLAttributes<HTMLDivElement> {
-  projects: ProjectPostAPIResponseProps;
+  projects: ProjectPostAPIResponseProps['content'];
 }
 
 export interface IProjectStyleProps {

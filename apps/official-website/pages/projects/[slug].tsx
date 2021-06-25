@@ -1,8 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import ErrorPage from 'next/error';
+import NextHead from 'next/head';
 import { useRouter } from 'next/router';
-import { URL } from '../../utilities/.';
-import type { ProjectPostAPIResponseProps } from '../../types/.';
+import { URL, extendProperties } from '../../utilities/.';
+import type { ProjectPostAPIResponseProps, IProjectPost } from '../../types/.';
 import type { GetServerSideProps } from 'next';
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -16,21 +17,26 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 export const Project: FunctionComponent<{
   project: ProjectPostAPIResponseProps;
-}> = ({ project }) => {
+}> = ({ project, ...rest }) => {
   const router = useRouter();
 
-  console.log(project);
-
-  if (!router.isFallback && project.type !== 'success') {
+  if (!router.isFallback && (!project || project?.type !== 'success')) {
     return <ErrorPage statusCode={404} />;
   }
 
+  const { content, title } = project.content as Partial<IProjectPost>;
+
   return (
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae inventore
-      consectetur ea voluptatibus, maxime sapiente ad, ipsam totam saepe libero
-      eaque illum fugiat est, vero veniam sunt ullam odio nam?
-    </p>
+    <div
+      {...extendProperties(rest, {
+        className: 'user-select-none',
+      })}
+    >
+      <NextHead>
+        <title>{title}</title>
+      </NextHead>
+      <div dangerouslySetInnerHTML={{ __html: content }} />
+    </div>
   );
 };
 

@@ -24,7 +24,11 @@ export const Project: FunctionComponent<IProjectProps> = ({
       <CardBody>
         <CardTitle className="text-white">{title}</CardTitle>
         <p>{description}</p>
-        <Button className="position-relative">Read more</Button>
+        <a href={link}>
+          <Button className="position-relative" squared>
+            Read more
+          </Button>
+        </a>
       </CardBody>
     </Card>
   );
@@ -34,10 +38,6 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
   projects,
   ...rest
 }) => {
-  if (projects.type === 'error') {
-    return null;
-  }
-
   const { root } = Styles({});
 
   return (
@@ -55,15 +55,15 @@ export const Projects: FunctionComponent<IProjectsProps> = ({
         temporibus magnam perferendis?
       </p>
       <div className="row row-cols-3">
-        {(projects.content as Partial<IProjectPost>[]).map(
-          ({ title, coverImage, excerpt, slug }, index) => (
+        {(projects as Partial<IProjectPost>[]).map(
+          ({ title, coverImage, excerpt, link }, index) => (
             <div className="col" key={index}>
               <Project
                 className="mx-2 my-5 w-100"
                 image={coverImage}
                 title={title}
                 description={excerpt}
-                link={`#!${slug}`}
+                link={link}
                 nth={index}
               />
             </div>

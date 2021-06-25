@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { getFullPath } from './path';
 import { markdownToHtml, URL } from '../utilities/.';
 import matter from 'gray-matter';
 
@@ -28,16 +29,14 @@ export const getPostBySlug = async <Type>(
   const items: Items = {};
 
   fields.forEach((field) => {
+    items[field] = data[field] ?? 1;
+
     if (field === 'slug') {
       items[field] = realSlug;
     }
 
     if (field === 'content') {
       items[field] = content;
-    }
-
-    if (data[field]) {
-      items[field] = data[field];
     }
   });
 
@@ -56,11 +55,13 @@ export const getAllPosts = async <Type>(fields: string[] = []) => {
 export interface INormalizePostData {
   content?: string;
   coverImage?: string;
+  link?: string;
 }
 
 export const normalizePostData = async ({
   content,
   coverImage,
+  link,
   ...rest
 }: INormalizePostData): Promise<INormalizePostData> =>
   Object.assign(
@@ -73,6 +74,11 @@ export const normalizePostData = async ({
     coverImage
       ? {
           coverImage: new URL().resolveURL(coverImage),
+        }
+      : {},
+    link
+      ? {
+          link: `${getFullPath('projects', 'WEBSITE')}/${(rest as any).slug}`,
         }
       : {}
   );

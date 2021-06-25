@@ -29,7 +29,6 @@ export const ProjectStyles = ({ nth }: IProjectStyleProps) => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       '& button': {
-        borderRadius: 0,
         zIndex: 1,
       },
       '&:before': {

@@ -1,1 +1,3 @@
-export interface IFaviconProps {}
+export interface IFaviconProps {
+  basePath: string;
+}

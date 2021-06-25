@@ -6,6 +6,7 @@ export interface IProjectPost {
   coverImage: string;
   excerpt: string;
   content: string;
+  link: string;
 }
 
 export type ProjectPostAPIResponseProps = IAPIResponseProps<

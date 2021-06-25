@@ -9,6 +9,7 @@ export default async (_req: NextApiRequest, response: NextApiResponse) => {
       'title',
       'coverImage',
       'excerpt',
+      'link',
     ]);
 
     successResponse<Partial<IProjectPost>[]>({
