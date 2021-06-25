@@ -30,12 +30,12 @@ export const Technologies: FunctionComponent<ITechnologiesProps> = ({
           'd-flex flex-column justify-content-center align-items-center',
       })}
     >
-      <Heading content="What technologies we are using ?" {...heading} />
+      <Heading
+        content="What tools and technologies we are using ?"
+        {...heading}
+      />
       <p className="text-light text-center">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
-        nihil aliquid perspiciatis ea, harum vero. Assumenda dolor hic
-        aspernatur possimus et tempore autem vero tempora dolorem, ratione
-        facilis eius consectetur?
+        We use the latest and greatest tools and technologies.
       </p>
       <div className="text-center" {...iconsContainer}>
         <Icon

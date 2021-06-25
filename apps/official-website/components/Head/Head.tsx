@@ -7,7 +7,7 @@ export const Head: FunctionComponent<IHeadProps> = ({ basePath, ...rest }) => {
   return (
     <Fragment {...rest}>
       <NextHead key="mainHead">
-        <title>Morajlab official website</title>
+        <title>Morajlab home</title>
       </NextHead>
       <Favicon basePath={basePath} key="faviconHead" />
     </Fragment>

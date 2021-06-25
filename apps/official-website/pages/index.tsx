@@ -55,7 +55,7 @@ export const Index: FunctionComponent<IIndexPageProps> = ({
     >
       <Head basePath={FAVICON} />
       <Header />
-      {projects?.type === 'success' ? (
+      {projects?.type === 'success' && (projects as any).projectsCount > 0 ? (
         <Projects projects={projects.content} />
       ) : null}
       <Technologies />

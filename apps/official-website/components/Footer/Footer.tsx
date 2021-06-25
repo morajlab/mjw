@@ -15,7 +15,7 @@ export const Footer: FunctionComponent<IFooterProps> = ({ ...rest }) => {
       <Row>
         <Col>{copyRight('Morajlab')}</Col>
         <Col lg={2} className="text-center" {...icons}>
-          <NextLink href="#github" passHref>
+          <NextLink href="https://github.com/morajlab" passHref>
             <Link>
               <BootstrapIcon name="github" />
             </Link>

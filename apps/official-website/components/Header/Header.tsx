@@ -60,10 +60,10 @@ export const Header: FunctionComponent<IHeaderProps> = ({ ...rest }) => {
                   <span className="text-nowrap ml-5" {...caption}>
                     Morajlab
                   </span>
-                  <span>official website</span>
+                  <span>website</span>
                 </h1>
                 <em {...slogan}>
-                  We love open-source and work hardly on it to improve it
+                  We love open-source and our goal is to improve and scale it.
                 </em>
               </div>
             </div>
