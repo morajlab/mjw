@@ -1,15 +1,19 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
-import { getFullPath } from './path';
-import { markdownToHtml, URL } from '../utilities/.';
+import { URL as NodeURL, pathToFileURL } from 'url';
+import { markdownToHtml, URL, Path } from '../utilities/.';
 import matter from 'gray-matter';
 
-const postsDirectory = join(
+/*const postsDirectory = join(
   process.cwd(),
   'apps',
   'official-website-cms',
   '_posts'
-);
+);*/
+
+const pathClass = new Path();
+
+const postsDirectory = new NodeURL(pathToFileURL(pathClass.get('POST')).href);
 
 export const getPostSlugs = () => readdirSync(postsDirectory);
 
@@ -18,7 +22,7 @@ export const getPostBySlug = async <Type>(
   fields: string[] = []
 ): Promise<Type> => {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
+  const fullPath = join(postsDirectory.href, `${realSlug}.md`);
   const fileContents = readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
@@ -78,7 +82,7 @@ export const normalizePostData = async ({
       : {},
     link
       ? {
-          link: `${getFullPath('projects', 'WEBSITE')}/${(rest as any).slug}`,
+          link: `${pathClass.get('POST_URL')}/${(rest as any).slug}`,
         }
       : {}
   );

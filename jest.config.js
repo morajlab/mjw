@@ -6,5 +6,6 @@ module.exports = {
     '<rootDir>/libs/official-website/types',
     '<rootDir>/libs/official-website/core',
     '<rootDir>/libs/official-website/lib',
+    '<rootDir>/apps/global-assets',
   ],
 };

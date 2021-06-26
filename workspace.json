@@ -271,6 +271,83 @@
           }
         }
       }
+    },
+    "global-assets": {
+      "root": "apps/global-assets",
+      "sourceRoot": "apps/global-assets",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/global-assets",
+            "outputPath": "dist/apps/global-assets"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "global-assets:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "global-assets:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "global-assets:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/global-assets"],
+          "options": {
+            "jestConfig": "apps/global-assets/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/global-assets/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "global-assets-e2e": {
+      "root": "apps/global-assets-e2e",
+      "sourceRoot": "apps/global-assets-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/global-assets-e2e/cypress.json",
+            "tsConfig": "apps/global-assets-e2e/tsconfig.e2e.json",
+            "devServerTarget": "global-assets:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "global-assets:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/global-assets-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
     }
   }
 }

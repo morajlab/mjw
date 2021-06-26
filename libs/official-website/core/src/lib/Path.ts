@@ -8,7 +8,7 @@ export class Path {
     this.Env = new Env();
   }
 
-  public get = (path: string) =>
+  public get = (path: string): string =>
     PATHS[path]
       .map((value: any) =>
         typeof value === 'function' ? value(this.Env.get) : value
