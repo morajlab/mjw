@@ -229,6 +229,48 @@
           }
         }
       }
+    },
+    "official-website-core": {
+      "root": "libs/official-website/core",
+      "sourceRoot": "libs/official-website/core/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/official-website/core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/official-website/core"],
+          "options": {
+            "jestConfig": "libs/official-website/core/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "official-website-lib": {
+      "root": "libs/official-website/lib",
+      "sourceRoot": "libs/official-website/lib/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/official-website/lib/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/official-website/lib"],
+          "options": {
+            "jestConfig": "libs/official-website/lib/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

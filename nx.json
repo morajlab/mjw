@@ -45,6 +45,12 @@
     },
     "official-website-types": {
       "tags": []
+    },
+    "official-website-core": {
+      "tags": []
+    },
+    "official-website-lib": {
+      "tags": []
     }
   }
 }
