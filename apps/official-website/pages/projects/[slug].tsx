@@ -1,4 +1,12 @@
-import React, { FunctionComponent } from 'react';
+export default () => (
+  <div>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt at quibusdam
+    soluta magni molestiae suscipit odit, repellat voluptate rem, voluptatum,
+    est fugiat architecto ullam aut quos iure quis? Asperiores, debitis.
+  </div>
+);
+
+/*import React, { FunctionComponent } from 'react';
 import ErrorPage from 'next/error';
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
@@ -41,3 +49,4 @@ export const Project: FunctionComponent<{
 };
 
 export default Project;
+*/

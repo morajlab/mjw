@@ -3,13 +3,13 @@ import NextHead from 'next/head';
 import { Favicon } from '..';
 import type { IHeadProps } from './Head.types';
 
-export const Head: FunctionComponent<IHeadProps> = ({ basePath, ...rest }) => {
+export const Head: FunctionComponent<IHeadProps> = ({ ...rest }) => {
   return (
     <Fragment {...rest}>
       <NextHead key="mainHead">
         <title>Morajlab home</title>
       </NextHead>
-      <Favicon basePath={basePath} key="faviconHead" />
+      <Favicon key="faviconHead" />
     </Fragment>
   );
 };

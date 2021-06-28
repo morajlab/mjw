@@ -51,13 +51,6 @@
     },
     "official-website-lib": {
       "tags": []
-    },
-    "global-assets": {
-      "tags": []
-    },
-    "global-assets-e2e": {
-      "tags": [],
-      "implicitDependencies": ["global-assets"]
     }
   }
 }

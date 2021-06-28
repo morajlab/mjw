@@ -1,4 +1,5 @@
 import { css } from 'glamor';
+import { svgToBase64FromURL } from '../../utilities/.';
 import type { ILogoStyleProps } from './Logo.types';
 
 export const Styles = ({}: ILogoStyleProps) => {
@@ -6,7 +7,9 @@ export const Styles = ({}: ILogoStyleProps) => {
     root: css({
       backgroundColor: '#343a40',
       height: '1200px',
-      backgroundImage: 'url("./logo_outline.svg")',
+      backgroundImage: `url('${svgToBase64FromURL(
+        'https://raw.githubusercontent.com/morajlab/morajlab-assets/master/assets/morajlab/images/logo/logo_outline.svg'
+      )}')`,
       backgroundPosition: 'center',
       backgroundSize: '140%',
       marginLeft: '-70px',

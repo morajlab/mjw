@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Styles } from './Logo.styles';
-import { extendProperties } from '../../utilities/.';
+import { extendProperties, Path } from '../../utilities/.';
 import type { ILogoProps } from './Logo.types';
 
 export const Logo: FunctionComponent<ILogoProps> = ({ ...rest }) => {
@@ -8,7 +8,10 @@ export const Logo: FunctionComponent<ILogoProps> = ({ ...rest }) => {
 
   return (
     <div {...root} {...extendProperties(rest, { className: 'mt-n5 mr-n5' })}>
-      <img src="logo.svg" alt="Logo" />
+      <img
+        src="https://raw.githubusercontent.com/morajlab/morajlab-assets/master/assets/morajlab/images/logo/logo.svg"
+        alt="Logo"
+      />
     </div>
   );
 };

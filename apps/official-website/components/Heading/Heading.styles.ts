@@ -1,15 +1,14 @@
 import { css } from 'glamor';
-import tile1 from '../../public/tile1.svg';
 import type { IHeadingStyleProps } from './Heading.types';
 
-export const Styles = ({}: IHeadingStyleProps) => {
+export const Styles = async ({}: IHeadingStyleProps) => {
   return {
     root: css({
       position: 'relative',
       zIndex: 1,
       '&:before': {
-        content: `url('${tile1}')`,
         display: 'block',
+        content: `url('https://raw.githubusercontent.com/morajlab/morajlab-assets/master/assets/illustration/tiles/tile1.svg')`,
         position: 'absolute',
         width: '50px',
         height: '50px',
