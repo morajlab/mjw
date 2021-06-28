@@ -1,7 +1,7 @@
 import { css } from 'glamor';
 import type { IHeadingStyleProps } from './Heading.types';
 
-export const Styles = async ({}: IHeadingStyleProps) => {
+export const Styles = ({}: IHeadingStyleProps) => {
   return {
     root: css({
       position: 'relative',

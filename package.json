@@ -7,7 +7,7 @@
     "official-website-cms:serve": "doppler run --command=\"yarn start official-website-cms --port=4300\"",
     "nx": "nx",
     "start": "nx serve",
-    "build": "nx build",
+    "build": "nx build official-website",
     "test": "nx test",
     "lint": "nx workspace-lint && nx lint",
     "e2e": "nx e2e",
