@@ -1,6 +1,90 @@
 {
   "version": 2,
   "projects": {
+    "morajlab-nextui-dashboard-nextui-dashboard": {
+      "root": "apps/morajlab/nextui-dashboard/nextui-dashboard",
+      "sourceRoot": "apps/morajlab/nextui-dashboard/nextui-dashboard",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/morajlab/nextui-dashboard/nextui-dashboard",
+            "outputPath": "dist/apps/morajlab/nextui-dashboard/nextui-dashboard"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "morajlab-nextui-dashboard-nextui-dashboard:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "morajlab-nextui-dashboard-nextui-dashboard:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "morajlab-nextui-dashboard-nextui-dashboard:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/morajlab/nextui-dashboard/nextui-dashboard"
+          ],
+          "options": {
+            "jestConfig": "apps/morajlab/nextui-dashboard/nextui-dashboard/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "apps/morajlab/nextui-dashboard/nextui-dashboard/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        }
+      }
+    },
+    "morajlab-nextui-dashboard-nextui-dashboard-e2e": {
+      "root": "apps/morajlab/nextui-dashboard/nextui-dashboard-e2e",
+      "sourceRoot": "apps/morajlab/nextui-dashboard/nextui-dashboard-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/morajlab/nextui-dashboard/nextui-dashboard-e2e/cypress.json",
+            "devServerTarget": "morajlab-nextui-dashboard-nextui-dashboard:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "morajlab-nextui-dashboard-nextui-dashboard:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "apps/morajlab/nextui-dashboard/nextui-dashboard-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    },
     "my-blog-my-blog": {
       "root": "apps/my-blog/my-blog",
       "sourceRoot": "apps/my-blog/my-blog",

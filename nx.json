@@ -28,6 +28,13 @@
     ]
   },
   "projects": {
+    "morajlab-nextui-dashboard-nextui-dashboard": {
+      "tags": []
+    },
+    "morajlab-nextui-dashboard-nextui-dashboard-e2e": {
+      "tags": [],
+      "implicitDependencies": ["morajlab-nextui-dashboard-nextui-dashboard"]
+    },
     "my-blog-my-blog": {
       "tags": []
     },
