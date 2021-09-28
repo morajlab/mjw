@@ -9,6 +9,12 @@
   },
   "private": true,
   "dependencies": {
+    "@heroicons/react": "^1.0.4",
+    "@mantine/core": "^2.5.1",
+    "@mantine/dates": "^2.5.1",
+    "@mantine/hooks": "^2.5.1",
+    "@mantine/notifications": "^2.5.1",
+    "@mantine/prism": "^2.5.1",
     "@nextui-org/react": "^1.0.1-alpha.35",
     "@nrwl/next": "12.9.0",
     "core-js": "^3.6.5",
@@ -19,6 +25,7 @@
     "tslib": "^2.0.0"
   },
   "devDependencies": {
+    "@mantine/eslint-config": "^2.5.1",
     "@nrwl/cli": "12.9.0",
     "@nrwl/cypress": "12.9.0",
     "@nrwl/eslint-plugin-nx": "12.9.0",

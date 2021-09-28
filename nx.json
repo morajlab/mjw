@@ -35,6 +35,13 @@
       "tags": [],
       "implicitDependencies": ["morajlab-nextui-dashboard-nextui-dashboard"]
     },
+    "morajlab-mantine-dashboard-mantine-dashboard": {
+      "tags": []
+    },
+    "morajlab-mantine-dashboard-mantine-dashboard-e2e": {
+      "tags": [],
+      "implicitDependencies": ["morajlab-mantine-dashboard-mantine-dashboard"]
+    },
     "my-blog-my-blog": {
       "tags": []
     },
