@@ -1,0 +1,8 @@
+{
+  "extends": "./packages/morajlab/config/typescript",
+  "compilerOptions": {
+    "rootDir": "packages",
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules", "tmp"]
+}

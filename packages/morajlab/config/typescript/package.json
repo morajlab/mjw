@@ -1,0 +1,25 @@
+{
+  "name": "config.typescript",
+  "version": "0.0.0",
+  "description": "Moraj Lab typescript config",
+  "main": "tsconfig.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "morajlab",
+    "moraj",
+    "typescript",
+    "config",
+    "node"
+  ],
+  "files": [
+    "tsconfig.json"
+  ],
+  "author": {
+    "name": "Morteza Jamali",
+    "email": "mortezajamali4241@gmail.com",
+    "url": "https://moraj.ir"
+  },
+  "license": "MIT"
+}
