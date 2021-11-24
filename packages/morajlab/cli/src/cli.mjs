@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import React from "react";
+import { createElement } from "react";
 import { render } from "ink";
 import meow from "meow";
-import App from "./ui";
+import { App } from "./ui.mjs";
 
 const cli = meow(
   `
@@ -27,4 +27,4 @@ const cli = meow(
   }
 );
 
-render(<App name={cli.flags.name} />);
+render(createElement(App, { name: cli.flags.name }));
