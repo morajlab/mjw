@@ -1,1 +1,0 @@
-# Moraj Lab typescript config
