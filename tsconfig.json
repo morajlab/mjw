@@ -1,9 +1,0 @@
-{
-  "extends": "./packages/morajlab/config/typescript/tsconfig.json",
-  "compilerOptions": {
-    "rootDir": "packages",
-    "outDir": "dist",
-    "baseUrl": "."
-  },
-  "exclude": ["node_modules", "tmp", "dist"]
-}

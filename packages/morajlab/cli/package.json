@@ -2,6 +2,11 @@
   "name": "cli",
   "version": "0.0.0",
   "license": "MIT",
+  "author": {
+    "name": "Morteza Jamali",
+    "email": "mortezajamali4241@gmail.com",
+    "url": "https://moraj.ir"
+  },
   "type": "module",
   "bin": "src/cli.mjs",
   "engines": {
