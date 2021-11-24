@@ -1,64 +1,48 @@
 {
   "name": "workspace",
   "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {
-    "start": "nx serve",
-    "build": "nx build",
-    "test": "nx test"
-  },
+  "description": "Moraj Lab workspace monorepo",
   "private": true,
-  "dependencies": {
-    "@heroicons/react": "^1.0.4",
-    "@mantine/core": "^2.5.1",
-    "@mantine/dates": "^2.5.1",
-    "@mantine/hooks": "^2.5.1",
-    "@mantine/notifications": "^2.5.1",
-    "@mantine/prism": "^2.5.1",
-    "@nextui-org/react": "^1.0.1-alpha.35",
-    "@nrwl/next": "12.9.0",
-    "core-js": "^3.6.5",
-    "next": "11.1.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "regenerator-runtime": "0.13.7",
-    "tslib": "^2.0.0"
+  "scripts": {
+    "test": "exit 0",
+    "format:prettier": "prettier --write --ignore-unknown",
+    "format:css": "stylelint",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morajlab/workspace.git"
+  },
+  "keywords": [
+    "morajlab",
+    "moraj",
+    "workspace",
+    "monorepo",
+    "repository"
+  ],
+  "author": {
+    "name": "Morteza Jamali",
+    "email": "mortezajamali4241@gmail.com",
+    "url": "https://moraj.ir"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morajlab/workspace/issues"
+  },
+  "homepage": "https://github.com/morajlab/workspace#readme",
+  "lint-staged": {
+    "**/*": "npm run format:prettier",
+    "**/*.css": "npm run format:css"
   },
   "devDependencies": {
-    "@mantine/eslint-config": "^2.5.1",
-    "@nrwl/cli": "12.9.0",
-    "@nrwl/cypress": "12.9.0",
-    "@nrwl/eslint-plugin-nx": "12.9.0",
-    "@nrwl/jest": "12.9.0",
-    "@nrwl/linter": "12.9.0",
-    "@nrwl/next": "^12.9.0",
-    "@nrwl/nx-cloud": "latest",
-    "@nrwl/react": "12.9.0",
-    "@nrwl/tao": "12.9.0",
-    "@nrwl/web": "12.9.0",
-    "@nrwl/workspace": "12.9.0",
-    "@testing-library/react": "11.2.6",
-    "@testing-library/react-hooks": "7.0.1",
-    "@types/jest": "26.0.24",
-    "@types/node": "14.14.33",
-    "@types/react": "17.0.3",
-    "@types/react-dom": "17.0.3",
-    "@typescript-eslint/eslint-plugin": "~4.28.3",
-    "@typescript-eslint/parser": "~4.28.3",
-    "babel-jest": "27.0.6",
-    "cypress": "^8.3.0",
-    "eslint": "7.22.0",
-    "eslint-config-next": "11.1.0",
-    "eslint-config-prettier": "8.1.0",
-    "eslint-plugin-cypress": "^2.10.3",
-    "eslint-plugin-import": "2.22.1",
-    "eslint-plugin-jsx-a11y": "6.4.1",
-    "eslint-plugin-react": "7.23.1",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "jest": "27.0.3",
-    "node-sass": "5.0.0",
-    "prettier": "^2.3.1",
-    "ts-jest": "27.0.3",
-    "typescript": "~4.3.5"
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "commitlint": "^15.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.2",
+    "prettier": "^2.4.1",
+    "stylelint": "^14.1.0",
+    "stylelint-config-standard": "^24.0.0",
+    "typescript": "^4.5.2"
   }
 }
