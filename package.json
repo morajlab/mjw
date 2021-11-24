@@ -8,7 +8,8 @@
     "format:prettier": "prettier --write --ignore-unknown",
     "format:css": "stylelint",
     "prepare": "husky install",
-    "morajlab": "node packages/morajlab/cli/src/cli.js"
+    "build": "swc packages -d dist",
+    "mj": "node packages/morajlab/cli/src/cli.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,8 @@
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
+    "@swc/cli": "^0.1.52",
+    "@swc/core": "^1.2.112",
     "ava": "^3.15.0",
     "commitlint": "^15.0.0",
     "eslint-config-xo-react": "^0.25.0",

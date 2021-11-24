@@ -7,11 +7,11 @@ import { App } from "./ui.js";
 
 const cli = meow(
   `
-	Usage
-	  $ cli
+	Usage: mj <command> [<args>]
 
-	Options
-		--name  Your name
+	Options:
+    -h, --help      Shows help
+    -v, --version   Shows version
 
 	Examples
 	  $ cli --name=Jane
@@ -26,5 +26,7 @@ const cli = meow(
     },
   }
 );
+
+console.log(cli);
 
 render(ce(App, { name: cli.flags.name }));
