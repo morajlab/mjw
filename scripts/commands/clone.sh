@@ -1,5 +1,4 @@
-# Load packages informations
-source ./package.sh
+source ./src/config.sh
 
 # Options
 CLONE_ALL_OPT="--clone-all"
@@ -14,7 +13,10 @@ exec_command() {
   echo "ERROR:: options are invalid !" &&
   exit 1
 
-  ( [ "$2" != "$CLONE_ALL_OPT" ] && [ -z "${packages[$2]}" ]) &&
+  (
+    [ "$2" != "$CLONE_ALL_OPT" ] &&
+    [ ! $(dependency_exist "$2" && echo 0) ]
+  ) &&
   echo "ERROR:: package '$2' doesn't exist !" &&
   exit 1
 
@@ -23,10 +25,12 @@ exec_command() {
   cd ./dependencies
 
   if [ "$2" == "$CLONE_ALL_OPT" ]; then
-    for key in ${!packages[@]}; do
-      clone "${packages[${key}]}"
+    local dependencies_array=$(get_dependency_url)
+
+    for dep in ${dependencies_array[@]}; do
+      clone "$dep"
     done
   else
-    clone "${packages[$2]}"
+    clone $(get_dependency_url "$2")
   fi
 }

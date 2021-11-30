@@ -1,4 +1,5 @@
 exec_command() {
-  # init command code
-  echo "init command executed"
+  if ! command -v yq &> /dev/null; then
+    snap install yq
+  fi
 }

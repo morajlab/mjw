@@ -1,0 +1,5 @@
+dependencies:
+  - name: "nodexe"
+    url: "https://github.com/morajlab/nodexe.git"
+  - name: "popo"
+    url: "https://github.com/morajlab/popo.git"
