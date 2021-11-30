@@ -1,44 +1,8 @@
 #!/usr/bin/env bash
 
-# Initial variables
-CLONE_URL=""
-CLONE_ALL=1
+# Load commands
+source ./scripts/commands.sh
 
-# CLI arguments
-CLONE_ARG="clone"
-
-# CLI options
-CLONE_ALL_OPT="--clone-all"
-
-# Parse options and arguments
-while [ "$#" -gt 0 ]; do
-  case "${1^^}" in
-    "${CLONE_ARG^^}")
-      CLONE_URL="$2"
-
-      shift
-      shift
-    ;;
-    "${CLONE_ALL_OPT^^}")
-      CLONE_ALL=0
-
-      shift
-    ;;
-    *)
-      shift
-    ;;
-  esac
-done
-
-# Load dependencies
-source ./scripts/init.sh
-
-if [[ $CLONE_ALL = 0 ]]; then
-  clone
-fi
-
-if [ ! -z "$CLONE_URL" ]; then
-  clone "$CLONE_URL"
-fi
+exec_commands $*
 
 exit 0
