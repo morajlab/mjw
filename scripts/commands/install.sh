@@ -1,4 +1,4 @@
-source ./scripts/commands/clone.sh
+source "$MJW_COMMANDS_PATH/clone.sh"
 
 install() {
   local search_path=$(pwd)

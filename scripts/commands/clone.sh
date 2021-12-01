@@ -1,4 +1,4 @@
-source ./src/config.sh
+source "$MJW_SOURCE_PATH/config.sh"
 
 # Options
 CLONE_ALL_OPT="--clone-all"
