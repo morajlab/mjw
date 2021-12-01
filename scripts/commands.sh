@@ -1,5 +1,5 @@
-exec_commands() {
-  command_path="./scripts/commands/$1.sh"
+commands() {
+  local command_path="./scripts/commands/$1.sh"
 
   if [ ! -f $command_path ]; then
     echo "ERROR:: command '$1' is invalid !"
@@ -7,5 +7,5 @@ exec_commands() {
   fi
 
   source $command_path &&
-  exec_command $*
+  "$1" $*
 }

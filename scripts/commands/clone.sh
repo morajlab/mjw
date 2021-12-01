@@ -4,11 +4,11 @@ source ./src/config.sh
 CLONE_ALL_OPT="--clone-all"
 
 # Clone to packages directory
-clone() {
+clone_repo() {
   git clone "$1"
 }
 
-exec_command() {
+clone() {
   [ ! "$#" -gt 1 ] &&
   echo "ERROR:: options are invalid !" &&
   exit 1
@@ -20,17 +20,20 @@ exec_command() {
   echo "ERROR:: package '$2' doesn't exist !" &&
   exit 1
 
-  [ ! -d ./packages ] && mkdir packages
+  local base_path=$(pwd)
+  [ ! -z "$3" ] && base_path="$3"
+  local packages_path="$base_path/packages"
 
-  cd ./packages
+  ( [ -d $packages_path ] || mkdir $packages_path ) &&
+  cd $packages_path
 
   if [ "$2" == "$CLONE_ALL_OPT" ]; then
     local dependencies_array=$(get_dependency_url)
 
     for dep in ${dependencies_array[@]}; do
-      clone "$dep"
+      clone_repo "$dep"
     done
   else
-    clone $(get_dependency_url "$2")
+    clone_repo $(get_dependency_url "$2")
   fi
 }

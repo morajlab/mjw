@@ -4,7 +4,7 @@ get_dependency_url() {
   else
     while IFS=' ' read -ra ADDR; do
       echo ${ADDR[@]}
-    done <<< $(cat ../mjw.config.yml | yq e ".devdependencies[].url" -)
+    done <<< $(cat ../mjw.config.yml | yq e ".devdependencies[].url, .dependencies[].url" -)
   fi
 }
 

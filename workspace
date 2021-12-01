@@ -3,6 +3,6 @@
 # Load commands
 source ./scripts/commands.sh
 
-exec_commands $*
+commands $*
 
 exit 0
