@@ -1,4 +1,4 @@
-dependencies:
+devdependencies:
   - name: "nodexe"
     url: "https://github.com/morajlab/nodexe.git"
   - name: "popo"

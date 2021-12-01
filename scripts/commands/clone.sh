@@ -20,9 +20,9 @@ exec_command() {
   echo "ERROR:: package '$2' doesn't exist !" &&
   exit 1
 
-  [ ! -d ./dependencies ] && mkdir dependencies
+  [ ! -d ./packages ] && mkdir packages
 
-  cd ./dependencies
+  cd ./packages
 
   if [ "$2" == "$CLONE_ALL_OPT" ]; then
     local dependencies_array=$(get_dependency_url)
