@@ -17,5 +17,5 @@ run() {
   fi
 
   source $command_path &&
-  "$sub_command" $*
+  "$sub_command" ${*:3}
 }
