@@ -3,6 +3,7 @@
 export MJW_ROOT_PATH=$(dirname $(dirname $0))
 export MJW_COMMANDS_PATH="$MJW_ROOT_PATH/scripts/commands"
 export MJW_SOURCE_PATH="$MJW_ROOT_PATH/src"
+export MJW_PACKAGES_PATH="$MJW_ROOT_PATH/packages"
 
 # Load commands
 source "$MJW_ROOT_PATH/scripts/commands.sh"
