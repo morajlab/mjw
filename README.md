@@ -8,8 +8,10 @@ Moraj Lab workspace
 
 ### Prerequisites
 
+- `git`
 - `curl`
 - `unzip`
+- `yq`
 
 Run this command in terminal:
 

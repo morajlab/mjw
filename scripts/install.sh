@@ -2,8 +2,10 @@
 
 WORKSPACE_PATH=$HOME/.mjw
 REQUIRMENTS=(
+  "git"
   "curl"
   "unzip"
+  "yq"
 )
 
 check_requirments() {
