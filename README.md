@@ -4,14 +4,17 @@ Moraj Lab workspace
 
 > ⚠️ This project is under development and isn't ready for production.
 
+## Prerequisites
+
+- `git`
+- `yq`
+
 ## Install
 
 ### Prerequisites
 
-- `git`
 - `curl`
 - `unzip`
-- `yq`
 
 Run this command in terminal:
 
