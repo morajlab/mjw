@@ -1,0 +1,46 @@
+{
+  "name": "mjw",
+  "version": "0.0.0",
+  "description": "Moraj Lab workspace",
+  "private": true,
+  "scripts": {
+    "preinstall": "npm config set '@morajlab:registry' https://npm.pkg.github.com",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "format:prettier": "prettier --write --ignore-unknown",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morajlab/workspace.git"
+  },
+  "keywords": [
+    "morajlab",
+    "moraj",
+    "workspace",
+    "mjw",
+    "cli",
+    "manager"
+  ],
+  "author": {
+    "name": "Morteza Jamali",
+    "email": "mortezajamali4241@gmail.com",
+    "url": "https://moraj.ir"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morajlab/workspace/issues"
+  },
+  "homepage": "https://github.com/morajlab/workspace#readme",
+  "dependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@morajlab/npm.config.prettier": "^0.0.1-alpha",
+    "commitlint": "^15.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
+    "prettier": "^2.5.1"
+  },
+  "lint-staged": {
+    "**/*": "npm run format:prettier"
+  }
+}
