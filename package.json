@@ -6,7 +6,6 @@
   "scripts": {
     "preinstall": "npm config set '@morajlab:registry' https://npm.pkg.github.com",
     "test": "mjw test",
-    "format:prettier": "mjw format --write --ignore-unknown",
     "prepare": "husky install"
   },
   "repository": {
@@ -41,6 +40,6 @@
     "prettier": "^2.5.1"
   },
   "lint-staged": {
-    "**/*": "npm run format:prettier"
+    "**/*": "mjw format"
   }
 }
