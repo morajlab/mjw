@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm config set '@morajlab:registry' https://npm.pkg.github.com",
     "test": "mjw test",
-    "prepare": "husky install"
+    "prepare": "mjw hooks install"
   },
   "repository": {
     "type": "git",
@@ -37,9 +37,12 @@
     "commitlint": "^15.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.4",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-standard": "^24.0.0"
   },
   "lint-staged": {
-    "**/*": "mjw format"
+    "**/*": "mjw format",
+    "**/*.css": "mjw lint --type style"
   }
 }
