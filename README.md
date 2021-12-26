@@ -8,6 +8,7 @@ Moraj Lab workspace
 
 - `git`
 - `yq`
+- `node.js`
 
 ## Install
 

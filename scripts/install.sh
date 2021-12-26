@@ -45,9 +45,15 @@ export PATH="$WORKSPACE_PATH/bin:\$PATH"
 EOF
 }
 
+install_deps() {
+  cd $WORKSPACE_PATH &&
+  npm install
+}
+
 check_requirments
 download
 set_path
+install_deps
 
 echo
 echo 'Moraj Lab workspace installed successfully !'
