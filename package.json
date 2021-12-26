@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "preinstall": "npm config set '@morajlab:registry' https://npm.pkg.github.com",
-    "test": "echo \"Warning: no test specified\" && exit 0",
-    "format:prettier": "./bin/mjw format --write --ignore-unknown",
+    "test": "mjw test",
+    "format:prettier": "mjw format --write --ignore-unknown",
     "prepare": "husky install"
   },
   "repository": {
