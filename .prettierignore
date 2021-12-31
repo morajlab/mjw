@@ -2,3 +2,4 @@
 
 /.cache
 /packages
+docs/**/*.html

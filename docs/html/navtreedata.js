@@ -22,4 +22,31 @@
 
  @licend  The above is the entire license notice for the JavaScript code in this file
 */
-var menudata = { children: [{ text: "Main Page", url: "index.html" }] };
+var NAVTREE = [
+  [
+    "MJW",
+    "index.html",
+    [
+      [
+        "Files",
+        "files.html",
+        [
+          ["File List", "files.html", "files_dup"],
+          [
+            "File Members",
+            "globals.html",
+            [
+              ["All", "globals.html", null],
+              ["Functions", "globals_func.html", null],
+            ],
+          ],
+        ],
+      ],
+    ],
+  ],
+];
+
+var NAVTREEINDEX = ["dir_53e6fa9553ac22a5646d2a2b2d7b97a1.html"];
+
+var SYNCONMSG = "click to disable panel synchronisation";
+var SYNCOFFMSG = "click to enable panel synchronisation";
