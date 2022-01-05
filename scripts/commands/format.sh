@@ -33,6 +33,8 @@ EOF
   echo "MJW formatter initialized successfully."
 }
 
+## @fn
+## @brief format command main function
 format() {
   if [[ ! -f $CACHE_FORMATTER_CONFIG_PATH ]]; then
     init
