@@ -5,3 +5,5 @@ devdependencies:
     url: "https://github.com/morajlab/popo.git"
   - name: "registry"
     url: "https://github.com/morajlab/registry.git"
+  - name: bash-doxygen
+    url: "https://github.com/Anvil/bash-doxygen.git"
