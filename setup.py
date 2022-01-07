@@ -1,6 +1,5 @@
-
 from setuptools import setup, find_packages
-from mjw.core.version import get_version
+from cli.core.version import get_version
 
 VERSION = get_version()
 
@@ -23,6 +22,6 @@ setup(
     include_package_data=True,
     entry_points="""
         [console_scripts]
-        mjw = mjw.main:main
+        mjw = cli.main:main
     """,
 )
