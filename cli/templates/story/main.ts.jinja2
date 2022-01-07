@@ -1,7 +1,11 @@
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import type { StorybookConfig } from "@storybook/react/types";
 
-$dest_story_main_content
+{% if customConfigCallback -%}
+{{ customConfigCallback }}
+{%- else -%}
+const configCallback = (args: any) => args;
+{%- endif %}
 
 const config: StorybookConfig = {
   core: {
