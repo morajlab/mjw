@@ -1,25 +1,23 @@
-
 from cement import Controller, ex
 from cement.utils.version import get_version_banner
 from ..core.version import get_version
 
 VERSION_BANNER = """
-Moraj Lab workspace cli app %s
+Moraj Lab workspace manager cli app %s
 %s
 """ % (get_version(), get_version_banner())
-
 
 class Base(Controller):
     class Meta:
         label = 'base'
 
         # text displayed at the top of --help output
-        description = 'Moraj Lab workspace cli app'
+        description = 'Moraj Lab workspace manager cli app'
 
         # text displayed at the bottom of --help output
-        epilog = 'Usage: mjw command1 --foo bar'
+        epilog = 'Usage: cli command1 --foo bar'
 
-        # controller level arguments. ex: 'mjw --version'
+        # controller level arguments. ex: 'cli --version'
         arguments = [
             ### add a version banner
             ( [ '-v', '--version' ],
@@ -27,34 +25,7 @@ class Base(Controller):
                 'version' : VERSION_BANNER } ),
         ]
 
-
     def _default(self):
         """Default action if no sub-command is passed."""
 
         self.app.args.print_help()
-
-
-    @ex(
-        help='example sub command1',
-
-        # sub-command level arguments. ex: 'mjw command1 --foo bar'
-        arguments=[
-            ### add a sample foo option under subcommand namespace
-            ( [ '-f', '--foo' ],
-              { 'help' : 'notorious foo option',
-                'action'  : 'store',
-                'dest' : 'foo' } ),
-        ],
-    )
-    def command1(self):
-        """Example sub-command."""
-
-        data = {
-            'foo' : 'bar',
-        }
-
-        ### do something with arguments
-        if self.app.pargs.foo is not None:
-            data['foo'] = self.app.pargs.foo
-
-        self.app.render(data, 'command1.jinja2')

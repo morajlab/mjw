@@ -1,19 +1,17 @@
-
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
-from .core.exc import MJWError
+from .core.exc import CLIError
 from .controllers.base import Base
+from .controllers.story import Story
 
 # configuration defaults
-CONFIG = init_defaults('mjw')
-CONFIG['mjw']['foo'] = 'bar'
+CONFIG = init_defaults('cli')
 
-
-class MJW(App):
-    """Moraj Lab Workspace primary application."""
+class CLI(App):
+    """CLI primary application."""
 
     class Meta:
-        label = 'mjw'
+        label = 'cli'
 
         # configuration defaults
         config_defaults = CONFIG
@@ -42,19 +40,20 @@ class MJW(App):
 
         # register handlers
         handlers = [
-            Base
+            Base,
+            Story
         ]
 
 
-class MJWTest(TestApp,MJW):
-    """A sub-class of MJW that is better suited for testing."""
+class CLITest(TestApp,CLI):
+    """A sub-class of CLI that is better suited for testing."""
 
     class Meta:
-        label = 'mjw'
+        label = 'cli'
 
 
 def main():
-    with MJW() as app:
+    with CLI() as app:
         try:
             app.run()
 
@@ -66,8 +65,8 @@ def main():
                 import traceback
                 traceback.print_exc()
 
-        except MJWError as e:
-            print('MJWError > %s' % e.args[0])
+        except CLIError as e:
+            print('CLIError > %s' % e.args[0])
             app.exit_code = 1
 
             if app.debug is True:

@@ -1,4 +1,4 @@
-# Moraj Lab Workspace Change History
+# MJW Change History
 
 ## 0.0.1
 

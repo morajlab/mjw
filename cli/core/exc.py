@@ -1,4 +1,4 @@
 
-class MJWError(Exception):
+class CLIError(Exception):
     """Generic errors."""
     pass

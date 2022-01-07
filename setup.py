@@ -10,7 +10,7 @@ f.close()
 setup(
     name='mjw',
     version=VERSION,
-    description='Moraj Lab workspace cli app',
+    description='Moraj Lab workspace manager cli app',
     long_description=LONG_DESCRIPTION,
     long_description_content_type='text/markdown',
     author='Morteza Jamali',
@@ -18,7 +18,7 @@ setup(
     url='https://github.com/morajlab/workspace',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'tests*']),
-    package_data={'mjw': ['templates/*']},
+    package_data={'cli': ['templates/*']},
     include_package_data=True,
     entry_points="""
         [console_scripts]
