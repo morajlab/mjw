@@ -1,41 +1,30 @@
 import hashlib
 import os
 import shutil
-from .path import getRoot
-
-
-class CacheNameError(Exception):
-    """Cache name error"""
-
-    pass
+from .path import getCachePath
 
 
 class Cache:
-    BASE_DIR_NAME = ".cache"
+    def __init__(self, key=None):
+        self.hash = ""
 
-    def __init__(self, name=None):
-        self.cache_path = os.path.join(getRoot(), self.BASE_DIR_NAME)
+        if key is not None:
+            self.hash = hashlib.md5(key.encode("utf-8")).hexdigest()
 
-        if name is not None:
-            self.hash = hashlib.md5(name.encode("utf-8")).hexdigest()
-            self.target_cache_path = os.path.join(self.cache_path, self.hash)
+    def getPath(self, *path):
+        return getCachePath(self.hash, *path)
 
-    def create(self):
+    def create(self, *path):
+        os.makedirs(self.getPath(*path), exist_ok=True)
+
+    def clear(self, *path):
         try:
-            os.makedirs(self.target_cache_path, exist_ok=True)
-        except AttributeError:
-            raise CacheNameError("parameter `name` is not defined") from None
-
-    def clear(self):
-        try:
-            shutil.rmtree(self.target_cache_path)
-        except AttributeError:
-            raise CacheNameError("parameter `name` is not defined") from None
+            shutil.rmtree(self.getPath(*path))
         except FileNotFoundError:
             pass
 
     def clear_all(self):
         try:
-            shutil.rmtree(self.cache_path)
+            shutil.rmtree(getCachePath())
         except FileNotFoundError:
             pass
