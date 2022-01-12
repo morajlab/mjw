@@ -12,4 +12,4 @@ class Cache(Controller):
     def cache(self):
         """Cache docstring"""
 
-        print("This is cache comand")
+        self.app.mjw.template.copy()

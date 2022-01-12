@@ -6,8 +6,8 @@ from .controllers.story import Story
 from .controllers.cache import Cache
 
 # configuration defaults
-CONFIG = init_defaults("cli", "plugin.mjwtemplateplugin")
-CONFIG["plugin.mjwtemplateplugin"]["enabled"] = "true"
+CONFIG = init_defaults("cli", "plugin.mjwplugin")
+CONFIG["plugin.mjwplugin"]["enabled"] = "true"
 
 
 class CLI(App):
