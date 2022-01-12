@@ -1,8 +1,8 @@
-from .controllers import mjw
+from .controllers.mjw import MJWHandler
 
 
 def extend_app(app):
-    app.extend("mjw", mjw)
+    app.extend("mjw", MJWHandler(app))
 
 
 def load(app):

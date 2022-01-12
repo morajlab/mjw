@@ -27,6 +27,6 @@ class Story(Controller):
         cache = Cache(key=cwd)
         cache.create(".story")
 
-        self.app.template.copy(
+        self.app.mjw.template.renderTo(
             getTemplatePath("story"), cache.getPath(".story"), data, force=True
         )

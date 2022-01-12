@@ -11,5 +11,4 @@ class Cache(Controller):
     @ex(help="Cache command help")
     def cache(self):
         """Cache docstring"""
-
-        self.app.mjw.template.copy()
+        pass
