@@ -1,7 +1,13 @@
 import os
+import subprocess
 from cement import Controller, ex
 from ..core.cache import Cache
-from ..core.path import getTemplatePath, getCachePath
+from ..core.path import (
+    getTemplatePath,
+    getCachePath,
+    getCurrentAbsPath,
+    getProjectAbsPath,
+)
 
 
 class Story(Controller):
@@ -14,19 +20,44 @@ class Story(Controller):
     def story(self):
         """Story docstring"""
 
-        data = {}
-        cwd = os.getcwd()
-        dest_story_path = os.path.join(cwd, ".story")
-
-        if os.path.exists(os.path.join(dest_story_path, "main.ts")):
-            data = {
-                "customConfigCallback": "import configCallback from '%s'"
-                % os.path.splitext(os.path.join(dest_story_path, "main.ts"))[0]
-            }
-
+        cwd = getCurrentAbsPath()
+        dest_story_path = getCurrentAbsPath(".story")
+        data = {"node_modules_path": getProjectAbsPath("node_modules"), "cwd": cwd}
         cache = Cache(key=cwd)
         cache.create(".story")
 
+        if os.path.exists(os.path.join(dest_story_path, "main.ts")):
+            data.update(
+                {
+                    "custom_config_callback": "import configCallback from '%s'"
+                    % os.path.splitext(os.path.join(dest_story_path, "main.ts"))[0]
+                }
+            )
+
+        if os.path.exists(os.path.join(cwd, "tsconfig.json")):
+            data.update({"ts_config_path": os.path.join(cwd, "tsconfig.json")})
+        elif os.path.exists(os.path.join(dest_story_path, "tsconfig.json")):
+            data.update(
+                {"ts_config_path": os.path.join(dest_story_path, "tsconfig.json")}
+            )
+        else:
+            data.update(
+                {
+                    "ts_config_path": os.path.join(
+                        cache.getPath(".story"), "tsconfig.json"
+                    )
+                }
+            )
+
         self.app.mjw.template.renderTo(
             getTemplatePath("story"), cache.getPath(".story"), data, force=True
+        )
+
+        subprocess.run(
+            [
+                getProjectAbsPath("./node_modules/.bin/start-storybook"),
+                "-c",
+                cache.getPath(".story"),
+            ],
+            check=True,
         )

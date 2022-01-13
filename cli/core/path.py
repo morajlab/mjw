@@ -17,7 +17,7 @@ def getTemplatePath(*path):
     return getProjectAbsPath("cli", "templates", *path)
 
 
-def getCurrentAbsPath(path):
+def getCurrentAbsPath(path="."):
     if os.path.isabs(path):
         return os.path.abspath(path)
     else:

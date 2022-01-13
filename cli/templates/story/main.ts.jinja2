@@ -1,8 +1,8 @@
-import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
-import type { StorybookConfig } from "@storybook/react/types";
+import { TsconfigPathsPlugin } from "{{ node_modules_path }}/tsconfig-paths-webpack-plugin";
+import type { StorybookConfig } from "{{ node_modules_path }}/@storybook/react/types";
 
-{% if customConfigCallback -%}
-{{ customConfigCallback }}
+{% if custom_config_callback -%}
+{{ custom_config_callback }}
 {%- else -%}
 const configCallback = (args: any) => args;
 {%- endif %}
@@ -12,8 +12,8 @@ const config: StorybookConfig = {
     builder: "webpack5",
   },
   stories: [
-    "$(pwd)/stories/**/*.stories.mdx",
-    "$(pwd)/stories/**/*.stories.@(js|jsx|ts|tsx)",
+    "{{ cwd }}/stories/**/*.stories.mdx",
+    "{{ cwd }}/stories/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
     "@storybook/addon-actions",
@@ -27,6 +27,7 @@ const config: StorybookConfig = {
       config.resolve.plugins = [
         ...((config.resolve.plugins || []) as any),
         new TsconfigPathsPlugin({
+          configFile: "{{ ts_config_path }}",
           extensions: config.resolve.extensions,
         }),
       ];
