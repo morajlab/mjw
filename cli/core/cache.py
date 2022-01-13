@@ -5,11 +5,10 @@ from .path import getCachePath
 
 
 class Cache:
-    def __init__(self, key=None):
-        self.hash = ""
-
-        if key is not None:
-            self.hash = hashlib.md5(key.encode("utf-8")).hexdigest()
+    def __init__(self, key):
+        path = key if os.path.isabs(key) else os.path.join(os.getcwd(), key)
+        path = os.path.abspath(path)
+        self.hash = hashlib.md5(path.encode("utf-8")).hexdigest()
 
     def getPath(self, *path):
         return getCachePath(self.hash, *path)
@@ -17,13 +16,14 @@ class Cache:
     def create(self, *path):
         os.makedirs(self.getPath(*path), exist_ok=True)
 
-    def clear(self, *path):
+    def clean(self, *path):
         try:
             shutil.rmtree(self.getPath(*path))
         except FileNotFoundError:
             pass
 
-    def clear_all(self):
+    @staticmethod
+    def cleanAll():
         try:
             shutil.rmtree(getCachePath())
         except FileNotFoundError:

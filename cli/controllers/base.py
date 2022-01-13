@@ -5,24 +5,26 @@ from ..core.version import get_version
 VERSION_BANNER = """
 Moraj Lab workspace manager cli app %s
 %s
-""" % (get_version(), get_version_banner())
+""" % (
+    get_version(),
+    get_version_banner(),
+)
+
 
 class Base(Controller):
     class Meta:
-        label = 'base'
+        label = "base"
 
         # text displayed at the top of --help output
-        description = 'Moraj Lab workspace manager cli app'
+        description = "Moraj Lab workspace manager cli app"
 
         # text displayed at the bottom of --help output
-        epilog = 'Usage: cli command1 --foo bar'
+        epilog = "Usage: cli command1 --foo bar"
 
         # controller level arguments. ex: 'cli --version'
         arguments = [
             ### add a version banner
-            ( [ '-v', '--version' ],
-              { 'action'  : 'version',
-                'version' : VERSION_BANNER } ),
+            (["-v", "--version"], {"action": "version", "version": VERSION_BANNER}),
         ]
 
     def _default(self):
