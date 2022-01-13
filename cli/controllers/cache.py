@@ -1,5 +1,6 @@
 from cement import Controller, ex
 from ..core.cache import Cache as CacheHandler
+from ..core.path import getCurrentAbsPath
 
 
 class Cache(Controller):
@@ -37,6 +38,7 @@ class Cache(Controller):
             self.app.log.info("All caches cleaned.")
 
         if self.app.pargs.path is not None:
-            cache_obj = CacheHandler(key=self.app.pargs.path)
+            abs_path = getCurrentAbsPath(self.app.pargs.path)
+            cache_obj = CacheHandler(key=abs_path)
             cache_obj.clean()
-            self.app.log.info("All caches cleaned for path '%s'." % self.app.pargs.path)
+            self.app.log.info("All caches cleaned for path '%s'." % abs_path)

@@ -6,9 +6,7 @@ from .path import getCachePath
 
 class Cache:
     def __init__(self, key):
-        path = key if os.path.isabs(key) else os.path.join(os.getcwd(), key)
-        path = os.path.abspath(path)
-        self.hash = hashlib.md5(path.encode("utf-8")).hexdigest()
+        self.hash = hashlib.md5(key.encode("utf-8")).hexdigest()
 
     def getPath(self, *path):
         return getCachePath(self.hash, *path)
