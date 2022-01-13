@@ -2,6 +2,7 @@
 
 WORKSPACE_PATH=$HOME/.mjw
 REQUIRMENTS=(
+  "python3"
   "git"
   "curl"
   "unzip"
@@ -47,7 +48,8 @@ EOF
 
 install_deps() {
   cd $WORKSPACE_PATH &&
-  npm install
+  npm install &&
+  make virtualenv
 }
 
 check_requirments

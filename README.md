@@ -1,11 +1,12 @@
 # MJW
 
-Moraj Lab workspace
+Moraj Lab workspace manager app
 
 > ⚠️ This project is under development and isn't ready for production.
 
 ## Prerequisites
 
+- `python3`
 - `git`
 - `yq`
 - `node.js`
@@ -29,4 +30,4 @@ curl -fsSL https://raw.githubusercontent.com/morajlab/workspace/master/scripts/i
 
 ## License
 
-[MIT © Moraj Lab](./LICENSE)
+[MIT © Moraj Lab](./LICENSE.md)

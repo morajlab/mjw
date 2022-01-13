@@ -11,4 +11,7 @@ class Cache(Controller):
     @ex(help="Cache command help")
     def cache(self):
         """Cache docstring"""
+
+        print("This is cache command")
+
         pass
