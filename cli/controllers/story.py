@@ -7,6 +7,7 @@ from ..core.path import (
     getCachePath,
     getCurrentAbsPath,
     getProjectAbsPath,
+    getNodeBinPath,
 )
 
 
@@ -55,7 +56,7 @@ class Story(Controller):
 
         subprocess.run(
             [
-                getProjectAbsPath("./node_modules/.bin/start-storybook"),
+                getNodeBinPath("start-storybook"),
                 "-c",
                 cache.getPath(".story"),
             ],

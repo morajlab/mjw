@@ -1,9 +1,7 @@
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import CLIError
-from .controllers.base import Base
-from .controllers.story import Story
-from .controllers.cache import Cache
+from .controllers import base, story, cache, lint, format
 
 # configuration defaults
 CONFIG = init_defaults("cli", "plugin.mjwplugin")
@@ -44,7 +42,7 @@ class CLI(App):
         template_handler = "jinja2"
 
         # register handlers
-        handlers = [Base, Story, Cache]
+        handlers = [base.Base, story.Story, cache.Cache, lint.Lint, format.Format]
 
 
 class CLITest(TestApp, CLI):

@@ -17,6 +17,14 @@ def getTemplatePath(*path):
     return getProjectAbsPath("cli", "templates", *path)
 
 
+def getNodeBinPath(name):
+    return getProjectAbsPath("node_modules", ".bin", name)
+
+
+def getPipEnvBinPath(name):
+    return getProjectAbsPath("env", "bin", name)
+
+
 def getCurrentAbsPath(path="."):
     if os.path.isabs(path):
         return os.path.abspath(path)
