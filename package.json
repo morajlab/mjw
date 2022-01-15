@@ -6,8 +6,7 @@
   "scripts": {
     "preinstall": "npm config set '@morajlab:registry' https://npm.pkg.github.com",
     "test": "mjw test",
-    "prepare": "mjw hooks install",
-    "format:python": "./env/bin/black"
+    "prepare": "mjw hooks install"
   },
   "repository": {
     "type": "git",
@@ -60,8 +59,8 @@
     "webpack": "^5.65.0"
   },
   "lint-staged": {
-    "**/*": "mjw format",
-    "**/*.py": "npm run format:python",
+    "**/*": "mjw format --type prettier",
+    "**/*.py": "mjw format --type black",
     "**/*.css": "mjw lint --type stylelint"
   }
 }

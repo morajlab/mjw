@@ -1,4 +1,5 @@
 import subprocess
+import pathlib
 from cement import Controller, ex
 from ..core.path import getNodeBinPath, getPipEnvBinPath, getCurrentAbsPath
 
@@ -14,7 +15,12 @@ class Format(Controller):
         arguments=[
             (
                 ["path"],
-                {"help": "[file/dir/glob ...]", "default": ".", "nargs": "?"},
+                {
+                    "help": "[file/dir/glob ...]",
+                    "default": ".",
+                    "nargs": "*",
+                    "type": pathlib.Path,
+                },
             ),
             (
                 ["-t", "--type"],
@@ -38,16 +44,28 @@ class Format(Controller):
     def format(self):
         """Format docstring"""
 
-        subprocess.run(
-            [
-                getNodeBinPath("prettier"),
-                getCurrentAbsPath(self.app.pargs.path),
-                "--write",
-                "--ignore-unknown",
-            ],
-            check=True,
-        )
-        subprocess.run(
-            [getPipEnvBinPath("black"), getCurrentAbsPath(self.app.pargs.path)],
-            check=True,
-        )
+        formatter_type = self.app.pargs.type
+        path = self.app.pargs.path
+        path_array = []
+
+        if type(path) is list:
+            for p in path:
+                path_array.append(getCurrentAbsPath(p))
+        else:
+            path_array.append(getCurrentAbsPath(path))
+
+        if formatter_type is None or formatter_type == "prettier":
+            subprocess.run(
+                [
+                    getNodeBinPath("prettier"),
+                    "--write",
+                    "--ignore-unknown",
+                    *path_array,
+                ],
+                check=True,
+            )
+
+        if formatter_type is None or formatter_type == "black":
+            subprocess.run([getPipEnvBinPath("black"), *path_array])
+
+        self.app.log.info("Formatter executed.")

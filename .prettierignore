@@ -2,4 +2,5 @@
 
 /.cache
 /packages
-docs/**/*.html
+/docs
+/env

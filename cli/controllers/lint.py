@@ -1,4 +1,5 @@
 import subprocess
+import pathlib
 from cement import Controller, ex
 from ..core.cache import Cache
 from ..core.path import (
@@ -18,7 +19,15 @@ class Lint(Controller):
     @ex(
         help="Lint command help",
         arguments=[
-            (["input"], {"help": "[file/dir/glob ...]", "default": ".", "nargs": "?"}),
+            (
+                ["input"],
+                {
+                    "help": "[file/dir/glob ...]",
+                    "default": ".",
+                    "nargs": "*",
+                    "type": pathlib.Path,
+                },
+            ),
             (
                 ["-t", "--type"],
                 {
@@ -45,15 +54,24 @@ class Lint(Controller):
         )
 
         if linter_type is None or linter_type == "stylelint":
-            subprocess.run(
-                [
-                    getNodeBinPath("stylelint"),
-                    "--config",
-                    cache.getPath("lint", ".stylelintrc.json"),
-                    input_content,
-                ],
-                check=True,
-            )
+            input_array = []
+
+            if type(input_content) is list:
+                for i in input_content:
+                    input_array.append(getCurrentAbsPath(i))
+            else:
+                input_array.append(getCurrentAbsPath(input_content))
+
+                subprocess.run(
+                    [
+                        getNodeBinPath("stylelint"),
+                        "--config",
+                        cache.getPath("lint", ".stylelintrc.json"),
+                        *input_array,
+                    ],
+                    check=True,
+                )
+
         if linter_type is None or linter_type == "commitlint":
             subprocess.run(
                 [
@@ -61,7 +79,7 @@ class Lint(Controller):
                     "--config",
                     cache.getPath("lint", "commitlint.config.js"),
                     "--edit",
-                    input_content,
+                    *input_content,
                 ],
                 check=True,
             )

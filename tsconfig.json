@@ -1,3 +1,1 @@
-{
-  "extends": "@morajlab/npm.config.typescript/ts-node.json"
-}
+{ "extends": "@morajlab/npm.config.typescript/ts-node.json" }
