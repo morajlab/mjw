@@ -62,6 +62,6 @@
   "lint-staged": {
     "**/*": "mjw format",
     "**/*.py": "npm run format:python",
-    "**/*.css": "mjw lint --type style"
+    "**/*.css": "mjw lint --type stylelint"
   }
 }
