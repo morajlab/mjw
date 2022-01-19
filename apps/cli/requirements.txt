@@ -4,3 +4,6 @@ pyyaml
 colorlog
 black
 tabulate
+fastapi
+uvicorn[standard]
+Faker
