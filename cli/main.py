@@ -1,7 +1,7 @@
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import CLIError
-from .controllers import base, story, cache, lint, format
+from .controllers import base, story, cache, lint, format, info, watch
 
 # configuration defaults
 CONFIG = init_defaults("cli", "plugin.mjwplugin")
@@ -21,11 +21,7 @@ class CLI(App):
         exit_on_close = True
 
         # load additional framework extensions
-        extensions = [
-            "yaml",
-            "colorlog",
-            "jinja2",
-        ]
+        extensions = ["yaml", "colorlog", "jinja2", "tabulate"]
 
         # configuration handler
         config_handler = "yaml"
@@ -42,7 +38,15 @@ class CLI(App):
         template_handler = "jinja2"
 
         # register handlers
-        handlers = [base.Base, story.Story, cache.Cache, lint.Lint, format.Format]
+        handlers = [
+            base.Base,
+            story.Story,
+            cache.Cache,
+            lint.Lint,
+            format.Format,
+            info.Info,
+            watch.Watch,
+        ]
 
 
 class CLITest(TestApp, CLI):
