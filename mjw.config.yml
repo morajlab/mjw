@@ -1,9 +1,0 @@
-devdependencies:
-  - name: "nodexe"
-    url: "https://github.com/morajlab/nodexe.git"
-  - name: "popo"
-    url: "https://github.com/morajlab/popo.git"
-  - name: "registry"
-    url: "https://github.com/morajlab/registry.git"
-  - name: bash-doxygen
-    url: "https://github.com/Anvil/bash-doxygen.git"

@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+import subprocess
+
+try:
+    subprocess.run(["poetry", "--version"])
+except FileNotFoundError:
+    print("ERROR: python module 'poetry' is not available !")

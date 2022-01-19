@@ -1,0 +1,4 @@
+[mjw.packages]
+bash_doxygen = "https://github.com/Anvil/bash-doxygen.git"
+mjw_server = "https://github.com/morajlab/mjw-server.git"
+mjw_ui = "https://github.com/morajlab/mjw-ui.git"
