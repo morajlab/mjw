@@ -1,6 +1,7 @@
 import os
 import subprocess
 import tomlkit
+import sys
 from .path import getRootPath, getPackagesPath
 from .git import checkout
 from git import Repo
@@ -31,8 +32,6 @@ def install():
         except Exception as error:
           raise error
 
-
-
 def sync():
   with os.scandir(getPackagesPath()) as ent:
     for entry in ent:
@@ -41,4 +40,4 @@ def sync():
             print("Checkout package '{}' to branch '{}'".format(entry.name, root_repo.active_branch))
 
 def mjw():
-  pass
+  subprocess.run([getPackagesPath("mjw-cli", "env", "bin", "mjw"), *sys.argv[1:]])
