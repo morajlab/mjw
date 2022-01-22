@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
+#!/usr/bin/env bash
 
-import subprocess
-
-try:
-    subprocess.run(["poetry", "--version"])
-except FileNotFoundError:
-    print("ERROR: python module 'poetry' is not available !")
+poetry run mjw $*
