@@ -26,7 +26,9 @@ def install():
                     makefile = getPackagesPath(package, "Makefile")
 
                     if os.path.exists(makefile):
-                        subprocess.run([makefile, "virtualenv"], check=True)
+                        subprocess.run(
+                            ["make", "install"], cwd=getPackagesPath(package)
+                        )
 
                     print("Package '%s' installed." % package)
                 except Exception as error:

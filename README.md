@@ -7,6 +7,7 @@ Moraj Lab workspace manager app
 ## Prerequisites
 
 - `python3`
+- `poetry`
 - `git`
 - `node.js`
 
@@ -16,6 +17,8 @@ Run following commands in terminal:
 
 ```sh
 git clone https://github.com/morajlab/mjw
+
+poetry run install
 
 export PATH=/path/to/mjw/mjw/bin:$PATH
 ```
