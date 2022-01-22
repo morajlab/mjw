@@ -1,8 +1,27 @@
 [tool.poetry]
 name = "mjw"
-version = "0.1.0"
-description = ""
+version = "0.0.2-alpha"
+description = "Moraj Lab workspace manager"
 authors = ["Morteza Jamali <mortezajamali4241@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://www.morajlab.com/opensource/products/workspace"
+repository = "https://github.com/morajlab/mjw"
+documentation = "https://github.com/morajlab/mjw"
+keywords = [
+  "mjw",
+  "workspace",
+  "manager",
+  "morajlab",
+  "project",
+  "monorepo",
+  "multi-repo",
+  "repository"
+]
+classifiers = [
+    "Topic :: Software Development :: Build Tools",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
 
 [tool.poetry.dependencies]
 python = "^3.9"

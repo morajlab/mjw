@@ -8,20 +8,16 @@ Moraj Lab workspace manager app
 
 - `python3`
 - `git`
-- `yq`
 - `node.js`
 
 ## Install
 
-### Prerequisites
-
-- `curl`
-- `unzip`
-
-Run this command in terminal:
+Run following commands in terminal:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/morajlab/workspace/master/scripts/install.sh | bash
+git clone https://github.com/morajlab/mjw
+
+export PATH=/path/to/mjw/mjw/bin:$PATH
 ```
 
 ## Maintainers
@@ -30,4 +26,4 @@ curl -fsSL https://raw.githubusercontent.com/morajlab/workspace/master/scripts/i
 
 ## License
 
-[MIT © Moraj Lab](./LICENSE.md)
+[MIT © Moraj Lab](./LICENSE)
