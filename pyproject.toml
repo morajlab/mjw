@@ -37,5 +37,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 install = "mjw.main:install"
-mjw = "mjw.main:mjw"
 sync = "mjw.main:sync"
