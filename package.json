@@ -3,9 +3,6 @@
   "version": "0.0.2-alpha",
   "description": "Moraj Lab workspace manager app",
   "private": true,
-  "scripts": {
-    "test": "mjw test"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/morajlab/mjw.git"
