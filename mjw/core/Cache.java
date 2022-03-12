@@ -1,45 +1,41 @@
 import java.math.BigInteger;
 import java.io.File;
 import java.security.MessageDigest;
-import org.apache.commons.io.FileUtils;
+// import org.apache.commons.io.FileUtils;
 
 public class Cache {
-  private final static String cache_dir_prefix = ".cache";
-  private static String key;
+  private final String CACHE_DIR_PREFIX = ".cache";
+  private final String key_hash;
+  private final String key;
 
-  Cache(String key) {
-    key = key;
+  public Cache(String key) {
+    this.key = key;
+    this.key_hash = getKeyHash();
   }
 
-  public static int main(String[] args) {
-    key = args[0];
+  // public static boolean clean() {
+  //   FileUtils.deleteDirectory(new File(destination));
+  // }
 
-    if (createDir()) {
-      return 0;
-    }
+  // public static boolean clean(boolean all) {}
 
-    return 1;
+  public String getCachePath() {
+    return this.CACHE_DIR_PREFIX + File.separator + getKeyHash();
   }
 
-  public static boolean clean() {
-    FileUtils.deleteDirectory(new File(destination));
-  }
-
-  public static boolean clean(boolean all) {}
-
-  public static boolean createDir() {
-    File cache_dir = new File(cache_dir_prefix + "/" + createHash());
+  public void init() {
+    File cache_dir = new File(getCachePath());
 
     if (!cache_dir.exists()) {
       cache_dir.mkdirs();
-
-      return true;
     }
-
-    return false;
   }
 
-  private static String createHash() {
+  private String getKeyHash() {
+    if (this.key_hash != null && !this.key_hash.isBlank()) {
+      return this.key_hash;
+    }
+
     String hash_string = "";
 
     try {
@@ -52,10 +48,8 @@ public class Cache {
       while(hash_string.length() < 32){
         hash_string = "0" + hash_string;
       }
-
-      return hash_string;
-    } catch(Exception ex) {
-      // pass
+    } catch (Exception ex) {
+      // Create your exception or re-throw ex object
     }
 
     return hash_string;
