@@ -1,0 +1,25 @@
+{
+  "root": "packages/mjw/dashboard/types",
+  "sourceRoot": "packages/mjw/dashboard/types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/mjw/dashboard/types/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/mjw/dashboard/types"],
+      "options": {
+        "jestConfig": "packages/mjw/dashboard/types/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

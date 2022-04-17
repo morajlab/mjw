@@ -1,0 +1,106 @@
+{
+  "root": "packages/mjw/dashboard/dashboard",
+  "sourceRoot": "packages/mjw/dashboard/dashboard/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/packages/mjw/dashboard/dashboard",
+        "index": "packages/mjw/dashboard/dashboard/src/index.html",
+        "baseHref": "/",
+        "main": "packages/mjw/dashboard/dashboard/src/main.tsx",
+        "polyfills": "packages/mjw/dashboard/dashboard/src/polyfills.ts",
+        "tsConfig": "packages/mjw/dashboard/dashboard/tsconfig.app.json",
+        "assets": [
+          "packages/mjw/dashboard/dashboard/src/favicon.ico",
+          "packages/mjw/dashboard/dashboard/src/assets"
+        ],
+        "styles": ["packages/mjw/dashboard/dashboard/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "packages/mjw/dashboard/dashboard/src/environments/environment.ts",
+              "with": "packages/mjw/dashboard/dashboard/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "mjw-dashboard-dashboard:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "mjw-dashboard-dashboard:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/mjw/dashboard/dashboard/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/mjw/dashboard/dashboard"],
+      "options": {
+        "jestConfig": "packages/mjw/dashboard/dashboard/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "storybook": {
+      "executor": "@nrwl/storybook:storybook",
+      "options": {
+        "uiFramework": "@storybook/react",
+        "port": 4400,
+        "config": {
+          "configFolder": "packages/mjw/dashboard/dashboard/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nrwl/storybook:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "uiFramework": "@storybook/react",
+        "outputPath": "dist/storybook/mjw-dashboard-dashboard",
+        "config": {
+          "configFolder": "packages/mjw/dashboard/dashboard/.storybook"
+        }
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
