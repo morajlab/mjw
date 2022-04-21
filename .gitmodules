@@ -1,0 +1,15 @@
+[submodule "packages/server"]
+	path = packages/server
+	url = https://github.com/morajlab/mjw-server.git
+[submodule "packages/ui"]
+	path = packages/ui
+	url = https://github.com/morajlab/mjw-ui.git
+[submodule "packages/documentor"]
+	path = packages/documentor
+	url = https://github.com/morajlab/mjw-documentor.git
+[submodule "packages/cli"]
+	path = packages/cli
+	url = https://github.com/morajlab/mjw-cli.git
+[submodule "packages/lib"]
+	path = packages/lib
+	url = https://github.com/morajlab/mjw-lib.git

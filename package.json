@@ -26,11 +26,18 @@
   },
   "homepage": "https://github.com/morajlab/mjw#readme",
   "lint-staged": {
-    "**/*": "mjw format --type prettier",
-    "**/*.py": "mjw format --type black",
-    "**/*.css": "mjw lint --type stylelint"
+    "**/*": "prettier -w -u",
+    "**/*.py": "echo 'mjw format --type black'",
+    "**/*.css": "stylelint"
   },
   "devDependencies": {
-    "lint-staged": "^12.2.2"
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.5",
+    "stylelint": "^14.6.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^25.0.0",
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
+    "prettier": "^2.5.1"
   }
 }
