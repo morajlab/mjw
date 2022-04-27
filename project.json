@@ -1,0 +1,6 @@
+{
+  "root": "packages/mjw",
+  "sourceRoot": "packages/mjw/packages",
+  "projectType": "application",
+  "tags": []
+}
