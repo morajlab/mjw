@@ -25,6 +25,13 @@
     "url": "https://github.com/morajlab/mjw/issues"
   },
   "homepage": "https://github.com/morajlab/mjw#readme",
+  "devDependencies": {
+    "@commitlint/cli": "latest",
+    "@commitlint/config-conventional": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "prettier": "latest"
+  },
   "lint-staged": {
     "**/*": "prettier -w -u"
   }
